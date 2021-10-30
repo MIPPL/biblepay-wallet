@@ -14,7 +14,7 @@ import { startup } from './StartupSagas'
 
 import { getAddressInfo, getAddressUtxo } from './AddressSagas'
 
-import { sendTransaction, estimateFee, rebroadcastTx, getMaxAmount, sendBurnTransaction } from './TransactionSagas'
+import { sendTransaction, estimateFee, rebroadcastTx, getMaxAmount } from './TransactionSagas'
 
 import { getNetworkStats } from './NetworkSagas'
 
@@ -27,7 +27,6 @@ export default function * root () {
     takeLatest(AccountTypes.FETCH_ADDRESS_INFO, getAddressInfo),
     takeLatest(AccountTypes.FETCH_ADDRESS_UTXO, getAddressUtxo),
     takeLatest(AccountTypes.SEND_TRANSACTION, sendTransaction),
-    takeLatest(AccountTypes.SEND_BURN_TRANSACTION, sendBurnTransaction),
     takeLatest(AccountTypes.ESTIMATE_FEE_AND_PROMPT_USER, estimateFee),
     takeLatest(AccountTypes.GET_MAX_AMOUNT, getMaxAmount),
     takeLatest(AccountTypes.REBROADCAST_TX, rebroadcastTx),

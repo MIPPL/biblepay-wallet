@@ -9,8 +9,6 @@ import Immutable from 'seamless-immutable'
 
 import '../../shim.js'
 import * as Keychain from "react-native-keychain";
-import {Alert} from "react-native";
-import I18n from 'i18n-js';
 
 var bitcore = require('bitcore-lib');
 
@@ -20,7 +18,6 @@ const crypto = require('crypto');
 
 const { Types, Creators } = createActions({
   generateAddressFromMnemonic: ['mnemonic', 'callback'],
-  migrateFromMnemonic: ['mnemonic', 'creds', 'callback'],
   getAddressFromPrivKey: ['privateKey', 'callback'],
   getAddressFromSinFile: ['cipherTxt', 'vSalt', 'rounds', 'passphrase', 'callback'],
   fetchAddressInfo: ['address'],
@@ -30,13 +27,13 @@ const { Types, Creators } = createActions({
   resetAddressUtxo: null,
   resetAddresses: null,
   sendTransaction: ['destination', 'value', 'fee', 'noalerts', 'callback'],
-  sendBurnTransaction: [ 'destination', 'value', 'utxo', 'pkhash', 'data', 'callback'],
   estimateFeeAndPromptUser: ['destination', 'value', 'callback'],
   addUnsendTx: ['signedTx'],
   resetUnsendTx: null,
   rebroadcastTx: ['sendImmediately'],
   getMaxAmount: ['callback'],
-  generateNewAddresses: ['callback']
+  generateNewAddresses: ['callback'],
+  setDerivationPath: ['path']
 })
 
 export const AccountTypes = Types
@@ -47,17 +44,17 @@ export default Creators
 export const INITIAL_STATE = Immutable({
   addresses: [],
   utxo: [],
-  unsendTx: []
+  unsendTx: [],
+  derivationPath: "m/44'/"+AppConfig.BIP44Code+"'/0'/"    // default bip44
 })
 
 /* ------------- Selectors ------------- */
 
 export const AccountSelectors = {
   getAddresses: state => state.account.addresses,
+  getDerivationPath: state => state.account.derivationPath,
   getTransactions: state => {
     let transactions = []
-    var hexAddressBurn = (AppConfig.BURN_HASH160.length/2).toString(16) + AppConfig.BURN_HASH160; 
-    var hexAddressMeta = (AppConfig.META_HASH160.length/2).toString(16) + AppConfig.META_HASH160; 
         
     state.account.unsendTx.forEach(uTx=>{
       let txObj = {
@@ -75,9 +72,7 @@ export const AccountSelectors = {
       if(add.transactions)
       add.transactions.forEach(tx => {
         var to = ''
-        if (tx.vout[0].hex.startsWith(hexAddressBurn))  to = AppConfig.BURN_ADDRESS;
-        else if (tx.vout[0].hex.startsWith(hexAddressMeta))  to = AppConfig.META_ADDRESS;
-        else to = tx.vout[0].addresses[0];
+        to = tx.vout[0].addresses[0];
         
         let txObj = {
           amount: 0,
@@ -171,7 +166,7 @@ function decrypt(text) {
     }
 
 // return array of {addresses,privkeys)
-function generateHDAddresses( mnemonic, startIndex, numAddresses, encryptedMnemonic ) {
+function generateHDAddresses( mnemonic, derivationPath, startIndex, numAddresses, encryptedMnemonic ) {
 
     var hdAddresses = [];
 
@@ -181,8 +176,8 @@ function generateHDAddresses( mnemonic, startIndex, numAddresses, encryptedMnemo
 
     var seed = bip39.mnemonicToSeed(mnemonic);
     const masterKey = HDKey.parseMasterSeed(seed);
-    const extAccountPrivKey = masterKey.derive("m/44'/715'/0'/0").extendedPrivateKey;
-    const extChangePrivKey = masterKey.derive("m/44'/715'/0'/1").extendedPrivateKey;
+    const extAccountPrivKey = masterKey.derive(derivationPath+"0").extendedPrivateKey;
+    const extChangePrivKey = masterKey.derive(derivationPath+"1").extendedPrivateKey;
     const childAccountKey = HDKey.parseExtendedKey(extAccountPrivKey);
     const childChangeKey = HDKey.parseExtendedKey(extChangePrivKey);
 
@@ -234,7 +229,7 @@ export const genAddFromMn =  (state = INITIAL_STATE, action) => {
     
     // HD addresses
     const encryptedMnemonic = encrypt(mnemonic, key, iv)
-    var hdAddresses = generateHDAddresses( mnemonic, 0, 10, encryptedMnemonic.encryptedData);
+    var hdAddresses = generateHDAddresses( mnemonic, state.derivationPath, 0, 10, encryptedMnemonic.encryptedData);
 
     allAddresses = [...allAddresses, ...hdAddresses]
 
@@ -250,49 +245,6 @@ export const genAddFromMn =  (state = INITIAL_STATE, action) => {
     callback(true)
     return state
   }
-}
-
-export const migrateFromMn =  (state = INITIAL_STATE, action) => {
-  const { mnemonic, creds, callback } = action
-
-  if(mnemonic.split(' ').length===12){
-    var allAddresses = state.addresses;
-
-    // legacy address
-    var value = Buffer.from(mnemonic);
-    var hash = bitcore.crypto.Hash.sha256(value);
-    var bn = bitcore.crypto.BN.fromBuffer(hash);
-
-    const privKey = new bitcore.PrivateKey(bn)
-    var address = privKey.toAddress().toString();
-
-    if (address!=state.addresses[0].address)  {
-      callback(true, I18n.t('errorMnemonicMatch'))
-      return state;
-    }
-    try {
-    const encryptedMnemonic = encrypt(mnemonic, Buffer.from(creds.password, 'hex'), Buffer.from(creds.username, 'hex'));
-
-    var hdAddresses = generateHDAddresses( mnemonic, 0, 10, encryptedMnemonic.encryptedData);
-    allAddresses = [...allAddresses, ...hdAddresses]
-
-    // store encrypted seed data (to generate more addresses to the pool if required later)
-    Keychain.setInternetCredentials(encryptedMnemonic.encryptedData,encryptedMnemonic.iv,encryptedMnemonic.key)
-
-    callback(false, '')
-    
-    return state.merge({
-      addresses: allAddresses
-    })
-    }
-    catch(e)  {
-      console.log('migrate CATCH ' + e.message);
-    }
-  } else {
-    callback(true, I18n.t('mnemonicInvalid'))
-    return state
-  }
-
 }
 
 export const genAddFromPriv = (state = INITIAL_STATE, action) => {
@@ -413,12 +365,15 @@ export const sendTransaction = (state = INITIAL_STATE, action) => {
   return state
 }
 
-export const sendBurnTransaction = (state = INITIAL_STATE, action) => {
+export const estimateFee = (state = INITIAL_STATE, action) => {
   return state
 }
 
-export const estimateFee = (state = INITIAL_STATE, action) => {
-  return state
+export const setDerivationPath = (state = INITIAL_STATE, action) => {
+  const { path } = action
+  return state.merge({
+    derivationPath: path
+  })
 }
 
 export const addUnsend = (state = INITIAL_STATE, action) => {
@@ -487,7 +442,6 @@ export const resetAddUtxo = (state = INITIAL_STATE, action) => {
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.GENERATE_ADDRESS_FROM_MNEMONIC]: genAddFromMn,
-  [Types.MIGRATE_FROM_MNEMONIC]: migrateFromMn,
   [Types.GET_ADDRESS_FROM_PRIV_KEY]: genAddFromPriv,
   [Types.GET_ADDRESS_FROM_SIN_FILE]: genAddFromSinFile,
   [Types.FETCH_ADDRESS_INFO]: fetchAddInfo,
@@ -497,11 +451,11 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.RESET_ADDRESSES]: resetAddresses,
   [Types.RESET_ADDRESS_UTXO]: resetAddUtxo,
   [Types.SEND_TRANSACTION]: sendTransaction,
-  [Types.SEND_BURN_TRANSACTION]: sendBurnTransaction,
   [Types.ESTIMATE_FEE_AND_PROMPT_USER]: estimateFee,
   [Types.ADD_UNSEND_TX]: addUnsend,
   [Types.RESET_UNSEND_TX]: resetUnsend,
   [Types.REBROADCAST_TX]: rebroadcast,
   [Types.GET_MAX_AMOUNT]: getMaxAmount,
-  [Types.GENERATE_NEW_ADDRESSES]: generateNewAddr
+  [Types.GENERATE_NEW_ADDRESSES]: generateNewAddr,
+  [Types.SET_DERIVATION_PATH]: setDerivationPath
 })

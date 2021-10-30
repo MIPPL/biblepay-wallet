@@ -148,6 +148,7 @@ export function * sendTransaction (action) {
 
   const { destination, value, fee, noalerts, callback } = action
   const allUtxos = yield select(AccountSelectors.getUtxo)
+  const derivationPath = yield select(AccountSelectors.getDerivationPath)
   allUtxos.sort((a,b)=>{return parseInt(a.satoshis)-parseInt(b.satoshis)})
 
   var realFee = (fee>0)?fee:AppConfig.MIN_RELAY_FEE;
@@ -173,7 +174,7 @@ export function * sendTransaction (action) {
       if (utxo.address!=addresses[0].address) {
         var index = addresses.findIndex( (addrObj) => addrObj.address === utxo.address ); 
         if (index!=-1 && typeof loadedKeys[index] === 'undefined')  {
-          var privKey = getPrivateKeyForHDAddress(decryptedMnemonic, (index-1)/2, false );
+          var privKey = getPrivateKeyForHDAddress(decryptedMnemonic, (index-1)/2, false, derivationPath );
           privateKeys.push( new bitcore.PrivateKey( privKey ) )
           loadedKeys[index] = true;
           //console.log('sendTransaction add HD priv: '+ privKey);
@@ -284,7 +285,7 @@ function decrypt(text) {
 }
 
 // return: priv key as raw hex string
-function getPrivateKeyForHDAddress(mnemonic, index, change)  {
+function getPrivateKeyForHDAddress(mnemonic, index, change, derivationPath)  {
 
   try {
     
@@ -292,7 +293,7 @@ function getPrivateKeyForHDAddress(mnemonic, index, change)  {
       return I18n.t('errorGettingAddressIndex');  
     }
   
-    var derivationPath = "m/44'/715'/0'/"+ ((change)?"1":"0");
+    var derivationPath = derivationPath + ((change)?"1":"0");
     var seed = bip39.mnemonicToSeed(mnemonic);
     const masterKey = HDKey.parseMasterSeed(seed);
     const extPrivKey = masterKey.derive(derivationPath).extendedPrivateKey;
@@ -304,104 +305,6 @@ function getPrivateKeyForHDAddress(mnemonic, index, change)  {
   catch(e)  {
     return I18n.t('errorGettingPrivKey');
   }
-}
-
-export function * sendBurnTransaction (action) {
-             
-  const { destination, value, utxo, pkhash, data, callback } = action
-  
-  var realFee = AppConfig.MIN_RELAY_FEE;
-  
-  const addresses = yield select(AccountSelectors.getAddresses)
-  let amount = longRep(parseFloat(value))
-  let utxos = [ utxo ]
-  let sumAmounts=0    
-  const changeAdd = addresses[0].address
-
-  sumAmounts+=parseInt(utxo.satoshis)
-
-  const creds = yield Keychain.getInternetCredentials(addresses[1].encryptedPrivKey)
-  var decryptedMnemonic = decrypt({encryptedData:addresses[1].encryptedPrivKey, iv: creds.username, key: creds.password})
-
-  var index = addresses.findIndex( (addrObj) => addrObj.address === utxo.address ); 
-  var privateKeyRaw = getPrivateKeyForHDAddress(decryptedMnemonic, (index-1)/2, false );
-  var privateKey = new bitcore.PrivateKey( privateKeyRaw )
-  
-  if (typeof privateKey == 'string')  {
-    callback()
-    showError(privateKey)
-    return;
-  }
-
-  try {
-  
-    // build burn script
-    var scriptObj =  new bitcore.Script()
-          .add(new Buffer(pkhash, 'hex'))
-          .add('OP_RETURN')
-          .add( Buffer.from(data) )
-    
-    var output = new bitcore.Transaction.Output({
-      script: scriptObj,
-      satoshis: amount-realFee
-    })
-    
-    var transaction = new bitcore.Transaction()
-        .from(utxos)
-        .addOutput( output )
-        .feePerKb(realFee)
-        //.change(changeAdd)
-   
-      let signedTx = transaction.sign(privateKey)
-      const url = yield select(GlobalSelectors.getBlockbookApi)
-      const api = API.create(url)
-      const response = yield call(api.sendTransaction, signedTx)
-  
-      if (response.ok) {
-        const txData = new SendTx(response.data)
-        
-        yield new Promise(resolve => {
-          setTimeout(() => {
-            resolve()
-          }, 5000);
-        })
-        callback(transaction.hash)
-        yield put(AccountActions.fetchAddressUtxo())
-        yield put(AccountActions.fetchAddressInfo())
-      } else {
-        console.log('sendBurnTransaction NOT OK ' +response.problem)
-        callback('')
-
-        if(response.problem==='TIMEOUT_ERROR'||response.problem==='CONNECTION_ERROR'||response.problem==='NETWORK_ERROR'){
-          yield put(AccountActions.addUnsendTx({hex: signedTx.toString('hex'),blockTime: new Date().getTime()/1000, amount: -(amount+transaction.getFee()), to: destination}))
-
-
-          Alert.alert(
-              I18n.t('info'),
-              I18n.t('noInternet'),
-              [
-                {text: I18n.t('dismiss')},
-              ],
-              {cancelable: false},
-          )
-
-          yield put(AccountActions.rebroadcastTx())
-
-        }else{
-          showError(I18n.t('unexpectedError'))
-        }
-
-      }
-
-  } catch(e) {
-    console.log('sendBurnTransaction CATCH #' + e.message)
-    callback()
-    showError(I18n.t('unexpectedError'))
-  }
-
-/*
-
-*/
 }
 
 export function * rebroadcastTx (action) {
