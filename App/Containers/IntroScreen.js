@@ -1,0 +1,541 @@
+import React, { Component } from 'react'
+
+import {
+  SafeAreaView,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Alert,
+  Image,
+  TouchableWithoutFeedback,
+  Dimensions,
+  Platform,
+  StatusBar,
+  BackHandler,
+  ImageBackground,
+    ScrollView,
+    Keyboard
+} from 'react-native';
+
+import { connect } from 'react-redux'
+
+// Styles
+import styles from './Styles/IntroScreenStyle'
+
+import AccountActions, { AccountSelectors } from '../Redux/AccountRedux'
+
+import PINCode from '../Components/PinCode'
+
+import Swiper from 'react-native-swiper'
+
+import Button from '../Components/Button'
+
+import bip39 from 'react-native-bip39'
+
+import { startApp } from '../Navigation/index';
+
+import Logo from '../Images/biblepay.svg';
+import LogoDark from '../Images/biblepay-dark.svg';
+
+import AccountOptions from '../Images/account-option-icon.png'
+
+import SecurityIcon from '../Images/security-icon.png'
+import BackgroundIntro from '../Images/background_welcome.svg'
+
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview'
+import StartupActions from '../Redux/StartupRedux';
+import Icon from 'react-native-vector-icons/Ionicons'
+import {Navigation} from 'react-native-navigation';
+import I18n from '../I18n'
+import {GlobalSelectors} from '../Redux/GlobalRedux';
+import * as Keychain from "react-native-keychain";
+import AppConfig from '../Config/AppConfig';
+
+class IntroScreen extends Component {
+  state = {
+    mnemonic: '',
+    mnemonicWords: ['','','','','','','','','','','',''],
+    mnemonicState: [0,0,0,0,0,0,0,0,0,0,0,0],
+    mnemonicFocusedIndex: -1,
+    mnemonicCheck: '',
+    mnemonicSelection: '',
+    importMnemonic: '',
+    privateKey: '',
+    page: 0,
+    cipherTxt: '',
+    vSalt: '',
+    rounds: '',
+    passphrase: ''
+  }
+
+  canGoBack=false
+  _mnemonicInputRef= [null,null,null,null,null,null,null,null,null,null,null,null,null]
+
+  componentDidMount () {
+
+    if(Platform.OS==='android')
+      this.backhandler=BackHandler.addEventListener('hardwareBackPress', () => {
+        if(this.canGoBack){
+            this.goBack()
+
+        }
+        return true;
+      });
+
+    function shuffle(a) {
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    this.generateMnemonic(128).then(res=>{
+      if(res.split(' ').length===12){
+        this.setState({mnemonic:res})
+
+        this.generateMnemonic(128).then(resp=>{
+          if(resp.split(' ').length===12){
+            let shuffeledArr = shuffle([...res.split(' '), ...resp.split(' ')])
+            this.setState({mnemonicSelection:shuffeledArr.join(' ')})
+          }
+        })
+
+      }
+    })
+  }
+
+  next = () => {
+    this.refs.swiper.scrollBy(1, true)
+  }
+
+  generateMnemonic = async (strength) => {
+    try {
+      return await bip39.generateMnemonic(strength) // means 12 words
+    } catch(e) {
+      return null
+    }
+  }
+
+  checkMnemonic = () => {
+    if(this.state.mnemonic===this.state.mnemonicCheck) {
+      this.props.generateAddressFromMnemonic(this.state.mnemonic, (error)=>{
+        if(!error){
+          setTimeout(()=>{
+            this.props.startup()
+          },200)
+          if(this.backhandler)
+            this.backhandler.remove()
+          startApp()
+
+        }
+      })
+
+
+    }else{
+      this.refs.swiper.scrollBy(-1, true)
+    }
+
+  }
+
+  importMnemonic = () => {
+    if(this.state.importMnemonic && bip39.validateMnemonic(this.state.importMnemonic)) {
+      if (this.props.migrateMode) { // migrate existing
+        Keychain.getInternetCredentials(this.props.addresses[0].encryptedPrivKey).then((creds)=>{
+          this.props.migrateFromMnemonic(this.state.importMnemonic, creds, (error, message) => {
+            if(error){
+              Alert.alert(
+                  I18n.t('error'),
+                  message,
+                  [
+                    {
+                      text: I18n.t('dismiss'),
+                      style: 'cancel',
+                    },
+                  ],
+                  {cancelable: false},
+              )
+            }else{
+              setTimeout(()=>{
+                if (this.props.onMigrateFinished) this.props.onMigrateFinished();
+                Navigation.dismissModal(this.props.componentId);
+              },200)
+              if(this.backhandler)
+                this.backhandler.remove()
+            }
+          })
+        })
+      }
+      else  {   // new wallet
+        this.props.generateAddressFromMnemonic(this.state.importMnemonic, (error) => {
+          if(error){
+            Alert.alert(
+                I18n.t('error'),
+                I18n.t('mnemonicInvalid'),
+                [
+                  {
+                    text: I18n.t('dismiss'),
+                    style: 'cancel',
+                  },
+                ],
+                {cancelable: false},
+            )
+          }else{
+            setTimeout(()=>{
+              this.props.startup()
+            },200)
+            if(this.backhandler)
+              this.backhandler.remove()
+            startApp()
+          }
+        })
+      }
+    }
+    else  {
+      Alert.alert(
+        I18n.t('error'),
+        I18n.t('mnemonicInvalid'),
+        [
+          {
+            text: I18n.t('dismiss'),
+            style: 'cancel',
+          },
+        ],
+        {cancelable: false},
+      )
+    }
+  }
+
+  addedWords = []
+
+  addWord = (word, index) => {
+
+    let foundIndex = this.addedWords.findIndex(aw => {return aw === null})
+    if(foundIndex>=0){
+      this.addedWords[foundIndex]=index
+    }else if(this.addedWords.length<12){
+      this.addedWords.push(index)
+    }
+
+      if(this.state.mnemonicCheck.includes('-')){
+        this.setState({mnemonicCheck:this.state.mnemonicCheck.replace('-',word)})
+      }else if(this.state.mnemonicCheck.split(' ').length!==12){
+        this.setState({mnemonicCheck:this.state.mnemonicCheck+(this.state.mnemonicCheck.length?' ':'')+word})
+      }
+  }
+
+  removeWord = (index) => {
+      this.addedWords.splice(index,1,null)
+
+      if(this.state.mnemonicCheck.includes(this.state.mnemonicCheck.split(' ')[index])) {
+        let tempCheck = this.state.mnemonicCheck.split(' ')
+        tempCheck[index] = '-'
+        this.setState({mnemonicCheck: tempCheck.join(' ')})
+      }
+  }
+
+  importPrivateKey = () => {
+    this.props.getAddressFromPrivKey(this.state.privateKey, (error)=>{
+      if(error){
+        Alert.alert(
+            I18n.t('error'),
+            I18n.t('privkeyInvalid'),
+            [
+              {text: I18n.t('dismiss')},
+            ],
+            {cancelable: false},
+        )
+      } else {
+        setTimeout(()=>{
+          this.props.startup()
+        },200)
+        if(this.backhandler)
+          this.backhandler.remove()
+        startApp()
+      }
+    })
+  }
+
+  importSINKeyfile = () => {
+    this.props.getAddressFromSinFile(this.state.cipherTxt, this.state.vSalt, this.state.rounds, this.state.passphrase, (error)=>{
+      if(error){
+        Alert.alert(
+            I18n.t('error'),
+            I18n.t('dataInvalid'),
+            [
+              {text: I18n.t('dismiss')},
+            ],
+            {cancelable: false},
+        )
+      } else {
+        setTimeout(()=>{
+          this.props.startup()
+        },200)
+        if(this.backhandler)
+          this.backhandler.remove()
+        startApp()
+      }
+
+    })
+  }
+
+  renderMnemonicWordInput = (n) => {
+    return ( <TextInput editable placeholder={I18n.t('word')+' #'+n} 
+                       style={(this.state.mnemonicState[n-1]==1)?styles.mnemonicError:(this.state.mnemonicFocusedIndex==(n-1))?styles.mnemonicFocus:styles.mnemonic} 
+                       onChangeText={(text)=>{this.setBIP39Word(n-1, text)}} 
+                       onFocus={ () => this.setState({ mnemonicFocusedIndex: n-1 }) }
+                       onBlur={ () => {if (n==12) Keyboard.dismiss();this.setState({ mnemonicFocusedIndex: -1 }) } }
+                       placeholderTextColor = "#a2a5b7"
+                       autoCapitalize = 'none'
+                       ref={(r) => { this._textInputRef = r; }}
+                       />
+          );
+  }
+
+  setBIP39Word = (n, word) =>  {
+    var last = word.substr(word.length-1,1);
+    if (last==' ') {
+      word = word.trim();
+      if (n<11) {
+        if (this._mnemonicInputRef[n+1]) {
+          this._mnemonicInputRef[n+1].focus();
+        }
+      }
+      else {
+        Keyboard.dismiss();
+      }
+    }
+
+    var wordsArray = this.state.mnemonicWords;
+    wordsArray[n] = word;
+    var wordsStatus = this.state.mnemonicState;
+    wordsStatus[n] = (this.checkBIP39Word(word))?0:1;
+
+    var mnemonic = wordsArray.join(' ');
+    this.setState( {mnemonicWords: wordsArray, 
+                    mnemonicState: wordsStatus,
+                    importMnemonic: mnemonic } );
+  }
+
+  checkBIP39Word = (word) =>  {
+    return (word=='' || bip39.wordlists.EN.indexOf(word)!==-1);
+  }
+
+  renderBackIcon = () =>  {
+    if (this.props.migrateMode) {
+      return (  <Icon name="md-arrow-back" size={wp(10)} color="white" style={{height: wp(10), position: 'absolute', top: hp(2), left: hp(2)}} onPress={()=>Navigation.dismissModal(this.props.componentId)}/>)
+    }
+    else  {
+      return (  <Icon name="md-arrow-back" size={wp(10)} color="white" style={{height: wp(10), position: 'absolute', top: hp(2), left: hp(2)}} onPress={this.goBack}/>)
+    }
+  }
+
+
+  goBack = () => {
+    this.canGoBack=false
+    this.refs.swiper.scrollBy(-1, true)
+  }
+
+  renderLogo = () => {
+    if(this.props.lightTheme){
+        return(<LogoDark width={wp(14)} height={wp(14)}/>)
+    }else{
+        return(<Logo width={wp(14)} height={wp(14)}/>)
+    }
+  }
+
+  render () {
+    return (
+        <View style={{flex:1}}>
+          <SafeAreaView style={styles.header} />
+      <SafeAreaView style={[styles.container, this.state.page===1?styles.containerWithGray:null]} >
+        <Swiper ref={'swiper'} showsPagination={false} autoplay={false} loop={false} scrollEnabled={false} showsButtons={false}>
+          {!this.props.migrateMode&&<View style={{flex:1, justifyContent:'space-around',alignItems:'center', backgroundColor: 'rgba(0, 0, 0, 0.0)'}}>
+          
+            <View style={styles.logoContainer}>
+              {this.renderLogo()}
+              <Text style={this.props.lightTheme?styles.textBoldLight:styles.textBold}>{AppConfig.coinName.toUpperCase()}</Text>
+            </View>
+            <View style={{alignItems:'center'}}>
+              <Text style={this.props.lightTheme?styles.textBoldLight2:styles.textBold2}>{I18n.t('unchained').toUpperCase()}</Text>
+            </View>
+            <Button label={I18n.t('open')} arrow onPress={()=>{this.setState({page: 1});this.next()}}/>
+          </View>}
+          {!this.props.migrateMode&&<PINCode status={'choose'}
+                 finishProcess={()=>{this.setState({page: 2});this.next()}}
+                 lightTheme={this.props.lightTheme}
+        />}
+          {!this.props.migrateMode&&<View style={styles.accountSetupPage}>
+            <Image source={AccountOptions} style={styles.accountIcon} resizeMode={'stretch'}/>
+            <Text style={styles.accountTitle}>{I18n.t('welcomeAboard')}</Text>
+            <Text style={styles.accountSubTitle}>{I18n.t('firstStartWallet')}</Text>
+            <Button label={I18n.t('importMnemonic')+ " BIP32 ("+I18n.t('oldFormat')+")"} notfilled onPress={()=>{this.canGoBack=true;this.setState({page: 3});this.next()}} style={styles.accountButton}/>
+            <Button label={I18n.t('importMnemonic')+ " BIP44 ("+I18n.t('newFormat')+")"} notfilled onPress={()=>{this.canGoBack=true;this.setState({page: 3});this.next()}} style={styles.accountButton}/>
+            <Button label={I18n.t('newWallet')} onPress={()=>{this.canGoBack=true;this.setState({page: 2});this.next()}} style={styles.accountButton}/>
+          </View>}
+          {!this.props.migrateMode&&this.state.page===2&&<View style={{flex:1,alignItems:'center'}}>
+            {this.renderBackIcon()}
+            <Image source={SecurityIcon} style={styles.securityIconCheck} resizeMode={'stretch'}/>
+            <Text style={styles.accountTitle}>{I18n.t('protectYourWallet')}</Text>
+            <Text  style={styles.newMnemonicSubTitle}>{I18n.t('protectLongText')}</Text>
+            <View style={styles.mnemonicContainer}>
+              <View style={styles.mnemonicContainerInner}>{this.state.mnemonic.split(' ').slice(0,4).map(word=>(<Text style={styles.mnemonicBold}>{word}</Text>))}</View>
+              <View style={styles.mnemonicContainerInner}>{this.state.mnemonic.split(' ').slice(4,8).map(word=>(<Text style={styles.mnemonicBold}>{word}</Text>))}</View>
+              <View style={styles.mnemonicContainerInner}>{this.state.mnemonic.split(' ').slice(8).map(word=>(<Text style={styles.mnemonicBold}>{word}</Text>))}</View>
+            </View>
+
+            <Button label={I18n.t('next')} arrow onPress={this.next}/>
+          </View>}
+          {(this.props.migrateMode||this.state.page===3)&&<KeyboardAwareScrollView bounces={false} automaticallyAdjustContentInsets={false} contentContainerStyle={{flexGrow: 1}} getTextInputRefs={() => { return [this._textInputRef];}}>
+            <View style={[styles.privateKeyPageContainer, Platform.OS!=='ios'?{height:Dimensions.get('window').height-StatusBar.currentHeight}:null]}>
+              <View style={styles.privateKeyPageInnerContainer}>
+              {this.renderBackIcon()}
+                <Image source={SecurityIcon} style={styles.securityIconPrivKey} resizeMode={'stretch'}/>
+                <Text style={styles.accountTitle}>{I18n.t('importYourMnemonics')}</Text>
+                {this.props.migrateMode&&<Text style={styles.mnemonicCheckSubTitle}>{I18n.t('walletMigrate')}</Text>}
+                <Text style={styles.mnemonicCheckSubTitle}>{I18n.t('ifYouHaveMnemonic')}</Text>
+              </View>
+              <View style={styles.mnemonicContainer}>
+                <View style={styles.mnemonicContainerInner}>{this.renderMnemonicWordInput(1)}{this.renderMnemonicWordInput(2)}{this.renderMnemonicWordInput(3)}</View>
+                <View style={styles.mnemonicContainerInner}>{this.renderMnemonicWordInput(4)}{this.renderMnemonicWordInput(5)}{this.renderMnemonicWordInput(6)}</View>
+                <View style={styles.mnemonicContainerInner}>{this.renderMnemonicWordInput(7)}{this.renderMnemonicWordInput(8)}{this.renderMnemonicWordInput(9)}</View>
+                <View style={styles.mnemonicContainerInner}>{this.renderMnemonicWordInput(10)}{this.renderMnemonicWordInput(11)}{this.renderMnemonicWordInput(12)}</View>
+              </View>
+              <Button label={I18n.t('next')} arrow onPress={this.importMnemonic}/>
+            </View>
+          </KeyboardAwareScrollView>
+          }
+          {this.state.page===4&&<KeyboardAwareScrollView bounces={false} automaticallyAdjustContentInsets={false} contentContainerStyle={{flexGrow: 1}} getTextInputRefs={() => { return [this._textInputRef];}}>
+          <View style={[styles.privateKeyPageContainer, Platform.OS!=='ios'?{height:Dimensions.get('window').height-StatusBar.currentHeight}:null]}>
+            {this.renderBackIcon()}
+            <View style={styles.privateKeyPageInnerContainer}>
+            <Image source={SecurityIcon} style={styles.securityIconPrivKey} resizeMode={'stretch'}/>
+            <Text style={styles.accountTitle}>{I18n.t('enterPrivkey')}</Text>
+            <Text style={styles.mnemonicCheckSubTitle}>{I18n.t('enterPrivKeyBelow')}</Text>
+            </View>
+            <TextInput editable placeholder={I18n.t('typeHere')} style={styles.textInputLong}
+                       onChangeText={(text)=>{this.setState({privateKey:text})}}
+                       placeholderTextColor = "#a2a5b7"
+                       ref={(r) => { this._textInputRef = r; }}/>
+            <Button label={I18n.t('next')} arrow onPress={this.importPrivateKey}/>
+          </View>
+          </KeyboardAwareScrollView>
+          }
+          {this.state.page===5&&
+          <KeyboardAwareScrollView bounces={false} automaticallyAdjustContentInsets={false} contentContainerStyle={{flexGrow:1}} getTextInputRefs={() => { return [this._textInputRef,this._textInputRef2,this._textInputRef3,this._textInputRef4];}}>
+            <View style={[styles.importSinKeyFileContainer, Platform.OS!=='ios'?{height:Dimensions.get('window').height-StatusBar.currentHeight}:null]}>
+              {this.renderBackIcon()}
+              <View  style={styles.importSinKeyFileInnerContainer}>
+            <Image source={SecurityIcon} style={styles.securityIconSinFile} resizeMode={'stretch'}/>
+            <Text style={styles.accountTitle}>{I18n.t('importYourKeyfile')}</Text>
+              </View>
+            <View>
+            <Text style={styles.sinFileImportText}>cipherTxt:</Text>
+            <TextInput editable  placeholder={I18n.t('typeHere')} style={styles.textInputLong}
+                       onChangeText={(text)=>{this.setState({cipherTxt:text})}}
+                       placeholderTextColor = "#a2a5b7"
+                       ref={(r) => { this._textInputRef = r; }}
+                       blurOnSubmit={false}
+                       onSubmitEditing={() => { this._textInputRef2.focus(); }}/>
+            <Text style={styles.sinFileImportText}>vSalt:</Text>
+            <TextInput editable  placeholder={I18n.t('typeHere')} style={styles.textInputLong}
+                       onChangeText={(text)=>{this.setState({vSalt:text})}}
+                       placeholderTextColor = "#a2a5b7"
+                       ref={(r) => { this._textInputRef2 = r; }}
+                       blurOnSubmit={false}
+                       onSubmitEditing={() => { this._textInputRef3.focus(); }}/>
+            <Text style={styles.sinFileImportText}>Rounds:</Text>
+            <TextInput editable  placeholder={I18n.t('typeHere')} style={styles.textInputLong}
+                       onChangeText={(text)=>{this.setState({rounds:text})}}
+                       placeholderTextColor = "#a2a5b7"
+                       ref={(r) => { this._textInputRef3 = r; }}
+                       blurOnSubmit={false}
+                       keyboardType={'number-pad'}
+                       onSubmitEditing={() => { this._textInputRef4.focus(); }}/>
+            <Text style={styles.sinFileImportText}>{I18n.t('passphrase')}</Text>
+            <TextInput editable placeholder={I18n.t('typeHere')} style={styles.textInputLong}
+                       onChangeText={(text)=>{this.setState({passphrase:text})}}
+                       placeholderTextColor = "#a2a5b7"
+                       ref={(r) => { this._textInputRef4 = r; }}
+                       secureTextEntry={true}/>
+            </View>
+            <Button label={I18n.t('next')} arrow onPress={this.importSINKeyfile}/>
+          </View>
+          </KeyboardAwareScrollView>}
+          <ScrollView bounces={false}>
+          <View style={{flex:1,alignItems:'center'}}>
+            <Image source={SecurityIcon} style={styles.securityIconCheckSmall} resizeMode={'stretch'}/>
+            <Text style={styles.accountTitle}>{I18n.t('oneLastStep')}</Text>
+            <Text style={styles.mnemonicCheckSubTitle}>{I18n.t('pleaseEnterMnemonic')}</Text>
+            <View style={styles.wordsContainer}>
+            {this.state.mnemonicSelection.split(' ').map((value, index)=>{
+
+              return (<TouchableOpacity onPress={()=>{!this.addedWords.find(aw=>{return aw===index})>=0?this.addWord(value, index):null}} style={[styles.wordContainer,this.addedWords.find(aw=>{return aw===index})>=0?styles.wordContainerSelected:null]}><Text style={[styles.word,this.addedWords.find(aw=>{return aw===index})>=0?styles.wordSelected:null]}>{value}</Text></TouchableOpacity>)
+            })}
+            </View>
+            <View style={styles.mnemonicCheckContainer}>
+              <View style={styles.mnemonicCheckInnerContainer}>
+              {this.state.mnemonic.split(' ').slice(0,4).map((word,index)=>(
+                  <TouchableWithoutFeedback onPress={()=>this.removeWord(index)}>
+                    <View pointerEvents='box-only'>
+                  <TextInput editable={false} style={styles.textInputCheck}
+                             value={this.state.mnemonicCheck.split(' ')[index]==='-'?'':this.state.mnemonicCheck.split(' ')[index]}/>
+                    </View>
+                  </TouchableWithoutFeedback>
+              ))}
+              </View>
+              <View style={styles.mnemonicCheckInnerContainer}>
+                {this.state.mnemonic.split(' ').slice(4,8).map((word,index)=>(
+                    <TouchableWithoutFeedback onPress={()=>this.removeWord(index+4)}>
+                      <View pointerEvents='box-only'>
+                    <TextInput editable={false} style={styles.textInputCheck}
+                               value={this.state.mnemonicCheck.split(' ')[index+4]==='-'?'':this.state.mnemonicCheck.split(' ')[index+4]}/>
+                      </View>
+                    </TouchableWithoutFeedback>
+
+                ))}
+              </View>
+              <View style={styles.mnemonicCheckInnerContainer}>
+                {this.state.mnemonic.split(' ').slice(8).map((word,index)=>(
+                  <TouchableWithoutFeedback onPress={()=>this.removeWord(index+8)}>
+                  <View pointerEvents='box-only'>
+                  <TextInput editable={false} style={styles.textInputCheck}
+                               value={this.state.mnemonicCheck.split(' ')[index+8]==='-'?'':this.state.mnemonicCheck.split(' ')[index+8]}/>
+                  </View>
+                  </TouchableWithoutFeedback>
+
+                ))}
+              </View>
+
+            </View>
+            <Button label={I18n.t('next')} arrow onPress={this.checkMnemonic} style={styles.buttonCheck}/>
+          </View>
+          </ScrollView>
+        </Swiper>
+      </SafeAreaView>
+        </View>
+    )
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    addresses: AccountSelectors.getAddresses(state)
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    generateAddressFromMnemonic: (mnemonic, callback) => dispatch(AccountActions.generateAddressFromMnemonic(mnemonic, callback)),
+    migrateFromMnemonic: (mnemonic, creds, callback) => dispatch(AccountActions.migrateFromMnemonic(mnemonic, creds, callback)),
+    getAddressFromPrivKey: (privateKey, callback) => dispatch(AccountActions.getAddressFromPrivKey(privateKey, callback)),
+    getAddressFromSinFile: (cipherTxt, vSalt, rounds, passphrase, callback) => dispatch(AccountActions.getAddressFromSinFile(cipherTxt, vSalt, rounds, passphrase, callback)),
+    startup: () => dispatch(StartupActions.startup()),
+
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(IntroScreen)
