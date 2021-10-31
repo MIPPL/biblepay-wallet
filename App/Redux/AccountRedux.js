@@ -173,7 +173,7 @@ function generateHDAddresses( mnemonic, derivationPath, startIndex, numAddresses
     if (startIndex==0 && encryptedMnemonic=='') {
       throw new Error('AccountRedux::generateHDAddresses: must provide encryptedMnemonic when startIndex is 0.')
     }
-
+console.log("generateHDAddresses START #" + derivationPath + "#");
     var seed = bip39.mnemonicToSeed(mnemonic);
     const masterKey = HDKey.parseMasterSeed(seed);
     const extAccountPrivKey = masterKey.derive(derivationPath+"0").extendedPrivateKey;
@@ -195,6 +195,9 @@ function generateHDAddresses( mnemonic, derivationPath, startIndex, numAddresses
       if (encryptedMnemonic!='' && i==0)  {
         encryptedAccountPrivKey = encryptedMnemonic;
       }
+console.log("generateHDAddresses ACCOUNT :" + hdAccountAddress.toString());
+console.log("generateHDAddresses CHANGE  :" + hdChangeAddress.toString());
+
       hdAddresses.push( { address: hdAccountAddress.toString(), encryptedPrivKey:encryptedAccountPrivKey, balance: 0, transactions: [], index: i} );
       hdAddresses.push( { address: hdChangeAddress.toString() , encryptedPrivKey:'', balance: 0, transactions: [], index: i} );
     }
@@ -206,107 +209,33 @@ export const genAddFromMn =  (state = INITIAL_STATE, action) => {
 
   if(mnemonic.split(' ').length===12){
     // address structure: 
-    //  0 = legacy address (hash of mnemonic)
-    //  n+1 (odd) = HD wallet account addresses
-    //  n+2 (even) = HD wallet change addresses
+    //  0..2n (even) = HD wallet account addresses
+    //  1..2n+1 (odd) = HD wallet change addresses
     var allAddresses = [];
-
-    // legacy address
-    var value = Buffer.from(mnemonic);
-    var hash = bitcore.crypto.Hash.sha256(value);
-    var bn = bitcore.crypto.BN.fromBuffer(hash);
-
-    const privKey = new bitcore.PrivateKey(bn)
-    var address = privKey.toAddress().toString();
 
     const key = crypto.randomBytes(32);
     const iv = crypto.randomBytes(16);
 
-    const encryptedKey = encrypt(privKey.toWIF(), key, iv)
-    Keychain.setInternetCredentials(encryptedKey.encryptedData,encryptedKey.iv,encryptedKey.key)
-    
-    allAddresses.push({address,encryptedPrivKey:encryptedKey.encryptedData, balance: 0, transactions: [], index: -1 });
-    
     // HD addresses
     const encryptedMnemonic = encrypt(mnemonic, key, iv)
-    var hdAddresses = generateHDAddresses( mnemonic, state.derivationPath, 0, 10, encryptedMnemonic.encryptedData);
-
-    allAddresses = [...allAddresses, ...hdAddresses]
+    var allAddresses = generateHDAddresses( mnemonic, state.derivationPath, 0, 10, encryptedMnemonic.encryptedData);
 
     // store encrypted seed data (to generate more addresses to the pool if required later)
     Keychain.setInternetCredentials(encryptedMnemonic.encryptedData,encryptedKey.iv,encryptedKey.key)
 
     callback(false)
-    
+    return state.merge({
+      addresses: []
+    })
+    /*
     return state.merge({
       addresses: allAddresses
     })
+    */
   } else {
     callback(true)
     return state
   }
-}
-
-export const genAddFromPriv = (state = INITIAL_STATE, action) => {
-
-  const {privateKey, callback} = action
-
-  try {
-    var address = new bitcore.PrivateKey(privateKey).toAddress().toString();
-
-    const key = crypto.randomBytes(32);
-    const iv = crypto.randomBytes(16);
-
-    const encryptedKey = encrypt(privateKey, key, iv)
-
-    Keychain.setInternetCredentials(encryptedKey.encryptedData,encryptedKey.iv,encryptedKey.key)
-
-    callback(false)
-
-    return state.merge({
-      addresses: [{address,encryptedPrivKey:encryptedKey.encryptedData, balance: 0, transactions: []},...state.addresses]
-    })
-
-  }catch(e){
-    callback(true)
-    return state
-  }
-
-
-}
-
-export const genAddFromSinFile = (state = INITIAL_STATE, action) => {
-
-  const {cipherTxt, vSalt, rounds, passphrase, callback} = action
-
-
-  try {
-    const bn = bitcore.PrivateKey.fromEncrypted(cipherTxt, vSalt, rounds, passphrase)
-
-    const address = bn.toAddress().toString()
-
-    const privateKey = bn.toWIF()
-
-    const key = crypto.randomBytes(32);
-
-    const iv = crypto.randomBytes(16);
-
-    const encryptedKey = encrypt(privateKey, key, iv)
-
-    Keychain.setInternetCredentials(encryptedKey.encryptedData,encryptedKey.iv,encryptedKey.key)
-
-    callback(false)
-
-    return state.merge({
-      addresses: [{address,encryptedPrivKey:encryptedKey.encryptedData, balance: 0, transactions: []},...state.addresses]
-    })
-
-  }catch(e){
-    callback(true)
-    return state
-  }
-
-
 }
 
 export const fetchAddInfo = (state = INITIAL_STATE, action) => {
@@ -411,7 +340,7 @@ export const generateNewAddr = (state = INITIAL_STATE, action) => {
 
     var decryptedMnemonic = decrypt({encryptedData:addresses[0].encryptedPrivKey, iv: creds.username, key: creds.password})
     var start = (state.addresses.length-1)/2;
-    var hdAddresses = generateHDAddresses( decryptedMnemonic, start, 10, '');
+    var hdAddresses = generateHDAddresses( decryptedMnemonic, start, 50, '');
     callback(false)
   } 
   catch(e){
@@ -442,8 +371,6 @@ export const resetAddUtxo = (state = INITIAL_STATE, action) => {
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.GENERATE_ADDRESS_FROM_MNEMONIC]: genAddFromMn,
-  [Types.GET_ADDRESS_FROM_PRIV_KEY]: genAddFromPriv,
-  [Types.GET_ADDRESS_FROM_SIN_FILE]: genAddFromSinFile,
   [Types.FETCH_ADDRESS_INFO]: fetchAddInfo,
   [Types.SUCCESS_FETCH_ADDRESS_INFO]: successFetchAddInfo,
   [Types.FETCH_ADDRESS_UTXO]: fetchAddUtxo,

@@ -32,7 +32,7 @@ import Swiper from 'react-native-swiper'
 import Button from '../Components/Button'
 
 import bip39 from 'react-native-bip39'
-
+import Bip39Tools from '../Bip39Tools'
 import { startApp } from '../Navigation/index';
 
 import Logo from '../Images/biblepay.svg';
@@ -55,6 +55,10 @@ import * as Keychain from "react-native-keychain";
 import AppConfig from '../Config/AppConfig';
 
 class IntroScreen extends Component {
+
+  BIP32_DERIVATION_PATH = "m/0'/";
+  BIP44_DERIVATION_PATH = "m/44'/"+AppConfig.BIP44Code+"'/0'/";
+
   state = {
     mnemonic: '',
     mnemonicWords: ['','','','','','','','','','','',''],
@@ -68,7 +72,8 @@ class IntroScreen extends Component {
     cipherTxt: '',
     vSalt: '',
     rounds: '',
-    passphrase: ''
+    passphrase: '',
+    derivationPath: ''
   }
 
   canGoBack=false
@@ -122,6 +127,7 @@ class IntroScreen extends Component {
 
   checkMnemonic = () => {
     if(this.state.mnemonic===this.state.mnemonicCheck) {
+      this.props.setDerivationPath(this.state.derivationPath);
       this.props.generateAddressFromMnemonic(this.state.mnemonic, (error)=>{
         if(!error){
           setTimeout(()=>{
@@ -237,51 +243,6 @@ class IntroScreen extends Component {
       }
   }
 
-  importPrivateKey = () => {
-    this.props.getAddressFromPrivKey(this.state.privateKey, (error)=>{
-      if(error){
-        Alert.alert(
-            I18n.t('error'),
-            I18n.t('privkeyInvalid'),
-            [
-              {text: I18n.t('dismiss')},
-            ],
-            {cancelable: false},
-        )
-      } else {
-        setTimeout(()=>{
-          this.props.startup()
-        },200)
-        if(this.backhandler)
-          this.backhandler.remove()
-        startApp()
-      }
-    })
-  }
-
-  importSINKeyfile = () => {
-    this.props.getAddressFromSinFile(this.state.cipherTxt, this.state.vSalt, this.state.rounds, this.state.passphrase, (error)=>{
-      if(error){
-        Alert.alert(
-            I18n.t('error'),
-            I18n.t('dataInvalid'),
-            [
-              {text: I18n.t('dismiss')},
-            ],
-            {cancelable: false},
-        )
-      } else {
-        setTimeout(()=>{
-          this.props.startup()
-        },200)
-        if(this.backhandler)
-          this.backhandler.remove()
-        startApp()
-      }
-
-    })
-  }
-
   renderMnemonicWordInput = (n) => {
     return ( <TextInput editable placeholder={I18n.t('word')+' #'+n} 
                        style={(this.state.mnemonicState[n-1]==1)?styles.mnemonicError:(this.state.mnemonicFocusedIndex==(n-1))?styles.mnemonicFocus:styles.mnemonic} 
@@ -313,7 +274,7 @@ class IntroScreen extends Component {
     wordsArray[n] = word;
     var wordsStatus = this.state.mnemonicState;
     wordsStatus[n] = (this.checkBIP39Word(word))?0:1;
-
+console.log("wl"+wordsArray)
     var mnemonic = wordsArray.join(' ');
     this.setState( {mnemonicWords: wordsArray, 
                     mnemonicState: wordsStatus,
@@ -321,7 +282,19 @@ class IntroScreen extends Component {
   }
 
   checkBIP39Word = (word) =>  {
-    return (word=='' || bip39.wordlists.EN.indexOf(word)!==-1);
+    arr = ['ábaco',
+    'abdomen',
+    'abeja'];
+    obj = {
+      1: 'ábaco'
+    }
+    obj2 = { ...arr }
+    console.log("@@@wordlist "+ obj2[0] + ',' + Object.values(obj)[0] + ',' + word + ',' + Bip39Tools.wordlists.ES.habil);
+    //console.log("@@@wordlist "+ Test.amount + ',' + word + ',' + Bip39Tools.wordlists.ES.indexOf(word) + ','+ Bip39Tools.wordlists.ES[843] );
+    return (word=='' 
+          || Bip39Tools.wordlists.EN.indexOf(word)!==-1
+          || Bip39Tools.wordlists.ES.indexOf(word)!==-1 
+        );
   }
 
   renderBackIcon = () =>  {
@@ -354,7 +327,7 @@ class IntroScreen extends Component {
       <SafeAreaView style={[styles.container, this.state.page===1?styles.containerWithGray:null]} >
         <Swiper ref={'swiper'} showsPagination={false} autoplay={false} loop={false} scrollEnabled={false} showsButtons={false}>
           {!this.props.migrateMode&&<View style={{flex:1, justifyContent:'space-around',alignItems:'center', backgroundColor: 'rgba(0, 0, 0, 0.0)'}}>
-          
+        
             <View style={styles.logoContainer}>
               {this.renderLogo()}
               <Text style={this.props.lightTheme?styles.textBoldLight:styles.textBold}>{AppConfig.coinName.toUpperCase()}</Text>
@@ -372,8 +345,8 @@ class IntroScreen extends Component {
             <Image source={AccountOptions} style={styles.accountIcon} resizeMode={'stretch'}/>
             <Text style={styles.accountTitle}>{I18n.t('welcomeAboard')}</Text>
             <Text style={styles.accountSubTitle}>{I18n.t('firstStartWallet')}</Text>
-            <Button label={I18n.t('importMnemonic')+ " BIP32 ("+I18n.t('oldFormat')+")"} notfilled onPress={()=>{this.canGoBack=true;this.setState({page: 3});this.next()}} style={styles.accountButton}/>
-            <Button label={I18n.t('importMnemonic')+ " BIP44 ("+I18n.t('newFormat')+")"} notfilled onPress={()=>{this.canGoBack=true;this.setState({page: 3});this.next()}} style={styles.accountButton}/>
+            <Button label={I18n.t('importMnemonic')+ " BIP32 ("+I18n.t('oldFormat')+")"} notfilled onPress={()=>{this.canGoBack=true;this.setState({page: 3, derivationPath: this.BIP32_DERIVATION_PATH });this.next()}} style={styles.accountButton}/>
+            <Button label={I18n.t('importMnemonic')+ " BIP44 ("+I18n.t('newFormat')+")"} notfilled onPress={()=>{this.canGoBack=true;this.setState({page: 3, derivationPath: this.BIP44_DERIVATION_PATH });this.next()}} style={styles.accountButton}/>
             <Button label={I18n.t('newWallet')} onPress={()=>{this.canGoBack=true;this.setState({page: 2});this.next()}} style={styles.accountButton}/>
           </View>}
           {!this.props.migrateMode&&this.state.page===2&&<View style={{flex:1,alignItems:'center'}}>
@@ -531,8 +504,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     generateAddressFromMnemonic: (mnemonic, callback) => dispatch(AccountActions.generateAddressFromMnemonic(mnemonic, callback)),
     migrateFromMnemonic: (mnemonic, creds, callback) => dispatch(AccountActions.migrateFromMnemonic(mnemonic, creds, callback)),
-    getAddressFromPrivKey: (privateKey, callback) => dispatch(AccountActions.getAddressFromPrivKey(privateKey, callback)),
-    getAddressFromSinFile: (cipherTxt, vSalt, rounds, passphrase, callback) => dispatch(AccountActions.getAddressFromSinFile(cipherTxt, vSalt, rounds, passphrase, callback)),
+    setDerivationPath: (path) => dispatch(AccountActions.setDerivationPath(path)),
     startup: () => dispatch(StartupActions.startup()),
 
   }
