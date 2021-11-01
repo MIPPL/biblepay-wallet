@@ -18,8 +18,6 @@ const crypto = require('crypto');
 
 const { Types, Creators } = createActions({
   generateAddressFromMnemonic: ['mnemonic', 'callback'],
-  getAddressFromPrivKey: ['privateKey', 'callback'],
-  getAddressFromSinFile: ['cipherTxt', 'vSalt', 'rounds', 'passphrase', 'callback'],
   fetchAddressInfo: ['address'],
   successFetchAddressInfo: ['address', 'balance', 'unconfirmedBalance', 'transactions'],
   fetchAddressUtxo: ['address'],
@@ -142,8 +140,13 @@ export const AccountSelectors = {
     //console.log('getUtxos account:' + state.account.utxo.length + ', ret: '+utxos.length);
     return utxos
   },
-  getUnsendTx: state => state.account.unsendTx
-
+  getUnsendTx: state => state.account.unsendTx,
+  getAccountAddress: state => {
+    return state.account.addresses.find( (item, index) => { return item.transactions.length==0 && (index%2)==0; })
+  },
+  getChangeAddress: state =>  {
+    return state.account.addresses.find( (item, index) => { return item.transactions.length==0 && (index%2)==1; })
+  } 
 }
 
 /* ------------- Reducers ------------- */
@@ -173,7 +176,7 @@ function generateHDAddresses( mnemonic, derivationPath, startIndex, numAddresses
     if (startIndex==0 && encryptedMnemonic=='') {
       throw new Error('AccountRedux::generateHDAddresses: must provide encryptedMnemonic when startIndex is 0.')
     }
-console.log("generateHDAddresses START #" + derivationPath + "#");
+
     var seed = bip39.mnemonicToSeed(mnemonic);
     const masterKey = HDKey.parseMasterSeed(seed);
     const extAccountPrivKey = masterKey.derive(derivationPath+"0").extendedPrivateKey;
@@ -195,8 +198,9 @@ console.log("generateHDAddresses START #" + derivationPath + "#");
       if (encryptedMnemonic!='' && i==0)  {
         encryptedAccountPrivKey = encryptedMnemonic;
       }
-console.log("generateHDAddresses ACCOUNT :" + hdAccountAddress.toString());
-console.log("generateHDAddresses CHANGE  :" + hdChangeAddress.toString());
+
+console.log('@@ NEW Account address ['+i+']: ' + hdAccountAddress.toString());
+console.log('@@ NEW Change address ['+i+']: ' + hdChangeAddress.toString());
 
       hdAddresses.push( { address: hdAccountAddress.toString(), encryptedPrivKey:encryptedAccountPrivKey, balance: 0, transactions: [], index: i} );
       hdAddresses.push( { address: hdChangeAddress.toString() , encryptedPrivKey:'', balance: 0, transactions: [], index: i} );
@@ -218,20 +222,14 @@ export const genAddFromMn =  (state = INITIAL_STATE, action) => {
 
     // HD addresses
     const encryptedMnemonic = encrypt(mnemonic, key, iv)
-    var allAddresses = generateHDAddresses( mnemonic, state.derivationPath, 0, 10, encryptedMnemonic.encryptedData);
-
+    var allAddresses = generateHDAddresses( mnemonic, state.derivationPath, 0, 20, encryptedMnemonic.encryptedData);
     // store encrypted seed data (to generate more addresses to the pool if required later)
-    Keychain.setInternetCredentials(encryptedMnemonic.encryptedData,encryptedKey.iv,encryptedKey.key)
+    Keychain.setInternetCredentials(encryptedMnemonic.encryptedData,encryptedMnemonic.iv,encryptedMnemonic.key)
 
     callback(false)
     return state.merge({
-      addresses: []
-    })
-    /*
-    return state.merge({
       addresses: allAddresses
     })
-    */
   } else {
     callback(true)
     return state
@@ -336,14 +334,17 @@ export const generateNewAddr = (state = INITIAL_STATE, action) => {
   }
 
   try {
-    const creds = Keychain.getInternetCredentials(state.addresses[1].encryptedPrivKey)
+    const creds = Keychain.getInternetCredentials(state.addresses[0].encryptedPrivKey)
+console.log('@@ data '+ JSON.stringify(creds));
+    var decryptedMnemonic = decrypt({encryptedData:state.addresses[0].encryptedPrivKey, iv: creds.username, key: creds.password})
+    var start = (state.addresses.length)/2;
+console.log('@@ generate '+ decryptedMnemonic);
 
-    var decryptedMnemonic = decrypt({encryptedData:addresses[0].encryptedPrivKey, iv: creds.username, key: creds.password})
-    var start = (state.addresses.length-1)/2;
-    var hdAddresses = generateHDAddresses( decryptedMnemonic, start, 50, '');
+    var hdAddresses = generateHDAddresses( decryptedMnemonic, start, 20, '');
     callback(false)
   } 
   catch(e){
+    console.log(e.message)
     callback(true)
     return state
   }

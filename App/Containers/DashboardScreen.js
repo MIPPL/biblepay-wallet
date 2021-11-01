@@ -74,14 +74,6 @@ class DashboardScreen extends Component {
     componentDidAppear() {
         this.refresh()
 
-        // pre-load recent node list 
-        var nodeAddresses = this.props.addresses
-                .filter( addObj => addObj.transactions.length>0 && addObj.address!=this.props.addresses[0].address )
-                .map( addObj => addObj.address );
-
-        this.props.getNodeInfo( nodeAddresses , ( success, strmessage ) => {
-        });
-
         if(Platform.OS==='android')
             this.backhandler=BackHandler.addEventListener('hardwareBackPress', () => {
                 if(!this.didPressOnce){
@@ -95,8 +87,22 @@ class DashboardScreen extends Component {
                 }
 
             });
-
+        
+        // check if enough account/change addresses are available. If not, create new ones.
+        if (  typeof this.props.accountAddress === 'undefined'
+        ||    typeof this.props.changeAddress === 'undefined' ) {
+          console.log("!! new addresses needed " + this.props.addresses.length);
+          this.props.generateNewAddresses( (error) => {
+            if (error)  {
+                console.log('!! error ' + error); 
+            }
+            else    {
+                console.log('!! success ' + this.props.addresses.length);
+            }
+          })
+        }
     }
+
     componentDidDisappear() {
         if(this.backhandler)
             this.backhandler.remove()
@@ -115,33 +121,19 @@ class DashboardScreen extends Component {
   }
 
   navToSend = () => {
-    /*
     Navigation.mergeOptions(this.props.componentId, {
         bottomTabs: {
-            currentTabIndex: 0
+            currentTabIndex: 1
         }
-    })
-    */
-    
-    Navigation.showModal( {component: {
-        name: 'SendScreen',
-            options: defaultOptions(this.props.lightTheme)
-        }})
+    })    
   }
   
   navToReceive = () => {
-    /*Navigation.mergeOptions(this.props.componentId, {
+    Navigation.mergeOptions(this.props.componentId, {
       bottomTabs: {
-          currentTabIndex: 1
+          currentTabIndex: 2
       }
-  })
-      */
-  
-    Navigation.showModal( {component: {
-        name: 'ReceiveScreen',
-            options: defaultOptions(this.props.lightTheme)
-        }})
-
+    })
   }
 
   render () {
@@ -207,7 +199,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
       fetchAddressInfo: ()=>dispatch(AccountActions.fetchAddressInfo()),
-      getStats: () => dispatch(NetworkActions.fetchNetworkStats())
+      getStats: () => dispatch(NetworkActions.fetchNetworkStats()),
+      generateNewAddresses: ( callback) => dispatch(AccountActions.generateNewAddresses(callback)),
   }
 }
 

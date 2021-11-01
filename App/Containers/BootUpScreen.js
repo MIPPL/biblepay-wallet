@@ -26,7 +26,7 @@ class BootUpScreen extends Component {
     if (typeof this.props.language !== 'undefined' && this.props.language!='')  {
       I18n.locale = this.props.language;
     }
-    //console.log('@@@ I18n.locale = ' +I18n.locale + '('+this.props.language+')');
+    //console.log('@@@ start = ' +this.props.addresses.length);
   
       if (!this.props.addresses.length) {
         preStartApp()

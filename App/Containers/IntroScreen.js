@@ -17,7 +17,7 @@ import {
     ScrollView,
     Keyboard
 } from 'react-native';
-
+import * as RNLocalize from 'react-native-localize';
 import { connect } from 'react-redux'
 
 // Styles
@@ -53,6 +53,7 @@ import I18n from '../I18n'
 import {GlobalSelectors} from '../Redux/GlobalRedux';
 import * as Keychain from "react-native-keychain";
 import AppConfig from '../Config/AppConfig';
+import { normalize } from 'path-browserify';
 
 class IntroScreen extends Component {
 
@@ -73,7 +74,7 @@ class IntroScreen extends Component {
     vSalt: '',
     rounds: '',
     passphrase: '',
-    derivationPath: ''
+    mnemonicLang : ''
   }
 
   canGoBack=false
@@ -119,7 +120,13 @@ class IntroScreen extends Component {
 
   generateMnemonic = async (strength) => {
     try {
-      return await bip39.generateMnemonic(strength) // means 12 words
+      const locales = RNLocalize.getLocales();
+      var languageCode = 'EN';
+      if (Array.isArray(locales)) {
+        languageCode = locales[0].languageCode.toUpperCase();
+      }
+      wordlist = Bip39Tools.getWordListForLocale( languageCode );
+      return await bip39.generateMnemonic(strength, null, wordlist) // 128 means 12 words
     } catch(e) {
       return null
     }
@@ -127,7 +134,6 @@ class IntroScreen extends Component {
 
   checkMnemonic = () => {
     if(this.state.mnemonic===this.state.mnemonicCheck) {
-      this.props.setDerivationPath(this.state.derivationPath);
       this.props.generateAddressFromMnemonic(this.state.mnemonic, (error)=>{
         if(!error){
           setTimeout(()=>{
@@ -148,57 +154,31 @@ class IntroScreen extends Component {
   }
 
   importMnemonic = () => {
-    if(this.state.importMnemonic && bip39.validateMnemonic(this.state.importMnemonic)) {
-      if (this.props.migrateMode) { // migrate existing
-        Keychain.getInternetCredentials(this.props.addresses[0].encryptedPrivKey).then((creds)=>{
-          this.props.migrateFromMnemonic(this.state.importMnemonic, creds, (error, message) => {
-            if(error){
-              Alert.alert(
-                  I18n.t('error'),
-                  message,
-                  [
-                    {
-                      text: I18n.t('dismiss'),
-                      style: 'cancel',
-                    },
-                  ],
-                  {cancelable: false},
-              )
-            }else{
-              setTimeout(()=>{
-                if (this.props.onMigrateFinished) this.props.onMigrateFinished();
-                Navigation.dismissModal(this.props.componentId);
-              },200)
-              if(this.backhandler)
-                this.backhandler.remove()
-            }
-          })
-        })
-      }
-      else  {   // new wallet
-        this.props.generateAddressFromMnemonic(this.state.importMnemonic, (error) => {
-          if(error){
-            Alert.alert(
-                I18n.t('error'),
-                I18n.t('mnemonicInvalid'),
-                [
-                  {
-                    text: I18n.t('dismiss'),
-                    style: 'cancel',
-                  },
-                ],
-                {cancelable: false},
-            )
-          }else{
-            setTimeout(()=>{
-              this.props.startup()
-            },200)
-            if(this.backhandler)
-              this.backhandler.remove()
-            startApp()
-          }
-        })
-      }
+    var normalizedMnemonic = Bip39Tools.normalize(this.state.importMnemonic);
+    if(this.state.importMnemonic && bip39.validateMnemonic( normalizedMnemonic, Bip39Tools.getWordList( this.state.mnemonicLang ))) {
+        // new wallet
+      this.props.generateAddressFromMnemonic(normalizedMnemonic, (error) => {
+        if(error){
+          Alert.alert(
+              I18n.t('error'),
+              I18n.t('mnemonicInvalid'),
+              [
+                {
+                  text: I18n.t('dismiss'),
+                  style: 'cancel',
+                },
+              ],
+              {cancelable: false},
+          )
+        }else{
+          setTimeout(()=>{
+            this.props.startup()
+          },200)
+          if(this.backhandler)
+            this.backhandler.remove()
+          startApp()
+        }
+      })
     }
     else  {
       Alert.alert(
@@ -251,6 +231,7 @@ class IntroScreen extends Component {
                        onBlur={ () => {if (n==12) Keyboard.dismiss();this.setState({ mnemonicFocusedIndex: -1 }) } }
                        placeholderTextColor = "#a2a5b7"
                        autoCapitalize = 'none'
+                       value={ this.state.mnemonicWords[n-1] }
                        ref={(r) => { this._textInputRef = r; }}
                        />
           );
@@ -274,7 +255,6 @@ class IntroScreen extends Component {
     wordsArray[n] = word;
     var wordsStatus = this.state.mnemonicState;
     wordsStatus[n] = (this.checkBIP39Word(word))?0:1;
-console.log("wl"+wordsArray)
     var mnemonic = wordsArray.join(' ');
     this.setState( {mnemonicWords: wordsArray, 
                     mnemonicState: wordsStatus,
@@ -282,28 +262,30 @@ console.log("wl"+wordsArray)
   }
 
   checkBIP39Word = (word) =>  {
-    arr = ['ábaco',
-    'abdomen',
-    'abeja'];
-    obj = {
-      1: 'ábaco'
+    wordLang = Bip39Tools.isWordInWordlist(word);
+
+    //console.log('checkBIP39Word: ' + word + ',' + wordLang + ',' + this.state.mnemonicLang)
+    if (wordLang!=='')  {
+      if (this.state.mnemonicLang!=='')   {
+        if (this.state.mnemonicLang!=wordLang)     // language must be the same for all words
+              return false;
+        else  return true;
+      }
+      else  {
+        this.setState( { mnemonicLang: wordLang } );
+        return true;
+      }
     }
-    obj2 = { ...arr }
-    console.log("@@@wordlist "+ obj2[0] + ',' + Object.values(obj)[0] + ',' + word + ',' + Bip39Tools.wordlists.ES.habil);
-    //console.log("@@@wordlist "+ Test.amount + ',' + word + ',' + Bip39Tools.wordlists.ES.indexOf(word) + ','+ Bip39Tools.wordlists.ES[843] );
-    return (word=='' 
-          || Bip39Tools.wordlists.EN.indexOf(word)!==-1
-          || Bip39Tools.wordlists.ES.indexOf(word)!==-1 
-        );
+    else  {
+      if ( this.state.mnemonicWords.every( word => word=='' ) ) {
+        this.setState( { mnemonicLang: '' } );
+      }
+      return (word=='')?true:false;
+    }
   }
 
   renderBackIcon = () =>  {
-    if (this.props.migrateMode) {
-      return (  <Icon name="md-arrow-back" size={wp(10)} color="white" style={{height: wp(10), position: 'absolute', top: hp(2), left: hp(2)}} onPress={()=>Navigation.dismissModal(this.props.componentId)}/>)
-    }
-    else  {
       return (  <Icon name="md-arrow-back" size={wp(10)} color="white" style={{height: wp(10), position: 'absolute', top: hp(2), left: hp(2)}} onPress={this.goBack}/>)
-    }
   }
 
 
@@ -326,7 +308,7 @@ console.log("wl"+wordsArray)
           <SafeAreaView style={styles.header} />
       <SafeAreaView style={[styles.container, this.state.page===1?styles.containerWithGray:null]} >
         <Swiper ref={'swiper'} showsPagination={false} autoplay={false} loop={false} scrollEnabled={false} showsButtons={false}>
-          {!this.props.migrateMode&&<View style={{flex:1, justifyContent:'space-around',alignItems:'center', backgroundColor: 'rgba(0, 0, 0, 0.0)'}}>
+          <View style={{flex:1, justifyContent:'space-around',alignItems:'center', backgroundColor: 'rgba(0, 0, 0, 0.0)'}}>
         
             <View style={styles.logoContainer}>
               {this.renderLogo()}
@@ -336,20 +318,20 @@ console.log("wl"+wordsArray)
               <Text style={this.props.lightTheme?styles.textBoldLight2:styles.textBold2}>{I18n.t('unchained').toUpperCase()}</Text>
             </View>
             <Button label={I18n.t('open')} arrow onPress={()=>{this.setState({page: 1});this.next()}}/>
-          </View>}
-          {!this.props.migrateMode&&<PINCode status={'choose'}
+          </View>
+          <PINCode status={'choose'}
                  finishProcess={()=>{this.setState({page: 2});this.next()}}
                  lightTheme={this.props.lightTheme}
-        />}
-          {!this.props.migrateMode&&<View style={styles.accountSetupPage}>
+        />
+          <View style={styles.accountSetupPage}>
             <Image source={AccountOptions} style={styles.accountIcon} resizeMode={'stretch'}/>
             <Text style={styles.accountTitle}>{I18n.t('welcomeAboard')}</Text>
             <Text style={styles.accountSubTitle}>{I18n.t('firstStartWallet')}</Text>
-            <Button label={I18n.t('importMnemonic')+ " BIP32 ("+I18n.t('oldFormat')+")"} notfilled onPress={()=>{this.canGoBack=true;this.setState({page: 3, derivationPath: this.BIP32_DERIVATION_PATH });this.next()}} style={styles.accountButton}/>
-            <Button label={I18n.t('importMnemonic')+ " BIP44 ("+I18n.t('newFormat')+")"} notfilled onPress={()=>{this.canGoBack=true;this.setState({page: 3, derivationPath: this.BIP44_DERIVATION_PATH });this.next()}} style={styles.accountButton}/>
-            <Button label={I18n.t('newWallet')} onPress={()=>{this.canGoBack=true;this.setState({page: 2});this.next()}} style={styles.accountButton}/>
-          </View>}
-          {!this.props.migrateMode&&this.state.page===2&&<View style={{flex:1,alignItems:'center'}}>
+            <Button label={I18n.t('importMnemonic')+ " BIP32 ("+I18n.t('oldFormat')+")"} notfilled onPress={()=>{this.canGoBack=true;this.setState({page: 3});this.props.setDerivationPath(this.BIP32_DERIVATION_PATH);this.next()}} style={styles.accountButton}/>
+            <Button label={I18n.t('importMnemonic')+ " BIP44 ("+I18n.t('newFormat')+")"} notfilled onPress={()=>{this.canGoBack=true;this.setState({page: 3});this.props.setDerivationPath(this.BIP44_DERIVATION_PATH);this.next()}} style={styles.accountButton}/>
+            <Button label={I18n.t('newWallet')} onPress={()=>{this.canGoBack=true;this.setState({page: 2 });this.props.setDerivationPath(this.BIP44_DERIVATION_PATH);this.next()}} style={styles.accountButton}/>
+          </View>
+          {this.state.page===2&&<View style={{flex:1,alignItems:'center'}}>
             {this.renderBackIcon()}
             <Image source={SecurityIcon} style={styles.securityIconCheck} resizeMode={'stretch'}/>
             <Text style={styles.accountTitle}>{I18n.t('protectYourWallet')}</Text>
@@ -362,13 +344,12 @@ console.log("wl"+wordsArray)
 
             <Button label={I18n.t('next')} arrow onPress={this.next}/>
           </View>}
-          {(this.props.migrateMode||this.state.page===3)&&<KeyboardAwareScrollView bounces={false} automaticallyAdjustContentInsets={false} contentContainerStyle={{flexGrow: 1}} getTextInputRefs={() => { return [this._textInputRef];}}>
+          {this.state.page===3&&<KeyboardAwareScrollView bounces={false} automaticallyAdjustContentInsets={false} contentContainerStyle={{flexGrow: 1}} getTextInputRefs={() => { return [this._textInputRef];}}>
             <View style={[styles.privateKeyPageContainer, Platform.OS!=='ios'?{height:Dimensions.get('window').height-StatusBar.currentHeight}:null]}>
               <View style={styles.privateKeyPageInnerContainer}>
               {this.renderBackIcon()}
                 <Image source={SecurityIcon} style={styles.securityIconPrivKey} resizeMode={'stretch'}/>
                 <Text style={styles.accountTitle}>{I18n.t('importYourMnemonics')}</Text>
-                {this.props.migrateMode&&<Text style={styles.mnemonicCheckSubTitle}>{I18n.t('walletMigrate')}</Text>}
                 <Text style={styles.mnemonicCheckSubTitle}>{I18n.t('ifYouHaveMnemonic')}</Text>
               </View>
               <View style={styles.mnemonicContainer}>
@@ -381,63 +362,7 @@ console.log("wl"+wordsArray)
             </View>
           </KeyboardAwareScrollView>
           }
-          {this.state.page===4&&<KeyboardAwareScrollView bounces={false} automaticallyAdjustContentInsets={false} contentContainerStyle={{flexGrow: 1}} getTextInputRefs={() => { return [this._textInputRef];}}>
-          <View style={[styles.privateKeyPageContainer, Platform.OS!=='ios'?{height:Dimensions.get('window').height-StatusBar.currentHeight}:null]}>
-            {this.renderBackIcon()}
-            <View style={styles.privateKeyPageInnerContainer}>
-            <Image source={SecurityIcon} style={styles.securityIconPrivKey} resizeMode={'stretch'}/>
-            <Text style={styles.accountTitle}>{I18n.t('enterPrivkey')}</Text>
-            <Text style={styles.mnemonicCheckSubTitle}>{I18n.t('enterPrivKeyBelow')}</Text>
-            </View>
-            <TextInput editable placeholder={I18n.t('typeHere')} style={styles.textInputLong}
-                       onChangeText={(text)=>{this.setState({privateKey:text})}}
-                       placeholderTextColor = "#a2a5b7"
-                       ref={(r) => { this._textInputRef = r; }}/>
-            <Button label={I18n.t('next')} arrow onPress={this.importPrivateKey}/>
-          </View>
-          </KeyboardAwareScrollView>
-          }
-          {this.state.page===5&&
-          <KeyboardAwareScrollView bounces={false} automaticallyAdjustContentInsets={false} contentContainerStyle={{flexGrow:1}} getTextInputRefs={() => { return [this._textInputRef,this._textInputRef2,this._textInputRef3,this._textInputRef4];}}>
-            <View style={[styles.importSinKeyFileContainer, Platform.OS!=='ios'?{height:Dimensions.get('window').height-StatusBar.currentHeight}:null]}>
-              {this.renderBackIcon()}
-              <View  style={styles.importSinKeyFileInnerContainer}>
-            <Image source={SecurityIcon} style={styles.securityIconSinFile} resizeMode={'stretch'}/>
-            <Text style={styles.accountTitle}>{I18n.t('importYourKeyfile')}</Text>
-              </View>
-            <View>
-            <Text style={styles.sinFileImportText}>cipherTxt:</Text>
-            <TextInput editable  placeholder={I18n.t('typeHere')} style={styles.textInputLong}
-                       onChangeText={(text)=>{this.setState({cipherTxt:text})}}
-                       placeholderTextColor = "#a2a5b7"
-                       ref={(r) => { this._textInputRef = r; }}
-                       blurOnSubmit={false}
-                       onSubmitEditing={() => { this._textInputRef2.focus(); }}/>
-            <Text style={styles.sinFileImportText}>vSalt:</Text>
-            <TextInput editable  placeholder={I18n.t('typeHere')} style={styles.textInputLong}
-                       onChangeText={(text)=>{this.setState({vSalt:text})}}
-                       placeholderTextColor = "#a2a5b7"
-                       ref={(r) => { this._textInputRef2 = r; }}
-                       blurOnSubmit={false}
-                       onSubmitEditing={() => { this._textInputRef3.focus(); }}/>
-            <Text style={styles.sinFileImportText}>Rounds:</Text>
-            <TextInput editable  placeholder={I18n.t('typeHere')} style={styles.textInputLong}
-                       onChangeText={(text)=>{this.setState({rounds:text})}}
-                       placeholderTextColor = "#a2a5b7"
-                       ref={(r) => { this._textInputRef3 = r; }}
-                       blurOnSubmit={false}
-                       keyboardType={'number-pad'}
-                       onSubmitEditing={() => { this._textInputRef4.focus(); }}/>
-            <Text style={styles.sinFileImportText}>{I18n.t('passphrase')}</Text>
-            <TextInput editable placeholder={I18n.t('typeHere')} style={styles.textInputLong}
-                       onChangeText={(text)=>{this.setState({passphrase:text})}}
-                       placeholderTextColor = "#a2a5b7"
-                       ref={(r) => { this._textInputRef4 = r; }}
-                       secureTextEntry={true}/>
-            </View>
-            <Button label={I18n.t('next')} arrow onPress={this.importSINKeyfile}/>
-          </View>
-          </KeyboardAwareScrollView>}
+          
           <ScrollView bounces={false}>
           <View style={{flex:1,alignItems:'center'}}>
             <Image source={SecurityIcon} style={styles.securityIconCheckSmall} resizeMode={'stretch'}/>
@@ -496,7 +421,8 @@ console.log("wl"+wordsArray)
 
 const mapStateToProps = (state) => {
   return {
-    addresses: AccountSelectors.getAddresses(state)
+    addresses: AccountSelectors.getAddresses(state),
+    derivationPath: AccountSelectors.getDerivationPath(state)
   }
 }
 

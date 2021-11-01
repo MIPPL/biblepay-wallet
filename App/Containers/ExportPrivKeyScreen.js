@@ -34,7 +34,7 @@ const crypto = require('crypto');
 class ReceiveScreen extends Component {
 
   state = {
-    qrValue : 'sin:'+this.props.addresses[0].address,
+    qrValue : AppConfig.coinTicker.toLowerCase()+':'+this.props.addresses[0].address,
     copyText: I18n.t('copy'),
     privateKey: ''
   }
@@ -81,9 +81,9 @@ class ReceiveScreen extends Component {
 
   changeQrValue = (amount) => {
     if(parseFloat(amount)){
-      this.setState({qrValue : 'sin:'+this.props.addresses[0].address+'?amount='+parseFloat(amount)})
+      this.setState({qrValue : this.props.addresses[0].address+'?amount='+parseFloat(amount)})
     }else{
-      this.setState({qrValue : 'sin:'+this.props.addresses[0].address})
+      this.setState({qrValue : this.props.addresses[0].address})
     }
   }
 

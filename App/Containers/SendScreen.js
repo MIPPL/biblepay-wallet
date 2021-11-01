@@ -107,8 +107,8 @@ class SendScreen extends Component {
         if (result && result.data!='') {
 
             let withOutPrefix = '';
-            if (result.data.split('sin:').length == 2)
-                    withOutPrefix = result.data.split('sin:')[1];
+            if (result.data.split(AppConfig.coinTicker.toLowerCase()+':').length == 2)
+                    withOutPrefix = result.data.split(AppConfig.coinTicker.toLowerCase()+':')[1];
             else    withOutPrefix = result.data;
             
             let address;

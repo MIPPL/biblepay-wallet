@@ -37,7 +37,7 @@ import I18n from '../I18n'
 class ReceiveScreen extends Component {
 
   state = {
-    qrValue : 'sin:'+this.props.addresses[0].address,
+    qrValue : this.props.addresses[0].address,
     copyText: I18n.t('copy'),
     amount: null
   }
@@ -67,9 +67,9 @@ class ReceiveScreen extends Component {
 
   changeQrValue = (amount) => {
     if(parseFloat(amount)){
-      this.setState({qrValue : 'sin:'+this.props.addresses[0].address+'?amount='+parseFloat(amount)})
+      this.setState({qrValue : this.props.addresses[0].address+'?amount='+parseFloat(amount)})
     }else{
-      this.setState({qrValue : 'sin:'+this.props.addresses[0].address})
+      this.setState({qrValue : this.props.addresses[0].address})
     }
   }
 
@@ -159,7 +159,9 @@ const mapStateToProps = (state) => {
     balance: AccountSelectors.getBalance(state),
     addresses: AccountSelectors.getAddresses(state),
     stats: NetworkSelectors.getStats(state),
-    lightTheme: GlobalSelectors.getUseLightTheme(state)
+    lightTheme: GlobalSelectors.getUseLightTheme(state),
+    accountAddress: AccountSelectors.getAccountAddress(state),
+    changeAddress: AccountSelectors.getChangeAddress(state)
   }
 }
 
