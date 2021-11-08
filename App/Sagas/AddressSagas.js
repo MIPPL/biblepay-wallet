@@ -55,19 +55,16 @@ export function * getAddressInfo (action) {
 
 export function * getAddressUtxo (action) {
 
-  //const {address} = action
-
   const addresses = yield select(AccountSelectors.getAddresses)
 
   const url = yield select(GlobalSelectors.getBlockbookApi)
   const api = API.create(url)
 
   yield put(AccountActions.resetAddressUtxo())
-
+  
   var zeroCounter = 0;
   for(var i=0; i<addresses.length;i++)  {
     var address = addresses[i].address;
-//console.log('!!!getAddressUtxo:' + address + ', n='+addresses[i].transactions.length )    
     if (addresses[i].transactions.length==0)  {
       zeroCounter++;
     }
@@ -78,18 +75,24 @@ export function * getAddressUtxo (action) {
     if (zeroCounter>=6) // after 6 empty addresses, stop getting utxos
       break;
 
+    console.log('!!!getAddressUtxo:' + address + ',' + addresses.length);    
+
     const response = yield call(api.getUtxo, address)
 
     if (response.ok) {
       try {
         const addressUtxo = new AddressUtxo(response.data)
 
+      console.log('!!!getAddressUtxo SUCCESS:' + JSON.stringify(addressUtxo.data));    
+
         yield put(AccountActions.successFetchAddressUtxo(address,addressUtxo.data))
       } catch(e) {
+        console.log('!!!getAddressUtxo FAIL:' + e.message);
         console.log(e.message)
       }
 
     } else {
+      console.log('!!!getAddressUtxo KO:' + JSON.stringify(response));
       break;
     }
   }

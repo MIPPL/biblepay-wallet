@@ -161,11 +161,9 @@ export function * sendTransaction (action) {
   let sumAmounts=0
   var decryptedMnemonic = '';
 
-  if (addresses.length>1) {
-    const credsHD = yield Keychain.getInternetCredentials(addresses[1].encryptedPrivKey)
-    decryptedMnemonic = decrypt({encryptedData:addresses[1].encryptedPrivKey, iv: credsHD.username, key: credsHD.password})
-  }
-
+  const credsHD = yield Keychain.getInternetCredentials(addresses[0].encryptedPrivKey)
+  decryptedMnemonic = decrypt({encryptedData:addresses[0].encryptedPrivKey, iv: credsHD.username, key: credsHD.password})
+  
   allUtxos.forEach(utxo=>{
     //console.log('sendTransaction try utxo ' + utxo.txId + '; address='+utxo.address+', amount='+utxo.satoshis + ' (sum='+sumAmounts+', required='+amount+') allUtxos len='+allUtxos.length );
     if(sumAmounts<(amount+realFee)){

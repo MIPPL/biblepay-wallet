@@ -7,11 +7,8 @@ import NetworkActions from '../Redux/NetworkRedux'
 // process STARTUP actions
 export function * startup (action) {
 
-    const addresses = yield select(AccountSelectors.getAddresses)
-    for(let i=0; i<addresses.length;i++){
-        yield put(AccountActions.fetchAddressInfo(addresses[i].address))
-        yield put(AccountActions.fetchAddressUtxo(addresses[i].address))
-    }
+    yield put(AccountActions.fetchAddressInfo())
+    yield put(AccountActions.fetchAddressUtxo())
     yield put(AccountActions.rebroadcastTx(true))
 
     yield put(NetworkActions.fetchNetworkStats())

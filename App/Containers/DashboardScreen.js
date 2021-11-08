@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 
 import { connect } from 'react-redux'
+import * as Keychain from "react-native-keychain";
 
 // Styles
 import styles from './Styles/DashboardScreenStyle'
@@ -89,17 +90,21 @@ class DashboardScreen extends Component {
             });
         
         // check if enough account/change addresses are available. If not, create new ones.
+        console.log('@@ addresses: ' + JSON.stringify(this.props.accountAddress) + ',' + JSON.stringify(this.props.changeAddress));
         if (  typeof this.props.accountAddress === 'undefined'
         ||    typeof this.props.changeAddress === 'undefined' ) {
           console.log("!! new addresses needed " + this.props.addresses.length);
-          this.props.generateNewAddresses( (error) => {
-            if (error)  {
-                console.log('!! error ' + error); 
-            }
-            else    {
-                console.log('!! success ' + this.props.addresses.length);
-            }
+          Keychain.getInternetCredentials(this.props.addresses[0].encryptedPrivKey).then(  (creds) => {
+            this.props.generateNewAddresses( creds.username, creds.password, (error) => {
+              if (error)  {
+                  console.log('!! error ' + error); 
+              }
+              else    {
+                  console.log('!! success ' + this.props.addresses.length);
+              }
+            })  
           })
+          
         }
     }
 
@@ -117,6 +122,7 @@ class DashboardScreen extends Component {
 
   refresh = () => {
         this.props.fetchAddressInfo()
+        //this.props.fetchAddressUtxo()
         this.props.getStats()
   }
 
@@ -192,15 +198,18 @@ const mapStateToProps = (state) => {
     addresses: AccountSelectors.getAddresses(state),
     balance: AccountSelectors.getBalance(state),
     stats: NetworkSelectors.getStats(state),
-    lightTheme: GlobalSelectors.getUseLightTheme(state)
+    lightTheme: GlobalSelectors.getUseLightTheme(state),
+    accountAddress: AccountSelectors.getAccountAddress(state),
+    changeAddress: AccountSelectors.getChangeAddress(state)
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
       fetchAddressInfo: ()=>dispatch(AccountActions.fetchAddressInfo()),
+      fetchAddressUtxo: ()=>dispatch(AccountActions.fetchAddressUtxo()),
       getStats: () => dispatch(NetworkActions.fetchNetworkStats()),
-      generateNewAddresses: ( callback) => dispatch(AccountActions.generateNewAddresses(callback)),
+      generateNewAddresses: ( username, password, callback) => dispatch(AccountActions.generateNewAddresses(username, password, callback)),
   }
 }
 

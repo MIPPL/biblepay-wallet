@@ -18,9 +18,9 @@ const crypto = require('crypto');
 
 const { Types, Creators } = createActions({
   generateAddressFromMnemonic: ['mnemonic', 'callback'],
-  fetchAddressInfo: ['address'],
+  fetchAddressInfo: [],
   successFetchAddressInfo: ['address', 'balance', 'unconfirmedBalance', 'transactions'],
-  fetchAddressUtxo: ['address'],
+  fetchAddressUtxo: [],
   successFetchAddressUtxo: ['address','utxo'],
   resetAddressUtxo: null,
   resetAddresses: null,
@@ -30,7 +30,7 @@ const { Types, Creators } = createActions({
   resetUnsendTx: null,
   rebroadcastTx: ['sendImmediately'],
   getMaxAmount: ['callback'],
-  generateNewAddresses: ['callback'],
+  generateNewAddresses: [ 'username', 'password','callback'],
   setDerivationPath: ['path']
 })
 
@@ -113,11 +113,13 @@ export const AccountSelectors = {
   },
   getUtxo: state => {
     let utxos = []
-
+    
+    if (state.account.addresses.length == 0) {
+      return []
+    }
+    
     state.account.utxo.forEach(ut=>{
-
       let address = state.account.addresses.find(add=>{return add.address===ut.address})
-
       let transaction = address.transactions.find(tx=>{return tx.txid===ut.txid})
 
       if(transaction) {
@@ -142,10 +144,10 @@ export const AccountSelectors = {
   },
   getUnsendTx: state => state.account.unsendTx,
   getAccountAddress: state => {
-    return state.account.addresses.find( (item, index) => { return item.transactions.length==0 && (index%2)==0; })
+    return state.account.addresses.find( (item, index) => { return item.transactions && item.transactions.length==0 && (index%2)==0; })
   },
   getChangeAddress: state =>  {
-    return state.account.addresses.find( (item, index) => { return item.transactions.length==0 && (index%2)==1; })
+    return state.account.addresses.find( (item, index) => { return item.transactions && item.transactions.length==0 && (index%2)==1; })
   } 
 }
 
@@ -184,6 +186,7 @@ function generateHDAddresses( mnemonic, derivationPath, startIndex, numAddresses
     const childAccountKey = HDKey.parseExtendedKey(extAccountPrivKey);
     const childChangeKey = HDKey.parseExtendedKey(extChangePrivKey);
 
+    console.log('generateHDAddresses' + derivationPath + ': ' + startIndex + '-' + (startIndex+numAddresses-1));
     for (var i=startIndex; i<startIndex+numAddresses; i++ ) {
       const hdAccountKeyPair = childAccountKey.derive(i.toString());
       const hdChangeKeyPair = childChangeKey.derive(i.toString());
@@ -327,28 +330,22 @@ export const getMaxAmount = (state = INITIAL_STATE, action) => {
 }
 
 export const generateNewAddr = (state = INITIAL_STATE, action) => {
-  const { callback } = action
-
-  if (state.addresses.length==1) {  // do nothing, need to initialize HD wallet first
-    return state;
-  }
+  const { username, password, callback } = action
 
   try {
-    const creds = Keychain.getInternetCredentials(state.addresses[0].encryptedPrivKey)
-console.log('@@ data '+ JSON.stringify(creds));
-    var decryptedMnemonic = decrypt({encryptedData:state.addresses[0].encryptedPrivKey, iv: creds.username, key: creds.password})
+    var hdAddresses = [];
+    var decryptedMnemonic = decrypt({encryptedData:state.addresses[0].encryptedPrivKey, iv: username, key: password})
     var start = (state.addresses.length)/2;
-console.log('@@ generate '+ decryptedMnemonic);
-
-    var hdAddresses = generateHDAddresses( decryptedMnemonic, start, 20, '');
+    hdAddresses = generateHDAddresses( decryptedMnemonic.normalize('NFKD'), state.derivationPath, start, 20, '');
     callback(false)
+    console.log('@@ callback');
   } 
   catch(e){
     console.log(e.message)
     callback(true)
     return state
   }
-
+  console.log('@@ return');
   return state.merge({
     addresses: [...state.addresses, hdAddresses]
   })
@@ -357,7 +354,7 @@ console.log('@@ generate '+ decryptedMnemonic);
 export const resetAddresses = (state = INITIAL_STATE, action) => {
 
   return state.merge({
-    addresses: [ state.addresses[0] ]
+    addresses: [ ]
   })
 }
 

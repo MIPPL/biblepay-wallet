@@ -5,7 +5,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.0)'
+    backgroundColor: 'rgba(255, 255, 255, 0.0)'
   },
   containerWithGray: {
     backgroundColor: '#f2f4fa'
@@ -16,7 +16,7 @@ export default StyleSheet.create({
   },
   header: {
     flex: 0,
-    backgroundColor: '#000000'
+    backgroundColor: 'white'
   },
   loadingIndicator: {
     position: 'absolute',

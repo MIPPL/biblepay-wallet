@@ -308,7 +308,7 @@ class IntroScreen extends Component {
           <SafeAreaView style={styles.header} />
       <SafeAreaView style={[styles.container, this.state.page===1?styles.containerWithGray:null]} >
         <Swiper ref={'swiper'} showsPagination={false} autoplay={false} loop={false} scrollEnabled={false} showsButtons={false}>
-          <View style={{flex:1, justifyContent:'space-around',alignItems:'center', backgroundColor: 'rgba(0, 0, 0, 0.0)'}}>
+          <View style={{flex:1, justifyContent:'space-around',alignItems:'center', backgroundColor: 'rgba(255, 255, 255, 0.0)'}}>
         
             <View style={styles.logoContainer}>
               {this.renderLogo()}

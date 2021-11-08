@@ -12,7 +12,7 @@ import { connect } from 'react-redux'
 import styles from './Styles/SettingsScreenStyle'
 
 import GlobalActions, { GlobalSelectors } from '../Redux/GlobalRedux'
-
+import {preStartApp} from '../Navigation';
 import Header from '../Components/TitleHeader';
 import TransactionItem from '../Components/TransactionItem';
 import {Navigation} from 'react-native-navigation';
@@ -159,6 +159,11 @@ class SettingsScreen extends Component {
 
     }
 
+    resetWallet = () => {
+        this.props.resetAddresses();
+//        preStartApp();
+    }
+
   render () {
     return (
       <SafeAreaView style={styles.container}>
@@ -204,11 +209,11 @@ class SettingsScreen extends Component {
                   </View>
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={this.exportPrivKey} style={[styles.settingContainer,this.props.lightTheme?styles.settingContainerLight1:styles.settingContainerDark1]}>
+              <TouchableOpacity onPress={this.resetWallet} style={[styles.settingContainer,this.props.lightTheme?styles.settingContainerLight1:styles.settingContainerDark1]}>
                   <View style={styles.settingInnerContainer}>
                       <Image source={this.props.lightTheme?ExportIconLight:ExportIcon} style={styles.icon} resizeMode={'contain'}/>
                       <View style={styles.titleWrapper}>
-                          <Text style={[styles.title,this.props.lightTheme?styles.titleLight:null]}>{I18n.t('exportPrivkey')}</Text>
+                          <Text style={[styles.title,this.props.lightTheme?styles.titleLight:null]}>Reset Wallet (test)</Text>
                       </View>
                   </View>
               </TouchableOpacity>
@@ -416,8 +421,6 @@ const mapStateToProps = (state) => {
   return {
       blockBookApi: GlobalSelectors.getBlockbookApi(state),
       explorerApi: GlobalSelectors.getExplorerApi(state),
-      nodeSetupApi: GlobalSelectors.getNodeSetupApi(state),
-      infinityApi: GlobalSelectors.getInfinityApi(state),
       lightTheme: GlobalSelectors.getUseLightTheme(state),
       language: GlobalSelectors.getLanguage(state)
   }
@@ -427,10 +430,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setBlockbookApi: (api) => dispatch(GlobalActions.setBlockbookApi(api)),
     setExplorerApi: (api) => dispatch(GlobalActions.setExplorerApi(api)),
-    setNodeSetupApi: (api) => dispatch(GlobalActions.setNodeSetupApi(api)),
-    setInfinityApi: (api) => dispatch(GlobalActions.setInfinityApi(api)),
     setUseLightTheme: (flag) => dispatch(GlobalActions.setUseLightTheme(flag)),
     setLanguage: (lang) => dispatch(GlobalActions.setLanguage(lang)),
+    resetAddresses: () => dispatch(AccountActions.resetAddresses()),
   }
 }
 

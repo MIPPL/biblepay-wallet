@@ -22,7 +22,7 @@ export default StyleSheet.create({
   containerLight: {
     flex: 0,
     borderWidth: 1,
-    borderColor: '#4F9FDE',
+    borderColor: 'white',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
