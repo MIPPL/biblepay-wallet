@@ -43,7 +43,9 @@ export const INITIAL_STATE = Immutable({
   addresses: [],
   utxo: [],
   unsendTx: [],
-  derivationPath: "m/44'/"+AppConfig.BIP44Code+"'/0'/"    // default bip44
+  derivationPath: "m/44'/"+AppConfig.BIP44Code+"'/0'/",    // default bip44
+  loadingAddressInfo: false,
+  loadingUtxoInfo: false
 })
 
 /* ------------- Selectors ------------- */
@@ -67,8 +69,8 @@ export const AccountSelectors = {
     })
 
     state.account.addresses.forEach(add=>{
-      if(add.transactions)
-      add.transactions.forEach(tx => {
+      if(add.transactions)  {
+        add.transactions.forEach(tx => {
         var to = ''
         to = tx.vout[0].addresses[0];
         
@@ -96,6 +98,7 @@ export const AccountSelectors = {
         })
         transactions.push(txObj)
       })
+    }
     })
 
     // sort transactions coming from different addresses
@@ -148,7 +151,14 @@ export const AccountSelectors = {
   },
   getChangeAddress: state =>  {
     return state.account.addresses.find( (item, index) => { return item.transactions && item.transactions.length==0 && (index%2)==1; })
-  } 
+  },
+  isAddressPoolEmpty: state =>  {
+    var lastNTx = state.account.addresses.slice(-4);
+    var hasTx = (add) => add.transactions.length > 0;
+    return lastNTx.some(hasTx);
+  },
+  getLoadingAddressInfo: state => state.account.loadingAddressInfo,
+  getLoadingUtxoInfo: state => state.account.loadingUtxoInfo
 }
 
 /* ------------- Reducers ------------- */
@@ -240,13 +250,20 @@ export const genAddFromMn =  (state = INITIAL_STATE, action) => {
 }
 
 export const fetchAddInfo = (state = INITIAL_STATE, action) => {
-  return state
+  console.log('@@fetchAddInfo: ');
+  
+  return state.merge({
+      loadingAddressInfo: true
+    })
 }
 
 export const successFetchAddInfo = (state = INITIAL_STATE, action) => {
   const { address, balance, unconfirmedBalance, transactions } = action
 
+  var loading = ( address == state.addresses[state.addresses.length-1].address ) ? false : true;
+  console.log('@@successFetchAddInfo: ' + address + ': ' + state.addresses.findIndex( (item, index) => { return item.address == address; } ) + ': ' + loading);
   if(transactions){
+    console.log('@@successFetchAddInfo txs: ' + transactions.length);
     let addresses = []
     state.addresses.forEach(add=>{
 
@@ -263,16 +280,23 @@ export const successFetchAddInfo = (state = INITIAL_STATE, action) => {
     })
 
     return state.merge({
-      addresses
+      addresses,
+      loadingAddressInfo: loading
     })
   }else{
-    return state
+    return state.merge({
+      loadingAddressInfo: loading
+    })
   }
 
 }
 
 export const fetchAddUtxo = (state = INITIAL_STATE, action) => {
-  return state
+  console.log('@@fetchAddUtxo: ');
+
+  return state.merge({
+    loadingUtxoInfo: true
+  })
 }
 
 export const successFetchAddUtxo = (state = INITIAL_STATE, action) => {
@@ -285,8 +309,12 @@ export const successFetchAddUtxo = (state = INITIAL_STATE, action) => {
   var utxoIds = new Set(state.utxo.map(u => u.txid + ':' + u.vout));
   var merged = [...state.utxo, ...utxo.filter(u => !utxoIds.has(u.txid + ':' + u.vout))];
 
+  var loading = ( address == state.addresses[state.addresses.length-1].address ) ? false : true;
+  console.log('@@successFetchUtxoInfo: ' + address + ': ' + loading);
+  
   return state.merge({
-    utxo: merged
+    utxo: merged,
+    loadingUtxoInfo: loading
   })
 
 }
@@ -338,16 +366,14 @@ export const generateNewAddr = (state = INITIAL_STATE, action) => {
     var start = (state.addresses.length)/2;
     hdAddresses = generateHDAddresses( decryptedMnemonic.normalize('NFKD'), state.derivationPath, start, 20, '');
     callback(false)
-    console.log('@@ callback');
   } 
   catch(e){
     console.log(e.message)
     callback(true)
     return state
   }
-  console.log('@@ return');
   return state.merge({
-    addresses: [...state.addresses, hdAddresses]
+    addresses: [...state.addresses, ...hdAddresses]
   })
 }
 

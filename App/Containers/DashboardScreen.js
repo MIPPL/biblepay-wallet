@@ -8,6 +8,7 @@ import {
     RefreshControl,
     ScrollView,
     StatusBar,
+    ActivityIndicator,
     TouchableOpacity,
     AppState,
     Platform, BackHandler,
@@ -50,12 +51,12 @@ import {defaultOptions} from '../Navigation';
 const ITEM_HEIGHT = ItemStyle.container.height + ItemStyle.container.marginBottom
 
 import I18n from '../I18n'
+import { TouchablePreview } from 'react-native-navigation/lib/dist/adapters/TouchablePreview';
 
 
 class DashboardScreen extends Component {
 
-
-    appState = null
+  appState = null
   componentDidMount () {
       Navigation.events().bindComponent(this);
       AppState.addEventListener('change', this.handleAppState);
@@ -92,7 +93,8 @@ class DashboardScreen extends Component {
         // check if enough account/change addresses are available. If not, create new ones.
         console.log('@@ addresses: ' + JSON.stringify(this.props.accountAddress) + ',' + JSON.stringify(this.props.changeAddress));
         if (  typeof this.props.accountAddress === 'undefined'
-        ||    typeof this.props.changeAddress === 'undefined' ) {
+        ||    typeof this.props.changeAddress === 'undefined'
+        ||    this.props.isAddressPoolEmpty) {
           console.log("!! new addresses needed " + this.props.addresses.length);
           Keychain.getInternetCredentials(this.props.addresses[0].encryptedPrivKey).then(  (creds) => {
             this.props.generateNewAddresses( creds.username, creds.password, (error) => {
@@ -101,10 +103,11 @@ class DashboardScreen extends Component {
               }
               else    {
                   console.log('!! success ' + this.props.addresses.length);
+                  //this.props.fetchAddressInfo();
+                  //this.props.fetchAddressUtxo()
               }
             })  
-          })
-          
+          })  
         }
     }
 
@@ -186,10 +189,21 @@ class DashboardScreen extends Component {
             renderItem={this.renderItem}
             bounces={false}
         />
-          </ScrollView>
+        {this.renderLoadingIndicator()}
+        </ScrollView>
       </SafeAreaView>
     )
   }
+
+  renderLoadingIndicator = () => {
+    console.log('@@ renderLoadingIndicator: ' + this.props.loadingAddressInfo + '-'+ this.props.loadingUtxoInfo);
+    if (this.props.loadingAddressInfo || this.props.loadingUtxoInfo ) {
+        return (
+            <ActivityIndicator size="large" color="#0000ff" style={styles.loadingIndicator}/>
+        );
+    }
+    return null;
+  };
 }
 
 const mapStateToProps = (state) => {
@@ -200,7 +214,10 @@ const mapStateToProps = (state) => {
     stats: NetworkSelectors.getStats(state),
     lightTheme: GlobalSelectors.getUseLightTheme(state),
     accountAddress: AccountSelectors.getAccountAddress(state),
-    changeAddress: AccountSelectors.getChangeAddress(state)
+    changeAddress: AccountSelectors.getChangeAddress(state),
+    isAddressPoolEmpty: AccountSelectors.isAddressPoolEmpty(state),
+    loadingAddressInfo: AccountSelectors.getLoadingAddressInfo(state),
+    loadingUtxoInfo: AccountSelectors.getLoadingUtxoInfo(state),
   }
 }
 

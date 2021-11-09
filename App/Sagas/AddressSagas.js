@@ -31,16 +31,6 @@ export function * getAddressInfo (action) {
       try {
         const addressInfo = new AddressInfo(response.data)
 
-        if (addressInfo.transactions()==null)   {
-          zeroCounter++;
-        }
-        else  {
-          zeroCounter = 0;
-        }
-        
-        if (zeroCounter>=6) // after 6 empty addresses, stop getting address info
-          break;
-
         yield put(AccountActions.successFetchAddressInfo(addressInfo.address(),addressInfo.balance(),addressInfo.unconfirmedBalance(),addressInfo.transactions()))
       } catch(e) {
         console.log(e.message)
@@ -65,34 +55,19 @@ export function * getAddressUtxo (action) {
   var zeroCounter = 0;
   for(var i=0; i<addresses.length;i++)  {
     var address = addresses[i].address;
-    if (addresses[i].transactions.length==0)  {
-      zeroCounter++;
-    }
-    else {
-      zeroCounter=0;
-    }
-      
-    if (zeroCounter>=6) // after 6 empty addresses, stop getting utxos
-      break;
-
-    console.log('!!!getAddressUtxo:' + address + ',' + addresses.length);    
-
+    
     const response = yield call(api.getUtxo, address)
 
     if (response.ok) {
       try {
         const addressUtxo = new AddressUtxo(response.data)
 
-      console.log('!!!getAddressUtxo SUCCESS:' + JSON.stringify(addressUtxo.data));    
-
         yield put(AccountActions.successFetchAddressUtxo(address,addressUtxo.data))
       } catch(e) {
-        console.log('!!!getAddressUtxo FAIL:' + e.message);
         console.log(e.message)
       }
 
     } else {
-      console.log('!!!getAddressUtxo KO:' + JSON.stringify(response));
       break;
     }
   }

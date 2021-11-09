@@ -24,7 +24,7 @@ export default Creators
 export const INITIAL_STATE = Immutable({
   blockbookApi: AppConfig.BLOCKBOOK_API,
   explorerApi: AppConfig.EXPLORER_API,
-  useLightTheme: true,
+  useLightTheme: false,
   useTestnet: false,
   language: ''
 })
