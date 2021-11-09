@@ -14,6 +14,7 @@ import {
     Platform, BackHandler,
 } from 'react-native';
 
+import ProgressBar from 'react-native-progress/Bar';
 import { connect } from 'react-redux'
 import * as Keychain from "react-native-keychain";
 
@@ -156,6 +157,7 @@ class DashboardScreen extends Component {
           {this.props.lightTheme&&<WalletImageLight width={wp(14)} height={wp(14)} style={{align:'center'}}/>}
           {!this.props.lightTheme&&<WalletImage width={wp(14)} height={wp(14)} style={{align:'center'}}/>}
         </View>
+        {this.renderLoadingIndicator()}
         <View style={styles.balanceContainer}>
             <View style={styles.balanceContainerItem}>
               <Text style={[this.props.lightTheme?styles.balanceTextLight:styles.balanceText, {textAlign: 'left'}]}>{I18n.t('yourBalanceStr')}</Text>
@@ -166,21 +168,6 @@ class DashboardScreen extends Component {
               <Text style={this.props.lightTheme?styles.balanceTextLight:styles.balanceText}>{this.props.stats.lastPrice?(this.props.stats.lastPrice*this.props.balance/100000000).toFixed(8):null} BTC</Text>
             </View>
           </View>
-          <View style={styles.balanceContainer}>
-            <View style={this.props.lightTheme?styles.sendReceiveContainerLight:styles.sendReceiveContainer}>
-              <TouchableOpacity style={styles.sendReceiveInnerContainer} onPress={this.navToSend}>
-              <SendMoney width={wp(12)} height={wp(12)}/>
-                  <Text style={styles.sendReceiveText}>{I18n.t('send').toUpperCase()}</Text>
-              </TouchableOpacity>
-              </View>
-              <View style={styles.seperator}/>
-            <View style={this.props.lightTheme?styles.sendReceiveContainerLight:styles.sendReceiveContainer}>
-              <TouchableOpacity style={styles.sendReceiveInnerContainer} onPress={this.navToReceive}>
-              <RequestMoney width={wp(12)} height={wp(12)}/>
-                  <Text style={styles.sendReceiveText}>{I18n.t('receive').toUpperCase()}</Text>
-              </TouchableOpacity>
-            </View>            
-        </View>
         <View style={styles.latestTxContainer}>
             <Text style={[this.props.lightTheme?styles.latestTxTextLight:styles.latestTxText, {textAlign: 'left'}]}>{I18n.t('latestTransactions')}</Text>
         </View>
@@ -189,17 +176,20 @@ class DashboardScreen extends Component {
             renderItem={this.renderItem}
             bounces={false}
         />
-        {this.renderLoadingIndicator()}
         </ScrollView>
       </SafeAreaView>
     )
   }
 
   renderLoadingIndicator = () => {
-    console.log('@@ renderLoadingIndicator: ' + this.props.loadingAddressInfo + '-'+ this.props.loadingUtxoInfo);
-    if (this.props.loadingAddressInfo || this.props.loadingUtxoInfo ) {
+    if ( this.props.loadingAddressInfo<1 ) {
         return (
-            <ActivityIndicator size="large" color="#0000ff" style={styles.loadingIndicator}/>
+          <View style={{alignItems:'center'}}>
+            <ProgressBar progress={this.props.loadingAddressInfo} 
+                width={wp(80)} 
+                color='#971B20'
+                />
+          </View>
         );
     }
     return null;

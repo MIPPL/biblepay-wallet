@@ -20,7 +20,7 @@ export default StyleSheet.create({
     alignItems: 'flex-start',
     marginHorizontal: wp(8),
     marginTop: hp(2),
-    marginBottom: wp(18),
+    marginBottom: wp(2),
   },
   balanceContainerItem: {
     width: '50%',
@@ -82,7 +82,7 @@ export default StyleSheet.create({
   },
   latestTxContainer: {
     marginLeft: wp(6),
-    marginTop: hp(3),
+    marginTop: hp(0),
     marginBottom: hp(1),
   },
   latestTxText: {

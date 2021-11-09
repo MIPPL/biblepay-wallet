@@ -44,8 +44,8 @@ export const INITIAL_STATE = Immutable({
   utxo: [],
   unsendTx: [],
   derivationPath: "m/44'/"+AppConfig.BIP44Code+"'/0'/",    // default bip44
-  loadingAddressInfo: false,
-  loadingUtxoInfo: false
+  loadingAddressInfo: 1.0,    // progress from 0 to 1
+  loadingUtxoInfo: 1.0      // progress from 0 to 1
 })
 
 /* ------------- Selectors ------------- */
@@ -249,21 +249,19 @@ export const genAddFromMn =  (state = INITIAL_STATE, action) => {
   }
 }
 
-export const fetchAddInfo = (state = INITIAL_STATE, action) => {
-  console.log('@@fetchAddInfo: ');
-  
+export const fetchAddInfo = (state = INITIAL_STATE, action) => {  
   return state.merge({
-      loadingAddressInfo: true
+      loadingAddressInfo: 0
     })
 }
 
 export const successFetchAddInfo = (state = INITIAL_STATE, action) => {
   const { address, balance, unconfirmedBalance, transactions } = action
 
-  var loading = ( address == state.addresses[state.addresses.length-1].address ) ? false : true;
-  console.log('@@successFetchAddInfo: ' + address + ': ' + state.addresses.findIndex( (item, index) => { return item.address == address; } ) + ': ' + loading);
+  var loading = state.addresses.findIndex( (item, index) => { return item.address == address; } )
+              / (state.addresses.length-1);
+
   if(transactions){
-    console.log('@@successFetchAddInfo txs: ' + transactions.length);
     let addresses = []
     state.addresses.forEach(add=>{
 
@@ -292,10 +290,8 @@ export const successFetchAddInfo = (state = INITIAL_STATE, action) => {
 }
 
 export const fetchAddUtxo = (state = INITIAL_STATE, action) => {
-  console.log('@@fetchAddUtxo: ');
-
   return state.merge({
-    loadingUtxoInfo: true
+    loadingUtxoInfo: 0
   })
 }
 
@@ -309,9 +305,9 @@ export const successFetchAddUtxo = (state = INITIAL_STATE, action) => {
   var utxoIds = new Set(state.utxo.map(u => u.txid + ':' + u.vout));
   var merged = [...state.utxo, ...utxo.filter(u => !utxoIds.has(u.txid + ':' + u.vout))];
 
-  var loading = ( address == state.addresses[state.addresses.length-1].address ) ? false : true;
-  console.log('@@successFetchUtxoInfo: ' + address + ': ' + loading);
-  
+  var loading = state.addresses.findIndex( (item, index) => { return item.address == address; } )
+              / (state.addresses.length-1);
+ 
   return state.merge({
     utxo: merged,
     loadingUtxoInfo: loading

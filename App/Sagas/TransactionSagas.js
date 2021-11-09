@@ -79,7 +79,7 @@ export function * estimateFee (action) {
   var transaction = new bitcore.Transaction()
       .from(utxos)
       .to(destination, amount)
-      .feePerKb(10000000)
+      .feePerKb(100000000)
       .change(changeAdd)
 
   var fee = parseInt(transaction.getFee())
