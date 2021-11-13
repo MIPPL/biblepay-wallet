@@ -16,7 +16,7 @@ import { getAddressInfo, getAddressUtxo } from './AddressSagas'
 
 import { sendTransaction, estimateFee, rebroadcastTx, getMaxAmount } from './TransactionSagas'
 
-import { getNetworkStats } from './NetworkSagas'
+import { getNetworkStats, getPriceData } from './NetworkSagas'
 
 /* ------------- Connect Types To Sagas ------------- */
 
@@ -31,5 +31,6 @@ export default function * root () {
     takeLatest(AccountTypes.GET_MAX_AMOUNT, getMaxAmount),
     takeLatest(AccountTypes.REBROADCAST_TX, rebroadcastTx),
     takeLatest(NetworkTypes.FETCH_NETWORK_STATS, getNetworkStats),
+    takeLatest(NetworkTypes.FETCH_PRICE_DATA, getPriceData),
   ])
 }

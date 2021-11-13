@@ -20,9 +20,11 @@ const create = (baseURL = AppConfig.EXPLORER_API, token = null) => {
   })
 
   const getNetworkStats = () => api.get(`summary.php`)
+  const getPriceData = (_currency, _reference) => api.get(`Server?action=MOBILE_API`)
 
   return {
-    getNetworkStats
+    getNetworkStats,
+    getPriceData
   }
 }
 

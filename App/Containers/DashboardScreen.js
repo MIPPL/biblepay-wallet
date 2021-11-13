@@ -104,8 +104,8 @@ class DashboardScreen extends Component {
               }
               else    {
                   console.log('!! success ' + this.props.addresses.length);
-                  //this.props.fetchAddressInfo();
-                  //this.props.fetchAddressUtxo()
+                  this.props.fetchAddressInfo();
+                  this.props.fetchAddressUtxo()
               }
             })  
           })  
@@ -125,9 +125,10 @@ class DashboardScreen extends Component {
   }
 
   refresh = () => {
+      if (this.props.loadingAddressInfo==1) {
         this.props.fetchAddressInfo()
-        //this.props.fetchAddressUtxo()
-        this.props.getStats()
+      } 
+      this.props.getPrice();  
   }
 
   navToSend = () => {
@@ -164,8 +165,8 @@ class DashboardScreen extends Component {
             </View>
             <View style={styles.balanceContainerItem}>
               <Text style={this.props.lightTheme?styles.balanceTextBigLight:styles.balanceTextBig}>{normalRepresentation(this.props.balance).toFixed(2)} {AppConfig.coinTicker}</Text>
-              <Text style={this.props.lightTheme?styles.balanceTextLight:styles.balanceText}>{this.props.stats.usdPrice?(this.props.stats.usdPrice*this.props.balance/100000000).toFixed(2):null} USD</Text>
-              <Text style={this.props.lightTheme?styles.balanceTextLight:styles.balanceText}>{this.props.stats.lastPrice?(this.props.stats.lastPrice*this.props.balance/100000000).toFixed(8):null} BTC</Text>
+              <Text style={this.props.lightTheme?styles.balanceTextLight:styles.balanceText}>{this.props.priceData.BBPUSD?(this.props.priceData.BBPUSD*this.props.balance/100000000).toFixed(2):null} USD</Text>
+              <Text style={this.props.lightTheme?styles.balanceTextLight:styles.balanceText}>{this.props.priceData.BTCUSD?((this.props.priceData.BBPUSD*this.props.balance/100000000)/this.props.priceData.BTCUSD).toFixed(8):null} BTC</Text>
             </View>
           </View>
         <View style={styles.latestTxContainer}>
@@ -202,6 +203,7 @@ const mapStateToProps = (state) => {
     addresses: AccountSelectors.getAddresses(state),
     balance: AccountSelectors.getBalance(state),
     stats: NetworkSelectors.getStats(state),
+    priceData: NetworkSelectors.getPriceData(state),
     lightTheme: GlobalSelectors.getUseLightTheme(state),
     accountAddress: AccountSelectors.getAccountAddress(state),
     changeAddress: AccountSelectors.getChangeAddress(state),
@@ -216,6 +218,7 @@ const mapDispatchToProps = (dispatch) => {
       fetchAddressInfo: ()=>dispatch(AccountActions.fetchAddressInfo()),
       fetchAddressUtxo: ()=>dispatch(AccountActions.fetchAddressUtxo()),
       getStats: () => dispatch(NetworkActions.fetchNetworkStats()),
+      getPrice: (currency, reference) => dispatch(NetworkActions.fetchPriceData(currency, reference)),
       generateNewAddresses: ( username, password, callback) => dispatch(AccountActions.generateNewAddresses(username, password, callback)),
   }
 }

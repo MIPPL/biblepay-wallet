@@ -1,6 +1,6 @@
 export default {
   BLOCKBOOK_API: 'https://blockbook.biblepay.org/api/v2/',
-  EXPLORER_API: 'https://blockbook.biblepay.org/',
+  EXPLORER_API: 'https://foundation.biblepay.org/',
   coinTicker: 'BBP',
   coinName: 'Biblepay',
   BIP44Code: 1777,
