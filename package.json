@@ -62,7 +62,7 @@
     "react-native-touch-id": "^4.4.1",
     "react-native-udp": "^2.7.0",
     "react-native-unimodules": "^0.14.8",
-    "react-native-vector-icons": "^6.6.0",
+    "react-native-vector-icons": "^7.0.0",
     "react-redux": "^5.0.6",
     "readable-stream": "^1.0.33",
     "redux": "^4.0.0",

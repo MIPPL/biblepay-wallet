@@ -113,7 +113,7 @@ export const defaultOptions = (useLightTheme) => ({
 });
 
 export const initApp = () => {
-  Navigation.setDefaultOptions(defaultOptions());
+  Navigation.setDefaultOptions(defaultOptions(true));
   Navigation.setRoot({
     root: {
       stack: {
@@ -132,7 +132,7 @@ export const initApp = () => {
 }
 
 export const preStartApp = () => {
-  Navigation.setDefaultOptions(defaultOptions());
+  Navigation.setDefaultOptions(defaultOptions(true));
   Navigation.setRoot({
     root: {
       stack: {
@@ -150,7 +150,7 @@ export const preStartApp = () => {
 }
 
 export const preStartApp2 = () => {
-  Navigation.setDefaultOptions(defaultOptions());
+  Navigation.setDefaultOptions(defaultOptions(true));
   Navigation.setRoot({
     root: {
       stack: {
