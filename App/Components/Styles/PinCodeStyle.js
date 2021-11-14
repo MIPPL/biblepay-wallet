@@ -19,7 +19,7 @@ export default StyleSheet.create({
     backgroundColor: '#F2F7FD' 
   },
   textLight : {
-    color: '#58A2DC' 
+    color: '#971B20' 
   },
   stylePinCodeButtonCircle: {
     width: wp(16),
@@ -37,7 +37,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 50,
     borderWidth: 2,
-    borderColor: "#58A2DC"
+    borderColor: "#971B20"
   },
   stylePinCodeRowButtons: {
     width: wp(100),
@@ -80,7 +80,7 @@ export default StyleSheet.create({
   stylePinCodeTextTitleLight: {
     fontFamily: 'MADETOMMY-Bold',
     fontSize: wp(5),
-    color: '#58A2DC',
+    color: '#971B20',
     marginBottom: wp(3)
   },
   stylePinCodeTextSubTitle: {
@@ -92,7 +92,7 @@ export default StyleSheet.create({
   stylePinCodeTextSubTitleLight: {
     fontFamily: 'MADETOMMY-Bold',
     fontSize: wp(4),
-    color: '#58A2DC',
+    color: '#971B20',
     textAlign: 'center'
   },
   stylePinCodeCircle: {
@@ -119,8 +119,8 @@ export default StyleSheet.create({
     color: '#0045DF',
   },
   stylePinCodeButtonNumberPressedLight: {
-    backgroundColor: '#58A2DC',
-    color: '#58A2DC',
+    backgroundColor: '#971B20',
+    color: '#971B20',
   },
   deleteButtonContainer: {
     justifyContent: 'center',
@@ -142,7 +142,7 @@ export default StyleSheet.create({
     height: hp(7),
     borderRadius: 50,
     borderWidth: 2,
-    borderColor: '#58A2DC',
+    borderColor: '#971B20',
   }
 
 

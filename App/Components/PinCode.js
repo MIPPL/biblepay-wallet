@@ -18,7 +18,7 @@ export default class PinCode extends PureComponent {
 
     renderDeleteButton = (cb) => {
         return (<TouchableHighlight style={this.props.lightTheme?styles.deleteButtonContainerLight:styles.deleteButtonContainer} onPress={cb}>
-            <BackIcon name="ios-backspace" size={wp(8)} color="white" style={{height: wp(8)}}/>
+            <BackIcon name="ios-backspace" size={wp(8)} color={this.props.lightTheme?'#971B20':'white'} style={{height: wp(8)}}/>
         </TouchableHighlight>)
     }
 
