@@ -169,37 +169,29 @@ export function * sendTransaction (action) {
     if(sumAmounts<(amount+realFee)){
       sumAmounts+=parseInt(utxo.satoshis)
 
-      if (utxo.address!=addresses[0].address) {
-        var index = addresses.findIndex( (addrObj) => addrObj.address === utxo.address ); 
-        if (index!=-1 && typeof loadedKeys[index] === 'undefined')  {
-          var privKey = getPrivateKeyForHDAddress(decryptedMnemonic, (index-1)/2, false, derivationPath );
-          privateKeys.push( new bitcore.PrivateKey( privKey ) )
-          loadedKeys[index] = true;
-          //console.log('sendTransaction add HD priv: '+ privKey);
-        }
+      var index = addresses.findIndex( (addrObj) => addrObj.address === utxo.address ); 
+      if (index!=-1 && typeof loadedKeys[index] === 'undefined')  {
+        var privKey = getPrivateKeyForHDAddress(decryptedMnemonic, index/2, false, derivationPath );
+        var pk = new bitcore.PrivateKey( privKey )
+        privateKeys.push( pk )
+        loadedKeys[index] = true;
+        //console.log('sendTransaction add HD priv: '+ utxo.address + '=>' + pk.toWIF());
       }
       utxos.push(utxo)
     }
   })
 
-  const changeAdd = addresses[0].address
-
-  const creds = yield Keychain.getInternetCredentials(addresses[0].encryptedPrivKey)
-
-  var decryptedPrivateKey = decrypt({encryptedData:addresses[0].encryptedPrivKey, iv: creds.username, key: creds.password})
-  privateKeys.push( new bitcore.PrivateKey(decryptedPrivateKey) );
+  const changeAdd = yield select(AccountSelectors.getChangeAddress)
 
   try {
-    //SIN fee change 100000 -> 10000000
-
-    var transaction = new bitcore.Transaction()
+      var transaction = new bitcore.Transaction()
         .from(utxos)
-        .to(destination, amount)
+        .to(destination, amount, '')
         .fee(realFee)
-        .change(changeAdd)
+        .change(changeAdd.address)
 
       let signedTx = transaction.sign(privateKeys)
-      //console.log('sendTransaction SIGN :'+ signedTx);
+      console.log('sendTransaction SIGN :'+ signedTx);
       const url = yield select(GlobalSelectors.getBlockbookApi)
 
       const api = API.create(url)
@@ -257,15 +249,16 @@ export function * sendTransaction (action) {
 
         }else{
           showError(I18n.t('unexpectedError'))
-          console.log('sendTransaction ERROR: '+ I18n.t('unexpectedError'));
+          console.log('sendTransaction ERROR: '+ JSON.stringify(response));
         }
 
       }
 
   } catch(e) {
     callback('')
-    showError(I18n.t('unexpectedError') + ' '+ + e.message)
-    console.log('sendTransaction ERROR: '+ I18n.t('unexpectedError'));
+    showError(I18n.t('unexpectedError') + ' => '+ e.message)
+    console.log('sendTransaction ERROR: '+ e.message);
+    throw e;
   }
 
 /*
