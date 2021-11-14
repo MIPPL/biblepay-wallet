@@ -155,10 +155,6 @@ class DashboardScreen extends Component {
                     contentContainerStyle={styles.container} bounces={false}
                     refreshControl={<RefreshControl refreshing={false} onRefresh={this.refresh}/>} >
         <Header title={I18n.t('wallet')} parentComponentId={this.props.componentId}/>
-        <View style={{alignItems:'center', marginTop: hp(1)}}>
-          {this.props.lightTheme&&<WalletImageLight width={wp(14)} height={wp(14)} style={{align:'center'}}/>}
-          {!this.props.lightTheme&&<WalletImage width={wp(14)} height={wp(14)} style={{align:'center'}}/>}
-        </View>
         {this.renderLoadingIndicator()}
         <View style={styles.balanceContainer}>
             <View style={styles.balanceContainerItem}>
@@ -166,8 +162,8 @@ class DashboardScreen extends Component {
             </View>
             <View style={styles.balanceContainerItem}>
               <Text style={this.props.lightTheme?styles.balanceTextBigLight:styles.balanceTextBig}>{normalRepresentation(this.props.balance).toFixed(2)} {AppConfig.coinTicker}</Text>
-              <Text style={this.props.lightTheme?styles.balanceTextLight:styles.balanceText}>{this.props.priceData.BBPUSD?(this.props.priceData.BBPUSD*this.props.balance/100000000).toFixed(2):null} USD</Text>
-              <Text style={this.props.lightTheme?styles.balanceTextLight:styles.balanceText}>{this.props.priceData.BTCUSD?((this.props.priceData.BBPUSD*this.props.balance/100000000)/this.props.priceData.BTCUSD).toFixed(8):null} BTC</Text>
+              <Text style={this.props.lightTheme?styles.balanceTextLight:styles.balanceText}>{this.props.priceData.BBPUSD?(this.props.priceData.BBPUSD*this.props.balance/100000000).toFixed(2):Number.parseFloat(0.0).toFixed(2)} USD</Text>
+              <Text style={this.props.lightTheme?styles.balanceTextLight:styles.balanceText}>{this.props.priceData.BTCUSD?((this.props.priceData.BBPUSD*this.props.balance/100000000)/this.props.priceData.BTCUSD).toFixed(8):Number.parseFloat(0.0).toFixed(8)} BTC</Text>
             </View>
           </View>
         <View style={styles.latestTxContainer}>

@@ -110,10 +110,6 @@ class TransactionsScreen extends Component {
     return (
       <SafeAreaView style={styles.container}>
           <Header title={I18n.t('transactions')} parentComponentId={this.props.componentId}/>
-          <View style={{alignItems:'center', marginTop: hp(2)}}>
-            {this.props.lightTheme&&<TransactionsIconLight width={wp(12)} height={wp(12)}/>}
-            {!this.props.lightTheme&&<TransactionsIcon width={wp(12)} height={wp(12)}/>}
-          </View>
           <FlatList
               style={styles.flatList}
               data={this.getData()}
