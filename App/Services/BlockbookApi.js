@@ -21,15 +21,15 @@ const create = (baseURL = AppConfig.BLOCKBOOK_API) => {
 
 
   const getAddress = (_address) => api.get(`address/${_address}?details=txs&pageSize=100`)
-
   const getUtxo = (_address) => api.get(`utxo/${_address}?confirmed=false`)
-
   const sendTransaction = (_hex) => api.get(`sendtx/${_hex}`)
+  const getXpub = (_xpub) => api.get(`xpub/${_xpub}`)
 
   return {
     getAddress,
     getUtxo,
-    sendTransaction
+    sendTransaction,
+    getXpub
   }
 }
 

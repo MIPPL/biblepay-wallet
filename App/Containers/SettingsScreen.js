@@ -209,16 +209,7 @@ class SettingsScreen extends Component {
                   </View>
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={this.resetWallet} style={[styles.settingContainer,this.props.lightTheme?styles.settingContainerLight1:styles.settingContainerDark1]}>
-                  <View style={styles.settingInnerContainer}>
-                      <Image source={this.props.lightTheme?ExportIconLight:ExportIcon} style={styles.icon} resizeMode={'contain'}/>
-                      <View style={styles.titleWrapper}>
-                          <Text style={[styles.title,this.props.lightTheme?styles.titleLight:null]}>Reset Wallet (test)</Text>
-                      </View>
-                  </View>
-              </TouchableOpacity>
-
-              <View style={[styles.settingContainer,this.props.lightTheme?styles.settingContainerLight2:styles.settingContainerDark2]}>
+              <View style={[styles.settingContainer,this.props.lightTheme?styles.settingContainerLight1:styles.settingContainerDark1]}>
                   <View style={styles.settingInnerContainer}>
                       <Image source={this.props.lightTheme?ThemeIconLight:ThemeIcon} style={styles.icon} resizeMode={'contain'}/>
                       <View style={styles.titleWrapper}>
@@ -227,7 +218,7 @@ class SettingsScreen extends Component {
                   </View>
                   <Switch value={this.props.lightTheme} onValueChange={this.handleSwitchChange} style={{marginRight: wp(1)}}/>
               </View>
-              <TouchableOpacity onPress={this.goToLanguage} style={[styles.settingContainer,this.props.lightTheme?styles.settingContainerLight1:styles.settingContainerDark1]}>
+              <TouchableOpacity onPress={this.goToLanguage} style={[styles.settingContainer,this.props.lightTheme?styles.settingContainerLight2:styles.settingContainerDark2]}>
                   <View style={styles.settingInnerContainer}>
                   <Image source={this.props.lightTheme?LanguageIcon:LanguageIcon} style={styles.icon} resizeMode={'contain'}/>
                       <View style={styles.titleWrapper}>
@@ -236,7 +227,7 @@ class SettingsScreen extends Component {
                   </View>
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={() => this.goToWebsite('https://www.biblepay.org/community/')} style={[styles.settingContainer,this.props.lightTheme?styles.settingContainerLight2:styles.settingContainerDark2]}>
+              <TouchableOpacity onPress={() => this.goToWebsite('https://www.biblepay.org/community/')} style={[styles.settingContainer,this.props.lightTheme?styles.settingContainerLight1:styles.settingContainerDark1]}>
                   <View style={styles.settingInnerContainer}>
                   <Image source={this.props.lightTheme?SocialMediaIcon:SocialMediaIcon} style={styles.icon} resizeMode={'contain'}/>
                       <View style={styles.titleWrapper}>
@@ -245,7 +236,7 @@ class SettingsScreen extends Component {
                   </View>
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={() => this.goToWebsite('https://www.biblepay.org')} style={[styles.settingContainer,this.props.lightTheme?styles.settingContainerLight1:styles.settingContainerDark1]}>
+              <TouchableOpacity onPress={() => this.goToWebsite('https://www.biblepay.org')} style={[styles.settingContainer,this.props.lightTheme?styles.settingContainerLight2:styles.settingContainerDark2]}>
                   <View style={styles.settingInnerContainer}>
                       <Image source={this.props.lightTheme?WebsiteIcon:WebsiteIcon} style={styles.icon} resizeMode={'contain'}/>
                       <View style={styles.titleWrapper}>

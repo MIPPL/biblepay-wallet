@@ -43,7 +43,7 @@ class ChangePinCodeScreen extends Component {
                    lightTheme={this.props.lightTheme}
           />
         </Swiper>
-        <View style={styles.closeContainer}><Icon name="ios-close" size={wp(12)} color={'white'} style={{height: wp(12)}} onPress={()=>Navigation.dismissModal(this.props.componentId)}/></View>
+        <View style={styles.closeContainer}><Icon name="ios-close" size={wp(12)} color={this.props.lightTheme?'black':'white'} style={{height: wp(12)}} onPress={()=>Navigation.dismissModal(this.props.componentId)}/></View>
 
       </SafeAreaView>
         </View>

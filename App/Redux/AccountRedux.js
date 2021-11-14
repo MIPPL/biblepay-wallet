@@ -22,6 +22,7 @@ const { Types, Creators } = createActions({
   successFetchAddressInfo: ['address', 'balance', 'unconfirmedBalance', 'transactions'],
   fetchAddressUtxo: [],
   successFetchAddressUtxo: ['address','utxo'],
+  fetchXpubInfo: [],
   resetAddressUtxo: null,
   resetAddresses: null,
   sendTransaction: ['destination', 'value', 'fee', 'noalerts', 'callback'],
@@ -43,6 +44,7 @@ export const INITIAL_STATE = Immutable({
   addresses: [],
   utxo: [],
   unsendTx: [],
+  xpub: '',
   derivationPath: "m/44'/"+AppConfig.BIP44Code+"'/0'/",    // default bip44
   loadingAddressInfo: 1.0,    // progress from 0 to 1
   loadingUtxoInfo: 1.0      // progress from 0 to 1
@@ -306,6 +308,12 @@ export const successFetchAddInfo = (state = INITIAL_STATE, action) => {
 
 }
 
+export const fetchXpubInfo = (state = INITIAL_STATE, action) => {  
+  return state.merge({
+      loadingAddressInfo: 0
+    })
+}
+
 export const fetchAddUtxo = (state = INITIAL_STATE, action) => {
   return state.merge({
     loadingUtxoInfo: 0
@@ -410,6 +418,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.GENERATE_ADDRESS_FROM_MNEMONIC]: genAddFromMn,
   [Types.FETCH_ADDRESS_INFO]: fetchAddInfo,
   [Types.SUCCESS_FETCH_ADDRESS_INFO]: successFetchAddInfo,
+  [Types.FETCH_XPUB_INFO]: fetchXpubInfo,
   [Types.FETCH_ADDRESS_UTXO]: fetchAddUtxo,
   [Types.SUCCESS_FETCH_ADDRESS_UTXO]: successFetchAddUtxo,
   [Types.RESET_ADDRESSES]: resetAddresses,
