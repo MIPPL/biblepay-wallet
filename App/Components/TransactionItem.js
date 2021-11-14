@@ -50,7 +50,7 @@ class TransactionItem extends PureComponent {
             <Text style={this.props.lightTheme?styles.addressTextLight:styles.addressText}>{this.props.item.to}</Text>
                 <View style={styles.innerContainer}>
             <Text style={this.props.lightTheme?styles.dateTextLight:styles.dateText}>{new Date(this.props.item.blockTime*1000).toLocaleDateString()+' '+new Date(this.props.item.blockTime*1000).toLocaleTimeString()}</Text>
-                    <Text style={[styles.amountText,this.props.lightTheme?styles.textLight:null]}>{shortRepresentation(this.props.item.amount)} <Text style={styles.tickerText}>{AppConfig.coinTicker}</Text></Text>
+                    <Text style={[styles.amountText,(this.props.item.amount>0)?styles.textLightReceived:styles.textLightSent]}>{shortRepresentation(this.props.item.amount)} <Text style={styles.tickerText}>{AppConfig.coinTicker}</Text></Text>
                 </View>
                 </View>
             </View>

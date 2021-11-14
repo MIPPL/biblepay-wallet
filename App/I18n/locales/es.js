@@ -69,7 +69,6 @@ export default
     importMnemonic: 'Importar mnemónico',
     oldFormat:'Anterior',
     newFormat:'Nuevo',
-    importKeyfile: 'Importar fichero de claves SIN',
     next: 'Siguiente',
     security: 'Seguridad',
     writeDownWords: 'Por favor, anote las siguientes palabras:',

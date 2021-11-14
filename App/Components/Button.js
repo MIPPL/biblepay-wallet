@@ -10,8 +10,13 @@ class Button extends PureComponent {
 
   renderLabel () {
     if (this.props.label) {
+      var labelStyle = [ styles.label ]
+      if (this.props.notfilled) 
+            labelStyle.push(this.props.lightTheme?styles.labelLight:styles.labelDark);
+      else  labelStyle.push(styles.labelDark);
+
       return (
-        <Text style={styles.label} numberOfLines={1} ellipsizeMode='tail'>{this.props.label.toUpperCase()} </Text>
+        <Text style={labelStyle} numberOfLines={1} ellipsizeMode='tail'>{this.props.label.toUpperCase()} </Text>
       )
     }
 
@@ -19,7 +24,7 @@ class Button extends PureComponent {
   }
   renderArrow = () => {
     if(this.props.arrow){
-      return (<Text style={styles.label}> &#8594;</Text>)
+      return (<Text style={this.props.lightTheme?styles.labelLight:styles.label}> &#8594;</Text>)
     }
     return null
   }

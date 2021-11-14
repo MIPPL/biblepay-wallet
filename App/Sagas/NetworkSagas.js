@@ -43,7 +43,6 @@ export function * getPriceData (action) {
   if (response.ok) {
     try {
       const price = new PriceData(response.data)
-      console.log('getPriceData ' + JSON.stringify(price.data))
       yield put(NetworkActions.setPriceData(price.data))
     } catch(e) {
       console.log('EX price ' +e.message)

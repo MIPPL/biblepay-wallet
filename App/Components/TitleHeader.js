@@ -42,7 +42,6 @@ class TitleHeader extends PureComponent {
 
     renderIcon = () => {
         if(this.props.title===I18n.t('settings')||this.props.title===I18n.t('export')
-        || this.props.title===I18n.t('send')||this.props.title===I18n.t('receive')
         || this.props.title===I18n.t('transaction')){
             return (<Icon name="ios-close" size={wp(12)} color={this.props.lightTheme?'#000000':'white'} style={{height: wp(12)}} onPress={this.closeSettings}/>
             )

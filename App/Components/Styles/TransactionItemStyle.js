@@ -57,8 +57,11 @@ export default StyleSheet.create({
     fontSize: wp(4),
     color: 'white'
   },
-  textLight: {
-    color: 'black'
+  textLightSent: {
+    color: 'red'
+  },
+  textLightReceived: {
+    color: '#00CC10'
   },
   tickerText: {
     fontFamily: 'MADETOMMY',

@@ -66,8 +66,6 @@ export default
   'initializeWallet': 'Bitte wählen Sie, wie Sie Ihr Wallet einrichten möchten',
   'newAddress': 'Neue Adresse erstellen',
   'importMnemonic': 'Mnemonik (12 Wörter) importieren',
-  'importPrivkey': 'Privaten Schlüssel importieren',
-  'importKeyfile': 'SIN-Keyfile importieren',
   'next': 'Weiter',
   'security': 'Sicherheit',
   'writeDownWords': 'Bitte schreiben Sie die folgenden Wörter auf',

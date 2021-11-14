@@ -66,8 +66,6 @@ export default
   'initializeWallet': 'Пожалуйста выберите вариант инициализации кошелька',
   'newAddress': 'Новый адрес',
   'importMnemonic': 'Импорт мнемонической фразы',
-  'importPrivkey': 'Импорт приватного ключа',
-  'importKeyfile': 'Импорт ключа SIN',
   'next': 'Следующий',
   'security': 'Безопасность',
   'writeDownWords': 'Пожалуйста впишите следующие слова по порядку',

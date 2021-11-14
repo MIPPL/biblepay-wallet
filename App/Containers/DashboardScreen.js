@@ -92,7 +92,7 @@ class DashboardScreen extends Component {
             });
         
         // check if enough account/change addresses are available. If not, create new ones.
-        console.log('@@ addresses: ' + JSON.stringify(this.props.accountAddress) + ',' + JSON.stringify(this.props.changeAddress));
+        //console.log('@@ addresses: ' + JSON.stringify(this.props.accountAddress) + ',' + JSON.stringify(this.props.changeAddress));
         if (  typeof this.props.accountAddress === 'undefined'
         ||    typeof this.props.changeAddress === 'undefined'
         ||    this.props.isAddressPoolEmpty) {
@@ -125,6 +125,7 @@ class DashboardScreen extends Component {
   }
 
   refresh = () => {
+    console.log('@@refresh')
       if (this.props.loadingAddressInfo==1) {
         this.props.fetchAddressInfo()
       } 

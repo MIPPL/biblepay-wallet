@@ -22,7 +22,7 @@ export default StyleSheet.create({
   containerLight: {
     flex: 0,
     borderWidth: 1,
-    borderColor: 'white',
+    borderColor: '#971B20',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -40,6 +40,12 @@ export default StyleSheet.create({
     fontSize: wp(4.5),
     fontWeight: '900',
     fontFamily: 'MADETOMMY-Bold',
+    color: 'white'
+  },
+  labelLight: {
+    color: 'black'
+  },
+  labelDark: {
     color: 'white'
   },
   notFilled: {

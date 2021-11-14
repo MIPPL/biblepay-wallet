@@ -38,11 +38,11 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
     borderColor: '#CCCCCC',
-    backgroundColor: '#111111'
+    backgroundColor: '#EEEEEE'
   },
   wordContainerSelected: {
     borderColor: '#000000',
-    backgroundColor: '#000000'
+    backgroundColor: '#CCCCCC'
   },
   wordsContainer: {
     flexDirection: 'row',
@@ -52,7 +52,7 @@ export default StyleSheet.create({
   },
   word: {
     fontSize: wp(4),
-    color: '#CCCCCC'
+    color: '#111111'
   },
   wordSelected: {
     color: '#000000'
@@ -67,13 +67,13 @@ export default StyleSheet.create({
     marginVertical: hp(6)
   },
   accountSetupPage: {
-    backgroundColor: '#000000',
+    backgroundColor: 'white',
     flex: 1,
     alignItems: 'center'
   },
   accountSubTitle: {
     fontFamily: 'MADETOMMY',
-    color: 'white',
+    color: 'black',
     fontSize: wp(4.5),
     marginTop: hp(1),
     marginBottom: hp(4),
@@ -82,7 +82,7 @@ export default StyleSheet.create({
   },
   accountTitle: {
     fontFamily: 'MADETOMMY-Bold',
-    color: 'white',
+    color: 'black',
     fontSize: wp(5)
   },
   accountButton: {
@@ -98,24 +98,24 @@ export default StyleSheet.create({
     fontFamily: 'MADETOMMY',
     width: wp(20),
     height: hp(6),
-    color: 'white',
+    color: 'black',
     paddingBottom: 2,
     paddingTop: 2,
     fontSize: wp(4),
     fontWeight: '900'
   },
   mnemonic: {
-    backgroundColor: '#111111',
+    backgroundColor: '#EEEEEE',
     fontFamily: 'MADETOMMY',
     width: wp(20),
     height: hp(6),
-    color: 'white',
+    color: 'black',
     paddingBottom: 2,
     paddingTop: 2,
     fontSize: wp(4),
   },
   mnemonicError: {
-    backgroundColor: '#111111',
+    backgroundColor: '#EEEEEE',
     borderBottomWidth: 2,
     borderBottomColor: 'red',
     height: hp(6),
@@ -127,7 +127,7 @@ export default StyleSheet.create({
     fontSize: wp(4),
   },
   mnemonicFocus: {
-    backgroundColor: '#111111',
+    backgroundColor: '#EEEEEE',
     borderBottomWidth: 2,
     borderBottomColor: '#07299E',
     width: wp(20),
@@ -135,7 +135,7 @@ export default StyleSheet.create({
     paddingBottom: 2,
     paddingTop: 2,
     fontFamily: 'MADETOMMY',
-    color: 'white',
+    color: 'black',
     fontSize: wp(4),
   },
   mnemonicContainer: {
@@ -150,7 +150,7 @@ export default StyleSheet.create({
   },
   newMnemonicSubTitle: {
     fontFamily: 'MADETOMMY',
-    color: 'white',
+    color: 'black',
     fontSize: wp(4.5),
     marginTop: hp(1),
     marginBottom: hp(3),
@@ -159,7 +159,7 @@ export default StyleSheet.create({
   },
   mnemonicCheckSubTitle: {
     fontFamily: 'MADETOMMY',
-    color: 'white',
+    color: 'black',
     fontSize: wp(4.5),
     marginTop: hp(1),
     marginBottom: hp(2.5),
@@ -181,8 +181,8 @@ export default StyleSheet.create({
   textInputCheck: {
     width: wp(17),
     borderBottomWidth: 1,
-    borderBottomColor: 'white',
-    color: 'white',
+    borderBottomColor: 'black',
+    color: 'black',
     fontFamily: 'MADETOMMY',
     fontSize: wp(4),
     textAlign: 'center',
@@ -245,7 +245,7 @@ export default StyleSheet.create({
   },
   sinFileSubTitle: {
     fontFamily: 'MADETOMMY',
-    color: 'white',
+    color: 'black',
     fontSize: wp(4.5),
     marginTop: hp(1),
     marginBottom: hp(1),
@@ -253,7 +253,7 @@ export default StyleSheet.create({
     textAlign: 'center'
   },
   textBold: {
-    color: 'white',
+    color: 'black',
     fontSize: wp(10),
     fontWeight : '900',
     marginLeft: wp(4),
@@ -267,7 +267,7 @@ export default StyleSheet.create({
     fontFamily: 'MADETOMMY-Bold'
   },
   textBold2: {
-    color: 'white',
+    color: 'black',
     fontSize: wp(7),
     fontWeight : '900',
     marginLeft: wp(4),

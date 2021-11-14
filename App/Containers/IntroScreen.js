@@ -285,7 +285,7 @@ class IntroScreen extends Component {
   }
 
   renderBackIcon = () =>  {
-      return (  <Icon name="md-arrow-back" size={wp(10)} color="white" style={{height: wp(10), position: 'absolute', top: hp(2), left: hp(2)}} onPress={this.goBack}/>)
+      return (  <Icon name="md-arrow-back" size={wp(10)} color="black" style={{height: wp(10), position: 'absolute', top: hp(2), left: hp(2)}} onPress={this.goBack}/>)
   }
 
 
@@ -296,9 +296,9 @@ class IntroScreen extends Component {
 
   renderLogo = () => {
     if(this.props.lightTheme){
-        return(<LogoDark width={wp(14)} height={wp(14)}/>)
+        return(<LogoDark width={wp(40)} height={wp(40)}/>)
     }else{
-        return(<Logo width={wp(14)} height={wp(14)}/>)
+        return(<Logo width={wp(40)} height={wp(40)}/>)
     }
   }
 
@@ -312,10 +312,10 @@ class IntroScreen extends Component {
         
             <View style={styles.logoContainer}>
               {this.renderLogo()}
-              <Text style={this.props.lightTheme?styles.textBoldLight:styles.textBold}>{AppConfig.coinName.toUpperCase()}</Text>
             </View>
             <View style={{alignItems:'center'}}>
-              <Text style={this.props.lightTheme?styles.textBoldLight2:styles.textBold2}>{I18n.t('unchained').toUpperCase()}</Text>
+              <Text style={styles.textBoldLight}>{AppConfig.coinName.toUpperCase()}</Text>
+              <Text style={styles.textBoldLight2}>{I18n.t('unchained').toUpperCase()}</Text>
             </View>
             <Button label={I18n.t('open')} arrow onPress={()=>{this.setState({page: 1});this.next()}}/>
           </View>
@@ -324,7 +324,7 @@ class IntroScreen extends Component {
                  lightTheme={this.props.lightTheme}
         />
           <View style={styles.accountSetupPage}>
-            <Image source={AccountOptions} style={styles.accountIcon} resizeMode={'stretch'}/>
+            <Image source={AccountOptions} style={styles.accountIcon} width={wp(40)} height={wp(20)} resizeMode={'contain'}/>
             <Text style={styles.accountTitle}>{I18n.t('welcomeAboard')}</Text>
             <Text style={styles.accountSubTitle}>{I18n.t('firstStartWallet')}</Text>
             <Button label={I18n.t('importMnemonic')+ " BIP32 ("+I18n.t('oldFormat')+")"} notfilled onPress={()=>{this.canGoBack=true;this.setState({page: 3});this.props.setDerivationPath(this.BIP32_DERIVATION_PATH);this.next()}} style={styles.accountButton}/>
