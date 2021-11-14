@@ -8,7 +8,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     height: hp(8),
-    backgroundColor: '#06062a',
+    backgroundColor: '#330000',
     marginHorizontal: wp(2.5),
     borderRadius: 5,
     marginBottom: hp(0.5),

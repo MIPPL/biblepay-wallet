@@ -236,7 +236,7 @@ class SettingsScreen extends Component {
                   </View>
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={() => this.goToWebsite('https://www.biblepay.org/community/')} style={[styles.settingContainer,this.props.lightTheme?styles.settingContainerLight1:styles.settingContainerDark1]}>
+              <TouchableOpacity onPress={() => this.goToWebsite('https://www.biblepay.org/community/')} style={[styles.settingContainer,this.props.lightTheme?styles.settingContainerLight2:styles.settingContainerDark2]}>
                   <View style={styles.settingInnerContainer}>
                   <Image source={this.props.lightTheme?SocialMediaIcon:SocialMediaIcon} style={styles.icon} resizeMode={'contain'}/>
                       <View style={styles.titleWrapper}>
@@ -245,7 +245,7 @@ class SettingsScreen extends Component {
                   </View>
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={() => this.goToWebsite('https://www.biblepay.org')} style={[styles.settingContainer,this.props.lightTheme?styles.settingContainerLight2:styles.settingContainerDark2]}>
+              <TouchableOpacity onPress={() => this.goToWebsite('https://www.biblepay.org')} style={[styles.settingContainer,this.props.lightTheme?styles.settingContainerLight1:styles.settingContainerDark1]}>
                   <View style={styles.settingInnerContainer}>
                       <Image source={this.props.lightTheme?WebsiteIcon:WebsiteIcon} style={styles.icon} resizeMode={'contain'}/>
                       <View style={styles.titleWrapper}>
@@ -282,7 +282,7 @@ class SettingsScreen extends Component {
                     <Image source={this.props.lightTheme?ExplorerIconLight:ExplorerIcon} style={styles.icon} resizeMode={'contain'}/>
                     <View>
                         <View style={styles.titleWrapper}>
-                        <Text style={[styles.title,this.props.lightTheme?styles.titleLight:null]}>Explorer</Text>
+                        <Text style={[styles.title,this.props.lightTheme?styles.titleLight:null]}>Foundation</Text>
                         </View>
                         <Text style={[styles.subTitle,this.props.lightTheme?styles.subTitleLight:null]}>{this.props.explorerApi}</Text>
                     </View>

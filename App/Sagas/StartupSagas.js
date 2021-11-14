@@ -11,5 +11,5 @@ export function * startup (action) {
     yield put(AccountActions.fetchAddressUtxo())
     yield put(AccountActions.rebroadcastTx(true))
 
-    yield put(NetworkActions.fetchNetworkStats())
+    yield put(NetworkActions.fetchPriceData())
 }

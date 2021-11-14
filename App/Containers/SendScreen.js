@@ -45,15 +45,6 @@ import { NetworkSelectors } from '../Redux/NetworkRedux'
 import AppConfig from '../Config/AppConfig'
 import I18n from '../I18n'
 
-const weekday = new Array(7);
-weekday[0] = I18n.t('sunday');
-weekday[1] = I18n.t('monday');
-weekday[2] = I18n.t('tuesday');
-weekday[3] = I18n.t('wednesday');
-weekday[4] = I18n.t('thursday');
-weekday[5] = I18n.t('friday');
-weekday[6] = I18n.t('saturday');
-
 class SendScreen extends Component {
 
     state = {
@@ -184,11 +175,6 @@ class SendScreen extends Component {
                 <Header title={I18n.t('send')} parentComponentId={this.props.componentId}/>
                 <View style={styles.innerContainerWrapper}>
                     <View style={this.props.lightTheme?styles.innerContainerLight:styles.innerContainer}>
-                        <View style={{alignItems:'center', marginTop: hp(-3)}}>
-                            {this.props.lightTheme&&<SendMoneyLight width={wp(12)} height={wp(12)}/>}
-                            {!this.props.lightTheme&&<SendMoney width={wp(12)} height={wp(12)}/>}
-                        </View>
-
                         <View style={styles.textInputContainer}>
                             <Text style={this.props.lightTheme?styles.balanceTextLight:styles.balanceText}>{I18n.t('yourBalanceStr')}</Text>
                             <Text style={this.props.lightTheme?styles.balanceTextBigLight:styles.balanceTextBig}>{normalRepresentation(this.props.balance).toFixed(2)} {AppConfig.coinTicker}</Text>
@@ -223,32 +209,15 @@ class SendScreen extends Component {
                                 <Text></Text>
                             </View>
                             <View style={{alignItems: 'flex-end'}}>
-                                <Text style={this.props.lightTheme?styles.labelTextLight2:styles.labelText2}>{this.props.stats.usdPrice&&!isNaN(this.state.amount)?(this.props.stats.usdPrice*this.state.amount).toFixed(2):Number.parseFloat(0.0).toFixed(2)} USD</Text>
-                                <Text style={this.props.lightTheme?styles.labelTextLight2:styles.labelText2}>{this.props.stats.lastPrice&&!isNaN(this.state.amount)?(this.props.stats.lastPrice*this.state.amount).toFixed(8):Number.parseFloat(0.0).toFixed(8)} BTC</Text>                              
+                                <Text style={this.props.lightTheme?styles.labelTextLight2:styles.labelText2}>{this.props.priceData&&this.props.priceData.BBPUSD&&!isNaN(this.state.amount)?(this.props.priceData.BBPUSD*this.state.amount).toFixed(2):Number.parseFloat(0.0).toFixed(2)} USD</Text>
+                                <Text style={this.props.lightTheme?styles.labelTextLight2:styles.labelText2}>{this.props.priceData&&this.props.priceData.BTCUSD&&!isNaN(this.state.amount)?((this.props.priceData.BBPUSD*this.state.amount)/this.props.priceData.BTCUSD).toFixed(8):Number.parseFloat(0.0).toFixed(8)} BTC</Text>                              
                                 <TouchableOpacity onPress={this.setMaxAmount} style={this.props.lightTheme?styles.maxButtonLight:styles.maxButton}>
                                     <Text style={this.props.lightTheme?styles.maxTextLight:styles.maxText}>{I18n.t('max')}</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
                         <View style={styles.seperatorBottom,this.props.lightTheme?styles.borderLight:null}/>
-                        <View style={styles.dateContainer}>
-                            <View>
-                                <Text style={this.props.lightTheme?styles.dateTextTitleLight:styles.dateTextTitle}>
-                                    {weekday[new Date().getDay()].toUpperCase()}
-                                </Text>
-                                <Text style={this.props.lightTheme?styles.dateTextLight:styles.dateText}>
-                                    {new Date().toLocaleDateString()}
-                                </Text>
-                            </View>
-                            <View style={{alignItems: 'flex-end'}}>
-                                <Text style={this.props.lightTheme?styles.dateTextTitleLight:styles.dateTextTitle}>
-                                    {I18n.t('time').toUpperCase()}
-                                </Text>
-                                <Text style={this.props.lightTheme?styles.dateTextLight:styles.dateText}>
-                                    {new Date().toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit'}).replace(/(:\d{2})$/, "")}
-                                </Text>
-                            </View>
-                        </View>
+                        
                     </View>
                     <Button label={I18n.t('send')} arrow onPress={this.estimateFee} style={styles.button}/>
                 </View>
@@ -289,6 +258,7 @@ const mapStateToProps = (state) => {
         utxo: AccountSelectors.getUtxo(state),
         lightTheme: GlobalSelectors.getUseLightTheme(state),
         stats: NetworkSelectors.getStats(state),
+        priceData: NetworkSelectors.getPriceData(state),
     };
 };
 

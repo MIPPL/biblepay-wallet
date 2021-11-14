@@ -32,6 +32,7 @@ import Header from '../Components/TitleHeader';
 
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import normalRepresentation from '../Helpers/normalRepresentation';
+import shortRepresentation from '../Helpers/shortRepresentation';
 
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview'
 import {GlobalSelectors} from '../Redux/GlobalRedux';
@@ -116,7 +117,7 @@ class TransactionDetailScreen extends Component {
                     <View style={styles.innerContainerRow30}>
                         <View>
                             <Text style={[this.props.lightTheme?styles.txLabelSmallLight:styles.txLabelSmall, styles.extraLabelMargin]}>{I18n.t('amount')}</Text>
-                            <Text style={[this.props.lightTheme?styles.textSubTitleLight:styles.textSubTitle, styles.extraLabelMargin]}>{normalRepresentation(this.props.transaction.amount)} {AppConfig.coinTicker}</Text>
+                            <Text style={[this.props.lightTheme?styles.textSubTitleLight:styles.textSubTitle, styles.extraLabelMargin]}>{shortRepresentation(this.props.transaction.amount)} {AppConfig.coinTicker}</Text>
                         </View>
                     </View>
                     <View style={styles.innerContainerRow30}>

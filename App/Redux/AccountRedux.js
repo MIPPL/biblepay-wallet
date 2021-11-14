@@ -72,9 +72,9 @@ export const AccountSelectors = {
       if(add.transactions)  {
         try {
           add.transactions.forEach(tx => {
-            console.log('@@@ getTransactions: ' + tx.txid);
+            //console.log('@@@ getTransactions: ' + tx.txid);
             if (transactions.findIndex(t => t.txid === tx.txid)!=-1) { // discard repeated transactions (from wallet addresses)
-              console.log('discarding repeated transaction: '+tx.txid)
+              //console.log('discarding repeated transaction: '+tx.txid)
               throw BreakException;
             }
             var to = ''
@@ -94,7 +94,7 @@ export const AccountSelectors = {
               if(vin.addresses && vin.addresses[0]){
                 var ownAddress = state.account.addresses.find( (item, index) => { return item.address == vin.addresses[0]; })
                 if (typeof ownAddress !== 'undefined') {  // own address
-                  console.log('VIN own address: '+vin.addresses[0])
+                  //console.log('VIN own address: '+vin.addresses[0])
                   txObj.from = add.address
                   txObj.amount-=parseInt(vin.value)
                 }
@@ -105,7 +105,7 @@ export const AccountSelectors = {
               if(vout.addresses && vout.addresses[0]){
                 var ownAddress = state.account.addresses.find( (item, index) => { return item.address == vout.addresses[0]; })
                 if (typeof ownAddress !== 'undefined') {  // own address
-                  console.log('VOUT external address: '+vout.addresses[0])
+                  //console.log('VOUT external address: '+vout.addresses[0])
                   txObj.amount+=parseInt(vout.value)
                 }
               }
@@ -294,7 +294,6 @@ export const successFetchAddInfo = (state = INITIAL_STATE, action) => {
       }
 
     })
-
     return state.merge({
       addresses,
       loadingAddressInfo: loading

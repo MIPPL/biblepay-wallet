@@ -125,7 +125,7 @@ class DashboardScreen extends Component {
   }
 
   refresh = () => {
-    console.log('@@refresh')
+      //console.log('@@refresh ' + this.props.loadingAddressInfo)
       if (this.props.loadingAddressInfo==1) {
         this.props.fetchAddressInfo()
       } 
@@ -162,8 +162,8 @@ class DashboardScreen extends Component {
             </View>
             <View style={styles.balanceContainerItem}>
               <Text style={this.props.lightTheme?styles.balanceTextBigLight:styles.balanceTextBig}>{normalRepresentation(this.props.balance).toFixed(2)} {AppConfig.coinTicker}</Text>
-              <Text style={this.props.lightTheme?styles.balanceTextLight:styles.balanceText}>{this.props.priceData.BBPUSD?(this.props.priceData.BBPUSD*this.props.balance/100000000).toFixed(2):Number.parseFloat(0.0).toFixed(2)} USD</Text>
-              <Text style={this.props.lightTheme?styles.balanceTextLight:styles.balanceText}>{this.props.priceData.BTCUSD?((this.props.priceData.BBPUSD*this.props.balance/100000000)/this.props.priceData.BTCUSD).toFixed(8):Number.parseFloat(0.0).toFixed(8)} BTC</Text>
+              <Text style={this.props.lightTheme?styles.balanceTextLight:styles.balanceText}>{this.props.priceData&&this.props.priceData.BBPUSD?(this.props.priceData.BBPUSD*this.props.balance/100000000).toFixed(2):Number.parseFloat(0.0).toFixed(2)} USD</Text>
+              <Text style={this.props.lightTheme?styles.balanceTextLight:styles.balanceText}>{this.props.priceData&&this.props.priceData.BTCUSD?((this.props.priceData.BBPUSD*this.props.balance/100000000)/this.props.priceData.BTCUSD).toFixed(8):Number.parseFloat(0.0).toFixed(8)} BTC</Text>
             </View>
           </View>
         <View style={styles.latestTxContainer}>
@@ -182,7 +182,7 @@ class DashboardScreen extends Component {
   renderLoadingIndicator = () => {
     if ( this.props.loadingAddressInfo<1 ) {
         return (
-          <View style={{alignItems:'center'}}>
+          <View style={{alignItems:'center', marginTop:hp(3)}}>
             <ProgressBar progress={this.props.loadingAddressInfo} 
                 width={wp(80)} 
                 color='#971B20'

@@ -118,7 +118,7 @@ export default StyleSheet.create({
     marginHorizontal: wp(5)
   },
   containerBorderLight: {
-    borderColor: '#4F9FDE',
+    borderColor: '#971B20',
     borderRadius: 10,
     borderWidth: 2,
     marginTop: hp(4),

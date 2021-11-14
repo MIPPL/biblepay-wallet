@@ -15,13 +15,16 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
   },
   settingContainerDark1: {
-    backgroundColor: '#002066'
+    backgroundColor: '#971B20'
   },
   settingContainerDark2: {
-    backgroundColor: '#001440'
+    backgroundColor: '#660000'
   },
   settingContainerLight1: {
-    backgroundColor: '#99d9ea'
+    backgroundColor: 'white',
+    borderColor: '#971B20',
+    borderTopWidth: 2,
+    borderBottomWidth: 2,
   },
   settingContainerLight2: {
     backgroundColor: 'white',
