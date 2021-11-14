@@ -70,35 +70,53 @@ export const AccountSelectors = {
 
     state.account.addresses.forEach(add=>{
       if(add.transactions)  {
-        add.transactions.forEach(tx => {
-        var to = ''
-        to = tx.vout[0].addresses[0];
-        
-        let txObj = {
-          amount: 0,
-          to: to,
-          txid: tx.txid,
-          confirmations: tx.confirmations,
-          blockTime: tx.blockTime,
-          from: '',
-          broadcasted: true
+        try {
+          add.transactions.forEach(tx => {
+            console.log('@@@ getTransactions: ' + tx.txid);
+            if (transactions.findIndex(t => t.txid === tx.txid)!=-1) { // discard repeated transactions (from wallet addresses)
+              console.log('discarding repeated transaction: '+tx.txid)
+              throw BreakException;
+            }
+            var to = ''
+            to = tx.vout[0].addresses[0];
+            
+            let txObj = {
+              amount: 0,
+              to: to,
+              txid: tx.txid,
+              confirmations: tx.confirmations,
+              blockTime: tx.blockTime,
+              from: '',
+              broadcasted: true
+            }
+
+            tx.vin.forEach(vin =>{
+              if(vin.addresses && vin.addresses[0]){
+                var ownAddress = state.account.addresses.find( (item, index) => { return item.address == vin.addresses[0]; })
+                if (typeof ownAddress !== 'undefined') {  // own address
+                  console.log('VIN own address: '+vin.addresses[0])
+                  txObj.from = add.address
+                  txObj.amount-=parseInt(vin.value)
+                }
+              }
+
+            })
+            tx.vout.forEach(vout =>{
+              if(vout.addresses && vout.addresses[0]){
+                var ownAddress = state.account.addresses.find( (item, index) => { return item.address == vout.addresses[0]; })
+                if (typeof ownAddress !== 'undefined') {  // own address
+                  console.log('VOUT external address: '+vout.addresses[0])
+                  txObj.amount+=parseInt(vout.value)
+                }
+              }
+            })
+            transactions.push(txObj)
+          })
         }
-
-        tx.vin.forEach(vin =>{
-          if(vin.addresses&&vin.addresses.includes(add.address)){
-            txObj.from = add.address
-            txObj.amount-=parseInt(vin.value)
-          }
-
-        })
-        tx.vout.forEach(vout =>{
-          if(vout.addresses&&vout.addresses.includes(add.address)){
-            txObj.amount+=parseInt(vout.value)
-          }
-        })
-        transactions.push(txObj)
-      })
-    }
+        catch (e) {
+          //if (e !== BreakException) throw e;
+        }
+      }
     })
 
     // sort transactions coming from different addresses
