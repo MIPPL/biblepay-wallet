@@ -90,26 +90,32 @@ class DashboardScreen extends Component {
                 }
 
             });
-        
-        // check if enough account/change addresses are available. If not, create new ones.
-        //console.log('@@ addresses: ' + JSON.stringify(this.props.accountAddress) + ',' + JSON.stringify(this.props.changeAddress));
-        if (  typeof this.props.accountAddress === 'undefined'
-        ||    typeof this.props.changeAddress === 'undefined'
-        ||    this.props.isAddressPoolEmpty) {
-          console.log("!! new addresses needed " + this.props.addresses.length);
-          Keychain.getInternetCredentials(this.props.addresses[0].encryptedPrivKey).then(  (creds) => {
-            this.props.generateNewAddresses( creds.username, creds.password, (error) => {
-              if (error)  {
-                  console.log('!! error ' + error); 
-              }
-              else    {
-                  console.log('!! success ' + this.props.addresses.length);
-                  this.props.fetchAddressInfo();
-                  this.props.fetchAddressUtxo()
-              }
-            })  
+    }
+
+    checkAvaliableAddresses = () => {
+      // check if enough account/change addresses are available. If not, create new ones.
+      if (  typeof this.props.accountAddress === 'undefined'
+      ||    typeof this.props.changeAddress === 'undefined'
+      ||    this.props.isAddressPoolEmpty) {
+        console.log("!! new addresses needed " + this.props.addresses.length);
+        Keychain.getInternetCredentials(this.props.addresses[0].encryptedPrivKey).then(  (creds) => {
+          this.props.generateNewAddresses( creds.username, creds.password, (error) => {
+            if (error)  {
+                // console.log
+            }
+            else    {
+                setTimeout(()=>{
+                  this.refreshAddressInfo()
+                },1000)
+            }
           })  
-        }
+        })  
+      }
+    }
+
+    refreshAddressInfo = () =>  {
+      this.props.fetchAddressInfo();
+      this.props.fetchAddressUtxo();
     }
 
     componentDidDisappear() {
@@ -189,6 +195,9 @@ class DashboardScreen extends Component {
                 />
           </View>
         );
+    }
+    else {
+      this.checkAvaliableAddresses();
     }
     return null;
   };

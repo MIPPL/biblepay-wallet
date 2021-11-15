@@ -67,7 +67,7 @@ export default StyleSheet.create({
     fontFamily: 'OpenSans-Bold'
   },
   text: {
-    fontFamily: 'OpenSans'
+    fontFamily: 'OpenSans-Regular'
   },
   seperatorTop: {
     width: wp(85),
@@ -120,7 +120,7 @@ export default StyleSheet.create({
     paddingBottom: hp(1),
     paddingTop: hp(1.2),
     paddingLeft: hp(2),
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: 'white',
     borderRadius: 10,
     textAlign: 'right',
@@ -133,7 +133,7 @@ export default StyleSheet.create({
     paddingBottom: hp(1),
     paddingTop: hp(1.2),    
     paddingLeft: hp(2),
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: 'black',
     borderRadius: 10,
     textAlign: 'right',
@@ -148,14 +148,14 @@ export default StyleSheet.create({
     bottom: 1,
   },
   addressText: {
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     fontSize: wp(4),
     marginTop: hp(1),
     color: 'white'
   },
   addressTextLight: {
     color: 'black',
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     fontSize: wp(4),
     marginTop: hp(1),
   },
@@ -192,13 +192,13 @@ export default StyleSheet.create({
     marginTop: hp(4)
   },
   textAmountHint: {
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     fontSize: wp(4),
     color: '#a2a5b7',
     marginTop: hp(1)
   },
   textAmountHintLight: {
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     fontSize: wp(4),
     color: 'black',
     marginTop: hp(1)
@@ -207,28 +207,28 @@ export default StyleSheet.create({
     marginTop: hp(2),
     marginBottom: hp(1),
     fontSize: wp(4),
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: '#a2a5b7',
     textAlign: 'left'
   },
   labelTextLight: {
     marginBottom: hp(1),
     fontSize: wp(4),
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: 'black',
     textAlign: 'left'
   },
   labelText2: {
     marginBottom: wp(2),
     fontSize: wp(5),
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: '#a2a5b7',
     textAlign: 'left'
   },
   labelTextLight2: {
     marginBottom: wp(2),
     fontSize: wp(5),
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: 'black',
     textAlign: 'left'
   },

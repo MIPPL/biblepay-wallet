@@ -327,8 +327,8 @@ class IntroScreen extends Component {
             <Image source={AccountOptions} style={styles.accountIcon} width={wp(40)} height={wp(20)} resizeMode={'contain'}/>
             <Text style={styles.accountTitle}>{I18n.t('welcomeAboard')}</Text>
             <Text style={styles.accountSubTitle}>{I18n.t('firstStartWallet')}</Text>
-            <Button label={I18n.t('importMnemonic')+ " BIP32 ("+I18n.t('oldFormat')+")"} notfilled onPress={()=>{this.canGoBack=true;this.setState({page: 3});this.props.setDerivationPath(this.BIP32_DERIVATION_PATH);this.next()}} style={styles.accountButton}/>
-            <Button label={I18n.t('importMnemonic')+ " BIP44 ("+I18n.t('newFormat')+")"} notfilled onPress={()=>{this.canGoBack=true;this.setState({page: 3});this.props.setDerivationPath(this.BIP44_DERIVATION_PATH);this.next()}} style={styles.accountButton}/>
+            <Button label={I18n.t('importMnemonic')+ " BIP32 "+I18n.t('oldFormat')+""} notfilled onPress={()=>{this.canGoBack=true;this.setState({page: 3});this.props.setDerivationPath(this.BIP32_DERIVATION_PATH);this.next()}} style={styles.accountButton}/>
+            <Button label={I18n.t('importMnemonic')+ " BIP44 "+I18n.t('newFormat')+""} notfilled onPress={()=>{this.canGoBack=true;this.setState({page: 3});this.props.setDerivationPath(this.BIP44_DERIVATION_PATH);this.next()}} style={styles.accountButton}/>
             <Button label={I18n.t('newWallet')} onPress={()=>{this.canGoBack=true;this.setState({page: 2 });this.props.setDerivationPath(this.BIP44_DERIVATION_PATH);this.next()}} style={styles.accountButton}/>
           </View>
           {this.state.page===2&&<View style={{flex:1,alignItems:'center'}}>

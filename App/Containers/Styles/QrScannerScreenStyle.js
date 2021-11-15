@@ -23,7 +23,7 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   notAuthText: {
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     fontSize: wp(5),
     color: 'white'
   },

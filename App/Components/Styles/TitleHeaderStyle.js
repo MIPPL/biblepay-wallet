@@ -16,7 +16,7 @@ export default StyleSheet.create({
   },
   text: {
     color: 'white',
-    fontFamily: 'OpenSans'
+    fontFamily: 'OpenSans-Regular'
   },
   textBold: {
     color: 'white',
@@ -26,7 +26,7 @@ export default StyleSheet.create({
   },
   textLight: {
     color: '#000000',
-    fontFamily: 'OpenSans'
+    fontFamily: 'OpenSans-Regular'
   },
   textBoldLight: {
     fontSize: wp(6),

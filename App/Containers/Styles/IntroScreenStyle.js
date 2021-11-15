@@ -72,7 +72,7 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   accountSubTitle: {
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: 'black',
     fontSize: wp(4.5),
     marginTop: hp(1),
@@ -95,7 +95,7 @@ export default StyleSheet.create({
     marginBottom: hp(4)
   },
   mnemonicBold: {
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     width: wp(20),
     height: hp(6),
     color: 'black',
@@ -106,7 +106,7 @@ export default StyleSheet.create({
   },
   mnemonic: {
     backgroundColor: '#EEEEEE',
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     width: wp(20),
     height: hp(6),
     color: 'black',
@@ -122,7 +122,7 @@ export default StyleSheet.create({
     width: wp(20),
     paddingBottom: 2,
     paddingTop: 2,
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: 'red',
     fontSize: wp(4),
   },
@@ -134,7 +134,7 @@ export default StyleSheet.create({
     height: hp(6),
     paddingBottom: 2,
     paddingTop: 2,
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: 'black',
     fontSize: wp(4),
   },
@@ -149,7 +149,7 @@ export default StyleSheet.create({
     width: wp(85),
   },
   newMnemonicSubTitle: {
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: 'black',
     fontSize: wp(4.5),
     marginTop: hp(1),
@@ -158,7 +158,7 @@ export default StyleSheet.create({
     textAlign: 'center'
   },
   mnemonicCheckSubTitle: {
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: 'black',
     fontSize: wp(4.5),
     marginTop: hp(1),
@@ -183,7 +183,7 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: 'black',
     color: 'black',
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     fontSize: wp(4),
     textAlign: 'center',
     paddingBottom: 0,
@@ -208,7 +208,7 @@ export default StyleSheet.create({
     color: '#f2f4fa',
     fontSize: wp(4),
     paddingBottom: wp(1),
-    fontFamily: 'OpenSans'
+    fontFamily: 'OpenSans-Regular'
   },
   privateKeyPageContainer: {
     flex: 1,
@@ -224,7 +224,7 @@ export default StyleSheet.create({
     marginBottom: hp(4)
   },
   sinFileImportText: {
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: '#a2a5b7',
     fontSize: wp(5),
     marginTop: hp(2),
@@ -244,7 +244,7 @@ export default StyleSheet.create({
     marginBottom: hp(2)
   },
   sinFileSubTitle: {
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: 'black',
     fontSize: wp(4.5),
     marginTop: hp(1),

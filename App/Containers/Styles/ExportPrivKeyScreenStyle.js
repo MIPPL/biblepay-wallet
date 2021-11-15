@@ -58,7 +58,7 @@ export default StyleSheet.create({
     fontFamily: 'OpenSans-Bold'
   },
   text: {
-    fontFamily: 'OpenSans'
+    fontFamily: 'OpenSans-Regular'
   },
   seperatorTop: {
     width: wp(85),
@@ -183,7 +183,7 @@ export default StyleSheet.create({
     marginTop: hp(1)
   },
   privKeyText: {
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     fontSize: wp(4),
     color: '#971B20',
     marginTop: hp(1),
@@ -193,7 +193,7 @@ export default StyleSheet.create({
 
   },
   privKeyTextLight: {
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     fontSize: wp(4),
     color: 'black',
     marginTop: hp(1),

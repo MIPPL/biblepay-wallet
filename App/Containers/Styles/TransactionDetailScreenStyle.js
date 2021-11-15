@@ -10,7 +10,7 @@ export default StyleSheet.create({
     marginTop: hp(3),
     marginLeft: hp(3),
     marginRight: hp(3),
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     textAlign: 'center',
     fontSize: wp(4.5),
     color: 'white'
@@ -23,24 +23,24 @@ export default StyleSheet.create({
   },
   txLabelSmall:  {
     color: '#a2a5b7',
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     textAlign: 'left',
     fontSize: wp(3),
     paddingHorizontal: wp(4)
   },
   txLabelSmallLight:  {
     color: 'black',
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     textAlign: 'left',
     fontSize: wp(3),
     paddingHorizontal: wp(4)
   },
   tickerText: {
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: '#9D9FBE',
   },
   copyLabel: {
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: '#9D9FBE',
     textAlign: 'center',
   },
@@ -97,12 +97,12 @@ export default StyleSheet.create({
     color: 'black'
   },
   textSubTitle: {
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: 'white',
     fontSize: wp(4),
   },
   textSubTitleLight: {
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: 'black',
     fontSize: wp(4),
   },

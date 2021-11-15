@@ -40,12 +40,12 @@ export default StyleSheet.create({
     fontSize: wp(3.2),
   },
   dateText: {
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: '#9D9FBE',
     fontSize: wp(3.2),
   },
   dateTextLight: {
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: '#333333',
     fontSize: wp(3.2),
   },
@@ -53,7 +53,7 @@ export default StyleSheet.create({
     marginRight: wp(4)
   },
   amountText: {
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     fontSize: wp(4),
     color: 'white'
   },
@@ -64,7 +64,7 @@ export default StyleSheet.create({
     color: '#00CC10'
   },
   tickerText: {
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: '#9D9FBE',
   }
 })

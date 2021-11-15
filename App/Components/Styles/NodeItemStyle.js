@@ -30,35 +30,35 @@ export default StyleSheet.create({
     justifyContent: 'flex-start'
   },
   addressText: {
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: 'white',
     fontSize: wp(3.2),
   },
   addressTextLight: {
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: 'black',
     fontSize: wp(3.2),
   },
   labelText: {
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: 'white',
     fontSize: wp(3),
     paddingRight: wp(2)
   },
   labelTextLight: {
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: '#7F7F7F',
     fontSize: wp(3),
     paddingRight: wp(2)
   },
   dateText: {
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: '#004FFF',
     fontSize: wp(3),
     paddingRight: wp(2)
   },
   dateTextLight: {
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: '#004FFF',
     fontSize: wp(3),
     paddingRight: wp(2)
@@ -67,7 +67,7 @@ export default StyleSheet.create({
     marginRight: wp(4)
   },
   amountText: {
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     fontSize: wp(3),
   },
   posAmountText: {
@@ -77,7 +77,7 @@ export default StyleSheet.create({
     color: '#bc8f3a'
   },
   tickerText: {
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: '#9D9FBE',
   }
 })

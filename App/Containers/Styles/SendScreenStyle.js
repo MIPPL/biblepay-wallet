@@ -75,7 +75,7 @@ export default StyleSheet.create({
   balanceText: {
     fontSize: wp(4),
     color: '#a2a5b7',
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     textAlign: 'center',
     marginTop: hp(2)
   },
@@ -93,7 +93,7 @@ export default StyleSheet.create({
   balanceTextLight: {
     fontSize: wp(5),
     color: '#000000',
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     textAlign: 'center',
     marginTop: hp(2),
   },
@@ -109,7 +109,7 @@ export default StyleSheet.create({
     fontFamily: 'OpenSans-Bold'
   },
   text: {
-    fontFamily: 'OpenSans'
+    fontFamily: 'OpenSans-Regular'
   },
   seperatorTop: {
     width: wp(85),
@@ -149,14 +149,14 @@ export default StyleSheet.create({
   labelText: {
     marginBottom: hp(1),
     fontSize: wp(4),
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: '#a2a5b7',
     textAlign: 'left'
   },
   labelTextLight: {
     marginBottom: hp(2),
     fontSize: wp(4),
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: 'black',
     textAlign: 'left'
   },
@@ -164,7 +164,7 @@ export default StyleSheet.create({
     marginBottom: hp(3),
     marginTop: hp(-2),
     fontSize: wp(5),
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: '#a2a5b7',
     textAlign: 'left'
   },
@@ -172,7 +172,7 @@ export default StyleSheet.create({
     marginBottom: hp(2),
     marginTop: hp(-2),
     fontSize: wp(5),
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: 'black',
     textAlign: 'left'
   },
@@ -183,7 +183,7 @@ export default StyleSheet.create({
     paddingBottom: hp(1),
     paddingTop: hp(1.2),
     paddingLeft: hp(2),
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: 'white',
     borderRadius: 10,
     textAlign: 'right',
@@ -196,7 +196,7 @@ export default StyleSheet.create({
     paddingBottom: hp(1),
     paddingTop: hp(1.2),    
     paddingLeft: hp(2),
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: 'black',
     borderRadius: 10,
     textAlign: 'right',
@@ -209,7 +209,7 @@ export default StyleSheet.create({
     paddingBottom: hp(1),
     paddingTop: hp(1.2),
     paddingLeft: wp(2),
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: 'white',
     fontSize: wp(4),
     alignSelf: 'flex-start'
@@ -221,7 +221,7 @@ export default StyleSheet.create({
     paddingBottom: hp(1),
     paddingTop: hp(1.2),    
     paddingLeft: hp(2),
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: 'black',
     fontSize: wp(4),
   },
@@ -273,12 +273,12 @@ export default StyleSheet.create({
     color: 'black'
   },
   addressText: {
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: 'white',
     fontSize: wp(3.5)
   },
   addressTextLight: {
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: 'black',
     fontSize: wp(3.5)
   },

@@ -29,7 +29,7 @@ export default StyleSheet.create({
   balanceText: {
     fontSize: wp(4),
     color: '#a2a5b7',
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     textAlign: 'right'
   },
   balanceTextBold: {
@@ -44,7 +44,7 @@ export default StyleSheet.create({
   balanceTextLight: {
     fontSize: wp(4),
     color: '#000000',
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     textAlign: 'right'
   },
   balanceTextBigLight: {
@@ -78,7 +78,7 @@ export default StyleSheet.create({
   sendReceiveText: {
     marginTop: hp(1),
     color: 'white',
-    fontFamily: 'OpenSans'
+    fontFamily: 'OpenSans-Regular'
   },
   latestTxContainer: {
     marginLeft: wp(6),
@@ -88,11 +88,11 @@ export default StyleSheet.create({
   latestTxText: {
     fontSize: wp(5),
     color: 'white',
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
   },
   latestTxTextLight: {
     fontSize: wp(5),
     color: 'black',
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
   }
 })

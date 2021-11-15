@@ -68,7 +68,7 @@ export default StyleSheet.create({
   },
   stylePinCodeTextButtonCircle: {
     fontSize: wp(8),
-    fontFamily: 'OpenSans',
+    fontFamily: 'OpenSans-Regular',
     color: '#ffffff'
   },
   stylePinCodeTextTitle: {
