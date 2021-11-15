@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* biblepayWalletTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* biblepayWalletTests.m */; };
+		0639193827427F7100E1DC9F /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0639193627427F7100E1DC9F /* OpenSans-Regular.ttf */; };
+		0639193927427F7100E1DC9F /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0639193727427F7100E1DC9F /* OpenSans-Bold.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -47,6 +49,8 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* biblepayWalletTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = biblepayWalletTests.m; sourceTree = "<group>"; };
 		0419CAAE08E84143BFBAE8BA /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
+		0639193627427F7100E1DC9F /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Regular.ttf"; path = "../App/Fonts/OpenSans-Regular.ttf"; sourceTree = "<group>"; };
+		0639193727427F7100E1DC9F /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Bold.ttf"; path = "../App/Fonts/OpenSans-Bold.ttf"; sourceTree = "<group>"; };
 		06A3EE497D0412B6273BA903 /* Pods-biblepayWallet-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-biblepayWallet-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-biblepayWallet-tvOSTests/Pods-biblepayWallet-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		12E6B4BA314C6881E534D14D /* libPods-biblepayWallet-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-biblepayWallet-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1348FCA595FA7B4E7F3459BA /* Pods-biblepayWalletTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-biblepayWalletTests.release.xcconfig"; path = "Target Support Files/Pods-biblepayWalletTests/Pods-biblepayWalletTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -172,6 +176,8 @@
 		64BD9A09BB3E4488B43295B1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0639193727427F7100E1DC9F /* OpenSans-Bold.ttf */,
+				0639193627427F7100E1DC9F /* OpenSans-Regular.ttf */,
 				B0B04AE1624A4E7EA0F36F32 /* MADE-TOMMY-Bold.ttf */,
 				93CED71831F747FA847FE8F5 /* MADE-TOMMY-Regular.ttf */,
 				4A65BE9E62BE4C5E80AF3D92 /* AntDesign.ttf */,
@@ -386,7 +392,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0639193827427F7100E1DC9F /* OpenSans-Regular.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				0639193927427F7100E1DC9F /* OpenSans-Bold.ttf in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				4EFA77B92F6D4705ADCF0B20 /* MADE-TOMMY-Bold.ttf in Resources */,
 				81B39E765F8047E0BE1B9BE8 /* MADE-TOMMY-Regular.ttf in Resources */,
@@ -726,13 +734,13 @@
 			baseConfigurationReference = EFE3E39775F2AED5EEDCF2A5 /* Pods-biblepayWallet.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 400;
+				CURRENT_PROJECT_VERSION = 401;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = CSZ4WJT8ZH;
 				INFOPLIST_FILE = biblepayWallet/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 4.0.0;
+				MARKETING_VERSION = 4.0.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -750,12 +758,12 @@
 			baseConfigurationReference = B43D52E43277480725D363EA /* Pods-biblepayWallet.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 400;
+				CURRENT_PROJECT_VERSION = 401;
 				DEVELOPMENT_TEAM = CSZ4WJT8ZH;
 				INFOPLIST_FILE = biblepayWallet/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 4.0.0;
+				MARKETING_VERSION = 4.0.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
