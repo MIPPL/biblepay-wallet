@@ -53,7 +53,7 @@ export default StyleSheet.create({
     marginTop: hp(-11)
   },
   titleBold: {
-    fontFamily: 'MADETOMMY-Bold',
+    fontFamily: 'OpenSans-Bold',
     fontSize: wp(4),
     color: 'white'
   },
@@ -61,7 +61,7 @@ export default StyleSheet.create({
     color: 'white'
   },
   title: {
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     fontSize: wp(4),
     color: 'white'
   },
@@ -69,7 +69,7 @@ export default StyleSheet.create({
     color: 'black'
   },
   subTitle: {
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     color: '#a2a5b7',
     fontSize: wp(3),
     marginTop: hp(0.5)
@@ -78,7 +78,7 @@ export default StyleSheet.create({
     color: '#a2a5b7'
   },
   arrow: {
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     fontSize: wp(5),
     marginRight: wp(3),
     color: 'white'

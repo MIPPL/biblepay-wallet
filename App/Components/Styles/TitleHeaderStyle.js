@@ -16,22 +16,22 @@ export default StyleSheet.create({
   },
   text: {
     color: 'white',
-    fontFamily: 'MADETOMMY'
+    fontFamily: 'OpenSans'
   },
   textBold: {
     color: 'white',
     fontSize: wp(6),
     marginLeft: wp(4),
-    fontFamily: 'MADETOMMY-Bold'
+    fontFamily: 'OpenSans-Bold'
   },
   textLight: {
     color: '#000000',
-    fontFamily: 'MADETOMMY'
+    fontFamily: 'OpenSans'
   },
   textBoldLight: {
     fontSize: wp(6),
     color: '#000000',
     marginLeft: wp(4),
-    fontFamily: 'MADETOMMY-Bold'
+    fontFamily: 'OpenSans-Bold'
   }
 })

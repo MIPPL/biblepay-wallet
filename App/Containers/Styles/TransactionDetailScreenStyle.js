@@ -10,7 +10,7 @@ export default StyleSheet.create({
     marginTop: hp(3),
     marginLeft: hp(3),
     marginRight: hp(3),
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     textAlign: 'center',
     fontSize: wp(4.5),
     color: 'white'
@@ -23,24 +23,24 @@ export default StyleSheet.create({
   },
   txLabelSmall:  {
     color: '#a2a5b7',
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     textAlign: 'left',
     fontSize: wp(3),
     paddingHorizontal: wp(4)
   },
   txLabelSmallLight:  {
     color: 'black',
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     textAlign: 'left',
     fontSize: wp(3),
     paddingHorizontal: wp(4)
   },
   tickerText: {
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     color: '#9D9FBE',
   },
   copyLabel: {
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     color: '#9D9FBE',
     textAlign: 'center',
   },
@@ -88,7 +88,7 @@ export default StyleSheet.create({
     width: wp(85)
   },
   textTitle: {
-    fontFamily: 'MADETOMMY-Bold',
+    fontFamily: 'OpenSans-Bold',
     fontSize: wp(4),
     marginRight: wp(4),
     color: '#971B20'
@@ -97,12 +97,12 @@ export default StyleSheet.create({
     color: 'black'
   },
   textSubTitle: {
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     color: 'white',
     fontSize: wp(4),
   },
   textSubTitleLight: {
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     color: 'black',
     fontSize: wp(4),
   },
@@ -151,12 +151,12 @@ export default StyleSheet.create({
     paddingHorizontal: wp(3)
   },
   dateText: {
-    fontFamily: 'MADETOMMY-Bold',
+    fontFamily: 'OpenSans-Bold',
     fontSize: wp(5),
     color: 'white'
   },
   dateTextLight: {
-    fontFamily: 'MADETOMMY-Bold',
+    fontFamily: 'OpenSans-Bold',
     fontSize: wp(5),
     color: 'black'
   },

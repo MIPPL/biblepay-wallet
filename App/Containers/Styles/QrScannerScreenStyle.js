@@ -23,7 +23,7 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   notAuthText: {
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     fontSize: wp(5),
     color: 'white'
   },

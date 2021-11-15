@@ -50,7 +50,7 @@ export default StyleSheet.create({
     borderRadius: 10
   },
   listHeaderInnerText: {
-    fontFamily: 'MADETOMMY-Bold',
+    fontFamily: 'OpenSans-Bold',
     color: '#a2a5b7',
     fontSize: wp(5)
   },

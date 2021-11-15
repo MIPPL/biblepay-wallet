@@ -68,29 +68,29 @@ export default StyleSheet.create({
   },
   stylePinCodeTextButtonCircle: {
     fontSize: wp(8),
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     color: '#ffffff'
   },
   stylePinCodeTextTitle: {
-    fontFamily: 'MADETOMMY-Bold',
+    fontFamily: 'OpenSans-Bold',
     fontSize: wp(5),
     color: 'white',
     marginBottom: wp(3)
   },
   stylePinCodeTextTitleLight: {
-    fontFamily: 'MADETOMMY-Bold',
+    fontFamily: 'OpenSans-Bold',
     fontSize: wp(5),
     color: '#971B20',
     marginBottom: wp(3)
   },
   stylePinCodeTextSubTitle: {
-    fontFamily: 'MADETOMMY-Bold',
+    fontFamily: 'OpenSans-Bold',
     fontSize: wp(4),
     color: 'white',
     textAlign: 'center'
   },
   stylePinCodeTextSubTitleLight: {
-    fontFamily: 'MADETOMMY-Bold',
+    fontFamily: 'OpenSans-Bold',
     fontSize: wp(4),
     color: '#971B20',
     textAlign: 'center'

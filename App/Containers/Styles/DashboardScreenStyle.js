@@ -29,14 +29,14 @@ export default StyleSheet.create({
   balanceText: {
     fontSize: wp(4),
     color: '#a2a5b7',
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     textAlign: 'right'
   },
   balanceTextBold: {
-    fontFamily: 'MADETOMMY-Bold'
+    fontFamily: 'OpenSans-Bold'
   },
   balanceTextBig: {
-    fontFamily: 'MADETOMMY-Bold',
+    fontFamily: 'OpenSans-Bold',
     color: 'white',
     fontSize: wp(5),
     textAlign: 'right'
@@ -44,11 +44,11 @@ export default StyleSheet.create({
   balanceTextLight: {
     fontSize: wp(4),
     color: '#000000',
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     textAlign: 'right'
   },
   balanceTextBigLight: {
-    fontFamily: 'MADETOMMY-Bold',
+    fontFamily: 'OpenSans-Bold',
     color: '#000000',
     fontSize: wp(5),
     textAlign: 'right'
@@ -78,7 +78,7 @@ export default StyleSheet.create({
   sendReceiveText: {
     marginTop: hp(1),
     color: 'white',
-    fontFamily: 'MADETOMMY'
+    fontFamily: 'OpenSans'
   },
   latestTxContainer: {
     marginLeft: wp(6),
@@ -88,11 +88,11 @@ export default StyleSheet.create({
   latestTxText: {
     fontSize: wp(5),
     color: 'white',
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
   },
   latestTxTextLight: {
     fontSize: wp(5),
     color: 'black',
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
   }
 })

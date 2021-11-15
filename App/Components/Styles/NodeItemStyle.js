@@ -30,35 +30,35 @@ export default StyleSheet.create({
     justifyContent: 'flex-start'
   },
   addressText: {
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     color: 'white',
     fontSize: wp(3.2),
   },
   addressTextLight: {
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     color: 'black',
     fontSize: wp(3.2),
   },
   labelText: {
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     color: 'white',
     fontSize: wp(3),
     paddingRight: wp(2)
   },
   labelTextLight: {
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     color: '#7F7F7F',
     fontSize: wp(3),
     paddingRight: wp(2)
   },
   dateText: {
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     color: '#004FFF',
     fontSize: wp(3),
     paddingRight: wp(2)
   },
   dateTextLight: {
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     color: '#004FFF',
     fontSize: wp(3),
     paddingRight: wp(2)
@@ -67,7 +67,7 @@ export default StyleSheet.create({
     marginRight: wp(4)
   },
   amountText: {
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     fontSize: wp(3),
   },
   posAmountText: {
@@ -77,7 +77,7 @@ export default StyleSheet.create({
     color: '#bc8f3a'
   },
   tickerText: {
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     color: '#9D9FBE',
   }
 })

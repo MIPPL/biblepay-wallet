@@ -39,7 +39,7 @@ export default StyleSheet.create({
   label: {
     fontSize: wp(4.5),
     fontWeight: '900',
-    fontFamily: 'MADETOMMY-Bold',
+    fontFamily: 'OpenSans-Bold',
     color: 'white'
   },
   labelLight: {

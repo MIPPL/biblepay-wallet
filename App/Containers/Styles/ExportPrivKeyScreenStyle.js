@@ -55,10 +55,10 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   textBold: {
-    fontFamily: 'MADETOMMY-Bold'
+    fontFamily: 'OpenSans-Bold'
   },
   text: {
-    fontFamily: 'MADETOMMY'
+    fontFamily: 'OpenSans'
   },
   seperatorTop: {
     width: wp(85),
@@ -106,7 +106,7 @@ export default StyleSheet.create({
     borderColor: '#a2a5b7',
     width: wp(83),
     paddingBottom: hp(0.7),
-    fontFamily: 'MADETOMMY-Bold',
+    fontFamily: 'OpenSans-Bold',
     fontSize: wp(6),
     color: '#971B20'
   },
@@ -115,7 +115,7 @@ export default StyleSheet.create({
     borderColor: '#a2a5b7',
     width: wp(83),
     paddingBottom: hp(0.7),
-    fontFamily: 'MADETOMMY-Bold',
+    fontFamily: 'OpenSans-Bold',
     fontSize: wp(6),
     color: 'white'
   },
@@ -130,7 +130,7 @@ export default StyleSheet.create({
     bottom: 1,
   },
   addressText: {
-    fontFamily: 'MADETOMMY-Bold',
+    fontFamily: 'OpenSans-Bold',
     fontSize: wp(3.3),
     marginTop: hp(0.5),
     marginBottom: hp(4),
@@ -138,7 +138,7 @@ export default StyleSheet.create({
   },
   addressTextLight: {
     color: 'black',
-    fontFamily: 'MADETOMMY-Bold',
+    fontFamily: 'OpenSans-Bold',
     fontSize: wp(3.3),
     marginTop: hp(0.5),
     marginBottom: hp(4)
@@ -151,17 +151,17 @@ export default StyleSheet.create({
     marginBottom: hp(1)
   },
   dateTextTitle: {
-    fontFamily: 'MADETOMMY-Bold',
+    fontFamily: 'OpenSans-Bold',
     fontSize: wp(3.5),
     color: '#971B20'
   },
   dateTextTitleLight: {
-    fontFamily: 'MADETOMMY-Bold',
+    fontFamily: 'OpenSans-Bold',
     fontSize: wp(3.5),
     color: 'white'
   },
   dateText: {
-    fontFamily: 'MADETOMMY-Bold',
+    fontFamily: 'OpenSans-Bold',
     fontSize: wp(5),
     color: 'white'
   },
@@ -171,19 +171,19 @@ export default StyleSheet.create({
     marginTop: hp(4)
   },
   textAmountHint: {
-    fontFamily: 'MADETOMMY-Bold',
+    fontFamily: 'OpenSans-Bold',
     fontSize: wp(4),
     color: '#971B20',
     marginTop: hp(1)
   },
   textAmountHintLight: {
-    fontFamily: 'MADETOMMY-Bold',
+    fontFamily: 'OpenSans-Bold',
     fontSize: wp(4),
     color: 'black',
     marginTop: hp(1)
   },
   privKeyText: {
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     fontSize: wp(4),
     color: '#971B20',
     marginTop: hp(1),
@@ -193,7 +193,7 @@ export default StyleSheet.create({
 
   },
   privKeyTextLight: {
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     fontSize: wp(4),
     color: 'black',
     marginTop: hp(1),

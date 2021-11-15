@@ -35,7 +35,7 @@ export default StyleSheet.create({
   statsTitle: {
     marginTop: hp(6),
     marginLeft: wp(5),
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     textAlign: 'left',
     fontSize: wp(4.5),
     color: 'white'
@@ -59,7 +59,7 @@ export default StyleSheet.create({
     width: wp(85)
   },
   textTitle: {
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     fontSize: wp(4),
     marginRight: wp(4),
     color: '#a2a5b7'
@@ -68,12 +68,12 @@ export default StyleSheet.create({
     color: 'black'
   },
   textSubTitle: {
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     color: 'white',
     fontSize: wp(4),
   },
   textSubTitleLight: {
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     color: 'black',
     fontSize: wp(4),
   },

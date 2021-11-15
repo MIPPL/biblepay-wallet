@@ -72,7 +72,7 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   accountSubTitle: {
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     color: 'black',
     fontSize: wp(4.5),
     marginTop: hp(1),
@@ -81,7 +81,7 @@ export default StyleSheet.create({
     textAlign: 'center'
   },
   accountTitle: {
-    fontFamily: 'MADETOMMY-Bold',
+    fontFamily: 'OpenSans-Bold',
     color: 'black',
     fontSize: wp(5)
   },
@@ -95,7 +95,7 @@ export default StyleSheet.create({
     marginBottom: hp(4)
   },
   mnemonicBold: {
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     width: wp(20),
     height: hp(6),
     color: 'black',
@@ -106,7 +106,7 @@ export default StyleSheet.create({
   },
   mnemonic: {
     backgroundColor: '#EEEEEE',
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     width: wp(20),
     height: hp(6),
     color: 'black',
@@ -122,7 +122,7 @@ export default StyleSheet.create({
     width: wp(20),
     paddingBottom: 2,
     paddingTop: 2,
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     color: 'red',
     fontSize: wp(4),
   },
@@ -134,7 +134,7 @@ export default StyleSheet.create({
     height: hp(6),
     paddingBottom: 2,
     paddingTop: 2,
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     color: 'black',
     fontSize: wp(4),
   },
@@ -149,7 +149,7 @@ export default StyleSheet.create({
     width: wp(85),
   },
   newMnemonicSubTitle: {
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     color: 'black',
     fontSize: wp(4.5),
     marginTop: hp(1),
@@ -158,7 +158,7 @@ export default StyleSheet.create({
     textAlign: 'center'
   },
   mnemonicCheckSubTitle: {
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     color: 'black',
     fontSize: wp(4.5),
     marginTop: hp(1),
@@ -183,7 +183,7 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: 'black',
     color: 'black',
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     fontSize: wp(4),
     textAlign: 'center',
     paddingBottom: 0,
@@ -208,7 +208,7 @@ export default StyleSheet.create({
     color: '#f2f4fa',
     fontSize: wp(4),
     paddingBottom: wp(1),
-    fontFamily: 'MADETOMMY'
+    fontFamily: 'OpenSans'
   },
   privateKeyPageContainer: {
     flex: 1,
@@ -224,7 +224,7 @@ export default StyleSheet.create({
     marginBottom: hp(4)
   },
   sinFileImportText: {
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     color: '#a2a5b7',
     fontSize: wp(5),
     marginTop: hp(2),
@@ -244,7 +244,7 @@ export default StyleSheet.create({
     marginBottom: hp(2)
   },
   sinFileSubTitle: {
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     color: 'black',
     fontSize: wp(4.5),
     marginTop: hp(1),
@@ -257,14 +257,14 @@ export default StyleSheet.create({
     fontSize: wp(10),
     fontWeight : '900',
     marginLeft: wp(4),
-    fontFamily: 'MADETOMMY-Bold'
+    fontFamily: 'OpenSans-Bold'
   },
   textBoldLight: {
     fontSize: wp(10),
     color: '#000000',
     fontWeight : '900',
     marginLeft: wp(4),
-    fontFamily: 'MADETOMMY-Bold'
+    fontFamily: 'OpenSans-Bold'
   },
   textBold2: {
     color: 'black',
@@ -272,7 +272,7 @@ export default StyleSheet.create({
     fontWeight : '900',
     marginLeft: wp(4),
     marginBottom: wp(5),
-    fontFamily: 'MADETOMMY-Bold'
+    fontFamily: 'OpenSans-Bold'
   },
   textBoldLight2: {
     fontSize: wp(7),
@@ -280,6 +280,6 @@ export default StyleSheet.create({
     fontWeight : '900',
     marginLeft: wp(4),
     marginBottom: wp(5),
-    fontFamily: 'MADETOMMY-Bold'
+    fontFamily: 'OpenSans-Bold'
   }
 })

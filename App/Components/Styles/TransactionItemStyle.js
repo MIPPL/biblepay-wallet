@@ -30,22 +30,22 @@ export default StyleSheet.create({
     justifyContent: 'space-between'
   },
   addressText: {
-    fontFamily: 'MADETOMMY-Bold',
+    fontFamily: 'OpenSans-Bold',
     color: 'white',
     fontSize: wp(3.2),
   },
   addressTextLight: {
-    fontFamily: 'MADETOMMY-Bold',
+    fontFamily: 'OpenSans-Bold',
     color: 'black',
     fontSize: wp(3.2),
   },
   dateText: {
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     color: '#9D9FBE',
     fontSize: wp(3.2),
   },
   dateTextLight: {
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     color: '#333333',
     fontSize: wp(3.2),
   },
@@ -53,7 +53,7 @@ export default StyleSheet.create({
     marginRight: wp(4)
   },
   amountText: {
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     fontSize: wp(4),
     color: 'white'
   },
@@ -64,7 +64,7 @@ export default StyleSheet.create({
     color: '#00CC10'
   },
   tickerText: {
-    fontFamily: 'MADETOMMY',
+    fontFamily: 'OpenSans',
     color: '#9D9FBE',
   }
 })
