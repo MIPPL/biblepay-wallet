@@ -216,7 +216,7 @@ function generateHDAddresses( mnemonic, derivationPath, startIndex, numAddresses
     const childAccountKey = HDKey.parseExtendedKey(extAccountPrivKey);
     const childChangeKey = HDKey.parseExtendedKey(extChangePrivKey);
 
-    console.log('generateHDAddresses' + derivationPath + ': ' + startIndex + '-' + (startIndex+numAddresses-1));
+    //console.log('generateHDAddresses' + derivationPath + ': ' + startIndex + '-' + (startIndex+numAddresses-1));
     for (var i=startIndex; i<startIndex+numAddresses; i++ ) {
       const hdAccountKeyPair = childAccountKey.derive(i.toString());
       const hdChangeKeyPair = childChangeKey.derive(i.toString());
@@ -232,8 +232,8 @@ function generateHDAddresses( mnemonic, derivationPath, startIndex, numAddresses
         encryptedAccountPrivKey = encryptedMnemonic;
       }
 
-console.log('@@ NEW Account address ['+i+']: ' + hdAccountAddress.toString());
-console.log('@@ NEW Change address ['+i+']: ' + hdChangeAddress.toString());
+//console.log('@@ NEW Account address ['+i+']: ' + hdAccountAddress.toString());
+//console.log('@@ NEW Change address ['+i+']: ' + hdChangeAddress.toString());
 
       hdAddresses.push( { address: hdAccountAddress.toString(), encryptedPrivKey:encryptedAccountPrivKey, balance: 0, transactions: [], index: i} );
       hdAddresses.push( { address: hdChangeAddress.toString() , encryptedPrivKey:'', balance: 0, transactions: [], index: i} );
@@ -380,19 +380,19 @@ export const getMaxAmount = (state = INITIAL_STATE, action) => {
 
 export const generateNewAddr = (state = INITIAL_STATE, action) => {
   const { username, password, callback } = action
-
+  var hdAddresses = [];
   try {
-    var hdAddresses = [];
     var decryptedMnemonic = decrypt({encryptedData:state.addresses[0].encryptedPrivKey, iv: username, key: password})
     var start = (state.addresses.length)/2;
     hdAddresses = generateHDAddresses( decryptedMnemonic.normalize('NFKD'), state.derivationPath, start, 20, '');
     callback(false)
   } 
   catch(e){
-    console.log(e.message)
+    console.log('EXCEPTION generateNewAddr ' + e.message)
     callback(true)
     return state
   }
+  console.log('@@merging addresses '+ state.addresses.length + ','+ hdAddresses.length);
   return state.merge({
     addresses: [...state.addresses, ...hdAddresses]
   })
