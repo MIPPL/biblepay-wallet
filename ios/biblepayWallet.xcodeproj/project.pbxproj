@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00E356F31AD99517003FC87E /* sinovateAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* sinovateAppTests.m */; };
+		00E356F31AD99517003FC87E /* biblepayWalletTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* biblepayWalletTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -15,13 +15,13 @@
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		2DCD954D1E0B4F2C00145EB5 /* sinovateAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* sinovateAppTests.m */; };
+		2DCD954D1E0B4F2C00145EB5 /* biblepayWalletTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* biblepayWalletTests.m */; };
 		4EFA77B92F6D4705ADCF0B20 /* MADE-TOMMY-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B0B04AE1624A4E7EA0F36F32 /* MADE-TOMMY-Bold.ttf */; };
-		72457B48AFA5911835B59159 /* libPods-sinovateApp-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7029CA04E2F96945E23AA3F0 /* libPods-sinovateApp-tvOSTests.a */; };
-		76005DB2CAD518E1D49F85E6 /* libPods-sinovateAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F7500F4BE0E3184B93A8875 /* libPods-sinovateAppTests.a */; };
+		72457B48AFA5911835B59159 /* libPods-biblepayWallet-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7029CA04E2F96945E23AA3F0 /* libPods-biblepayWallet-tvOSTests.a */; };
+		76005DB2CAD518E1D49F85E6 /* libPods-biblepayWalletTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F7500F4BE0E3184B93A8875 /* libPods-biblepayWalletTests.a */; };
 		81B39E765F8047E0BE1B9BE8 /* MADE-TOMMY-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93CED71831F747FA847FE8F5 /* MADE-TOMMY-Regular.ttf */; };
-		C02275ECC988C7F9433807C9 /* libPods-sinovateApp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 12E6B4BA314C6881E534D14D /* libPods-sinovateApp-tvOS.a */; };
-		DDA44AEBDD087A636D611291 /* libPods-sinovateApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4873B669C04EB35AD383A84B /* libPods-sinovateApp.a */; };
+		C02275ECC988C7F9433807C9 /* libPods-biblepayWallet-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 12E6B4BA314C6881E534D14D /* libPods-biblepayWallet-tvOS.a */; };
+		DDA44AEBDD087A636D611291 /* libPods-biblepayWallet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4873B669C04EB35AD383A84B /* libPods-biblepayWallet.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,62 +30,62 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = sinovateApp;
+			remoteInfo = biblepayWallet;
 		};
 		2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 2D02E47A1E0B4A5D006451C7;
-			remoteInfo = "sinovateApp-tvOS";
+			remoteInfo = "biblepayWallet-tvOS";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
-		00E356EE1AD99517003FC87E /* sinovateAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = sinovateAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* biblepayWalletTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = biblepayWalletTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* sinovateAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = sinovateAppTests.m; sourceTree = "<group>"; };
+		00E356F21AD99517003FC87E /* biblepayWalletTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = biblepayWalletTests.m; sourceTree = "<group>"; };
 		0419CAAE08E84143BFBAE8BA /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
-		06A3EE497D0412B6273BA903 /* Pods-sinovateApp-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sinovateApp-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-sinovateApp-tvOSTests/Pods-sinovateApp-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
-		12E6B4BA314C6881E534D14D /* libPods-sinovateApp-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-sinovateApp-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1348FCA595FA7B4E7F3459BA /* Pods-sinovateAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sinovateAppTests.release.xcconfig"; path = "Target Support Files/Pods-sinovateAppTests/Pods-sinovateAppTests.release.xcconfig"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* sinovateApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sinovateApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = sinovateApp/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = sinovateApp/AppDelegate.m; sourceTree = "<group>"; };
+		06A3EE497D0412B6273BA903 /* Pods-biblepayWallet-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-biblepayWallet-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-biblepayWallet-tvOSTests/Pods-biblepayWallet-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		12E6B4BA314C6881E534D14D /* libPods-biblepayWallet-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-biblepayWallet-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1348FCA595FA7B4E7F3459BA /* Pods-biblepayWalletTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-biblepayWalletTests.release.xcconfig"; path = "Target Support Files/Pods-biblepayWalletTests/Pods-biblepayWalletTests.release.xcconfig"; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* biblepayWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = biblepayWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = biblepayWallet/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = biblepayWallet/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = sinovateApp/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = sinovateApp/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = sinovateApp/main.m; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = biblepayWallet/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = biblepayWallet/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = biblepayWallet/main.m; sourceTree = "<group>"; };
 		2852228226CE46D79C7A9957 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		2B3612CBA77D4E668AAF1E89 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
-		2D02E47B1E0B4A5D006451C7 /* sinovateApp-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "sinovateApp-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2D02E4901E0B4A5D006451C7 /* sinovateApp-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "sinovateApp-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		384C416C9FD5378464F7FF8A /* Pods-sinovateApp-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sinovateApp-tvOS.release.xcconfig"; path = "Target Support Files/Pods-sinovateApp-tvOS/Pods-sinovateApp-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		2D02E47B1E0B4A5D006451C7 /* biblepayWallet-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "biblepayWallet-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D02E4901E0B4A5D006451C7 /* biblepayWallet-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "biblepayWallet-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		384C416C9FD5378464F7FF8A /* Pods-biblepayWallet-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-biblepayWallet-tvOS.release.xcconfig"; path = "Target Support Files/Pods-biblepayWallet-tvOS/Pods-biblepayWallet-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		401CC9B1E9D94EFC80C95709 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
-		4873B669C04EB35AD383A84B /* libPods-sinovateApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-sinovateApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4873B669C04EB35AD383A84B /* libPods-biblepayWallet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-biblepayWallet.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A65BE9E62BE4C5E80AF3D92 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
-		4F7500F4BE0E3184B93A8875 /* libPods-sinovateAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-sinovateAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4FBC4F891A8563FA5CF6867C /* Pods-sinovateApp-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sinovateApp-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-sinovateApp-tvOSTests/Pods-sinovateApp-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		4F7500F4BE0E3184B93A8875 /* libPods-biblepayWalletTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-biblepayWalletTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4FBC4F891A8563FA5CF6867C /* Pods-biblepayWallet-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-biblepayWallet-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-biblepayWallet-tvOSTests/Pods-biblepayWallet-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		56CD870A9DD54C3DAAADD8EA /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		630A33EF20B64D539197FE72 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		671D139AC4CA4233A25F2471 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		689FD17A0B484A448AE57B00 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
-		7029CA04E2F96945E23AA3F0 /* libPods-sinovateApp-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-sinovateApp-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		727459ED1D474E243387B6D1 /* Pods-sinovateApp-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sinovateApp-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-sinovateApp-tvOS/Pods-sinovateApp-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		7029CA04E2F96945E23AA3F0 /* libPods-biblepayWallet-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-biblepayWallet-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		727459ED1D474E243387B6D1 /* Pods-biblepayWallet-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-biblepayWallet-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-biblepayWallet-tvOS/Pods-biblepayWallet-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		7BF24A93FA584A6C9473ADF5 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
-		88FD1D536B14BBCFD29BD6C8 /* Pods-sinovateAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sinovateAppTests.debug.xcconfig"; path = "Target Support Files/Pods-sinovateAppTests/Pods-sinovateAppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		88FD1D536B14BBCFD29BD6C8 /* Pods-biblepayWalletTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-biblepayWalletTests.debug.xcconfig"; path = "Target Support Files/Pods-biblepayWalletTests/Pods-biblepayWalletTests.debug.xcconfig"; sourceTree = "<group>"; };
 		93CED71831F747FA847FE8F5 /* MADE-TOMMY-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "MADE-TOMMY-Regular.ttf"; path = "../App/Fonts/MADE-TOMMY-Regular.ttf"; sourceTree = "<group>"; };
 		95F56D8591404714B93F7A31 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		9804EB3359E444D29351C60B /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		B0B04AE1624A4E7EA0F36F32 /* MADE-TOMMY-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "MADE-TOMMY-Bold.ttf"; path = "../App/Fonts/MADE-TOMMY-Bold.ttf"; sourceTree = "<group>"; };
 		B3488A9A899447FD8B75D987 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
-		B43D52E43277480725D363EA /* Pods-sinovateApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sinovateApp.release.xcconfig"; path = "Target Support Files/Pods-sinovateApp/Pods-sinovateApp.release.xcconfig"; sourceTree = "<group>"; };
+		B43D52E43277480725D363EA /* Pods-biblepayWallet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-biblepayWallet.release.xcconfig"; path = "Target Support Files/Pods-biblepayWallet/Pods-biblepayWallet.release.xcconfig"; sourceTree = "<group>"; };
 		D3E438BB45544FA4A6C116FF /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		E92E159480F04B68AC71C27E /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		EFE3E39775F2AED5EEDCF2A5 /* Pods-sinovateApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sinovateApp.debug.xcconfig"; path = "Target Support Files/Pods-sinovateApp/Pods-sinovateApp.debug.xcconfig"; sourceTree = "<group>"; };
+		EFE3E39775F2AED5EEDCF2A5 /* Pods-biblepayWallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-biblepayWallet.debug.xcconfig"; path = "Target Support Files/Pods-biblepayWallet/Pods-biblepayWallet.debug.xcconfig"; sourceTree = "<group>"; };
 		FC4C5817FD6D446DA6376140 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -94,7 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				76005DB2CAD518E1D49F85E6 /* libPods-sinovateAppTests.a in Frameworks */,
+				76005DB2CAD518E1D49F85E6 /* libPods-biblepayWalletTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,7 +102,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DDA44AEBDD087A636D611291 /* libPods-sinovateApp.a in Frameworks */,
+				DDA44AEBDD087A636D611291 /* libPods-biblepayWallet.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,7 +110,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C02275ECC988C7F9433807C9 /* libPods-sinovateApp-tvOS.a in Frameworks */,
+				C02275ECC988C7F9433807C9 /* libPods-biblepayWallet-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,20 +118,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				72457B48AFA5911835B59159 /* libPods-sinovateApp-tvOSTests.a in Frameworks */,
+				72457B48AFA5911835B59159 /* libPods-biblepayWallet-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* sinovateAppTests */ = {
+		00E356EF1AD99517003FC87E /* biblepayWalletTests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* sinovateAppTests.m */,
+				00E356F21AD99517003FC87E /* biblepayWalletTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = sinovateAppTests;
+			path = biblepayWalletTests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -142,7 +142,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* sinovateApp */ = {
+		13B07FAE1A68108700A75B9A /* biblepayWallet */ = {
 			isa = PBXGroup;
 			children = (
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -153,7 +153,7 @@
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = sinovateApp;
+			name = biblepayWallet;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -161,10 +161,10 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				4873B669C04EB35AD383A84B /* libPods-sinovateApp.a */,
-				12E6B4BA314C6881E534D14D /* libPods-sinovateApp-tvOS.a */,
-				7029CA04E2F96945E23AA3F0 /* libPods-sinovateApp-tvOSTests.a */,
-				4F7500F4BE0E3184B93A8875 /* libPods-sinovateAppTests.a */,
+				4873B669C04EB35AD383A84B /* libPods-biblepayWallet.a */,
+				12E6B4BA314C6881E534D14D /* libPods-biblepayWallet-tvOS.a */,
+				7029CA04E2F96945E23AA3F0 /* libPods-biblepayWallet-tvOSTests.a */,
+				4F7500F4BE0E3184B93A8875 /* libPods-biblepayWalletTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -204,9 +204,9 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				13B07FAE1A68108700A75B9A /* sinovateApp */,
+				13B07FAE1A68108700A75B9A /* biblepayWallet */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* sinovateAppTests */,
+				00E356EF1AD99517003FC87E /* biblepayWalletTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				FDDB2A1AB48FF719E6455046 /* Pods */,
@@ -220,10 +220,10 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* sinovateApp.app */,
-				00E356EE1AD99517003FC87E /* sinovateAppTests.xctest */,
-				2D02E47B1E0B4A5D006451C7 /* sinovateApp-tvOS.app */,
-				2D02E4901E0B4A5D006451C7 /* sinovateApp-tvOSTests.xctest */,
+				13B07F961A680F5B00A75B9A /* biblepayWallet.app */,
+				00E356EE1AD99517003FC87E /* biblepayWalletTests.xctest */,
+				2D02E47B1E0B4A5D006451C7 /* biblepayWallet-tvOS.app */,
+				2D02E4901E0B4A5D006451C7 /* biblepayWallet-tvOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -231,14 +231,14 @@
 		FDDB2A1AB48FF719E6455046 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				EFE3E39775F2AED5EEDCF2A5 /* Pods-sinovateApp.debug.xcconfig */,
-				B43D52E43277480725D363EA /* Pods-sinovateApp.release.xcconfig */,
-				727459ED1D474E243387B6D1 /* Pods-sinovateApp-tvOS.debug.xcconfig */,
-				384C416C9FD5378464F7FF8A /* Pods-sinovateApp-tvOS.release.xcconfig */,
-				06A3EE497D0412B6273BA903 /* Pods-sinovateApp-tvOSTests.debug.xcconfig */,
-				4FBC4F891A8563FA5CF6867C /* Pods-sinovateApp-tvOSTests.release.xcconfig */,
-				88FD1D536B14BBCFD29BD6C8 /* Pods-sinovateAppTests.debug.xcconfig */,
-				1348FCA595FA7B4E7F3459BA /* Pods-sinovateAppTests.release.xcconfig */,
+				EFE3E39775F2AED5EEDCF2A5 /* Pods-biblepayWallet.debug.xcconfig */,
+				B43D52E43277480725D363EA /* Pods-biblepayWallet.release.xcconfig */,
+				727459ED1D474E243387B6D1 /* Pods-biblepayWallet-tvOS.debug.xcconfig */,
+				384C416C9FD5378464F7FF8A /* Pods-biblepayWallet-tvOS.release.xcconfig */,
+				06A3EE497D0412B6273BA903 /* Pods-biblepayWallet-tvOSTests.debug.xcconfig */,
+				4FBC4F891A8563FA5CF6867C /* Pods-biblepayWallet-tvOSTests.release.xcconfig */,
+				88FD1D536B14BBCFD29BD6C8 /* Pods-biblepayWalletTests.debug.xcconfig */,
+				1348FCA595FA7B4E7F3459BA /* Pods-biblepayWalletTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -246,9 +246,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* sinovateAppTests */ = {
+		00E356ED1AD99517003FC87E /* biblepayWalletTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "sinovateAppTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "biblepayWalletTests" */;
 			buildPhases = (
 				B7E8908DE57D83D0FAA3A06A /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -260,14 +260,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = sinovateAppTests;
-			productName = sinovateAppTests;
-			productReference = 00E356EE1AD99517003FC87E /* sinovateAppTests.xctest */;
+			name = biblepayWalletTests;
+			productName = biblepayWalletTests;
+			productReference = 00E356EE1AD99517003FC87E /* biblepayWalletTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* sinovateApp */ = {
+		13B07F861A680F5B00A75B9A /* biblepayWallet */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "sinovateApp" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "biblepayWallet" */;
 			buildPhases = (
 				42831D5DF1AFE2685AB88431 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -281,14 +281,14 @@
 			);
 			dependencies = (
 			);
-			name = sinovateApp;
-			productName = sinovateApp;
-			productReference = 13B07F961A680F5B00A75B9A /* sinovateApp.app */;
+			name = biblepayWallet;
+			productName = biblepayWallet;
+			productReference = 13B07F961A680F5B00A75B9A /* biblepayWallet.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E47A1E0B4A5D006451C7 /* sinovateApp-tvOS */ = {
+		2D02E47A1E0B4A5D006451C7 /* biblepayWallet-tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "sinovateApp-tvOS" */;
+			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "biblepayWallet-tvOS" */;
 			buildPhases = (
 				F8446C9CADD74E2C78EC42A6 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F122414F3F0027D42C /* Start Packager */,
@@ -301,14 +301,14 @@
 			);
 			dependencies = (
 			);
-			name = "sinovateApp-tvOS";
-			productName = "sinovateApp-tvOS";
-			productReference = 2D02E47B1E0B4A5D006451C7 /* sinovateApp-tvOS.app */;
+			name = "biblepayWallet-tvOS";
+			productName = "biblepayWallet-tvOS";
+			productReference = 2D02E47B1E0B4A5D006451C7 /* biblepayWallet-tvOS.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E48F1E0B4A5D006451C7 /* sinovateApp-tvOSTests */ = {
+		2D02E48F1E0B4A5D006451C7 /* biblepayWallet-tvOSTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "sinovateApp-tvOSTests" */;
+			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "biblepayWallet-tvOSTests" */;
 			buildPhases = (
 				E8EDE789A2B54A213DC16B4E /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
@@ -320,9 +320,9 @@
 			dependencies = (
 				2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */,
 			);
-			name = "sinovateApp-tvOSTests";
-			productName = "sinovateApp-tvOSTests";
-			productReference = 2D02E4901E0B4A5D006451C7 /* sinovateApp-tvOSTests.xctest */;
+			name = "biblepayWallet-tvOSTests";
+			productName = "biblepayWallet-tvOSTests";
+			productReference = 2D02E4901E0B4A5D006451C7 /* biblepayWallet-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -339,7 +339,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 82TMVBNQZX;
+						DevelopmentTeam = CSZ4WJT8ZH;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -352,7 +352,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "sinovateApp" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "biblepayWallet" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -366,10 +366,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* sinovateApp */,
-				00E356ED1AD99517003FC87E /* sinovateAppTests */,
-				2D02E47A1E0B4A5D006451C7 /* sinovateApp-tvOS */,
-				2D02E48F1E0B4A5D006451C7 /* sinovateApp-tvOSTests */,
+				13B07F861A680F5B00A75B9A /* biblepayWallet */,
+				00E356ED1AD99517003FC87E /* biblepayWalletTests */,
+				2D02E47A1E0B4A5D006451C7 /* biblepayWallet-tvOS */,
+				2D02E48F1E0B4A5D006451C7 /* biblepayWallet-tvOSTests */,
 			);
 		};
 /* End PBXProject section */
@@ -454,7 +454,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-sinovateApp-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-biblepayWallet-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -467,7 +467,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-sinovateApp/Pods-sinovateApp-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-biblepayWallet/Pods-biblepayWallet-resources.sh",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
@@ -506,7 +506,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-sinovateApp/Pods-sinovateApp-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-biblepayWallet/Pods-biblepayWallet-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B7E8908DE57D83D0FAA3A06A /* [CP] Check Pods Manifest.lock */ = {
@@ -524,7 +524,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-sinovateAppTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-biblepayWalletTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -546,7 +546,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-sinovateApp-tvOSTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-biblepayWallet-tvOSTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -568,7 +568,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-sinovateApp-tvOS-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-biblepayWallet-tvOS-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -620,7 +620,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E356F31AD99517003FC87E /* sinovateAppTests.m in Sources */,
+				00E356F31AD99517003FC87E /* biblepayWalletTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -646,7 +646,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DCD954D1E0B4F2C00145EB5 /* sinovateAppTests.m in Sources */,
+				2DCD954D1E0B4F2C00145EB5 /* biblepayWalletTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -655,12 +655,12 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* sinovateApp */;
+			target = 13B07F861A680F5B00A75B9A /* biblepayWallet */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 		2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2D02E47A1E0B4A5D006451C7 /* sinovateApp-tvOS */;
+			target = 2D02E47A1E0B4A5D006451C7 /* biblepayWallet-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -672,7 +672,7 @@
 				13B07FB21A68108700A75B9A /* Base */,
 			);
 			name = LaunchScreen.xib;
-			path = sinovateApp;
+			path = biblepayWallet;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -680,14 +680,14 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 88FD1D536B14BBCFD29BD6C8 /* Pods-sinovateAppTests.debug.xcconfig */;
+			baseConfigurationReference = 88FD1D536B14BBCFD29BD6C8 /* Pods-biblepayWalletTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = sinovateAppTests/Info.plist;
+				INFOPLIST_FILE = biblepayWalletTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -697,17 +697,17 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/sinovateApp.app/sinovateApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/biblepayWallet.app/biblepayWallet";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1348FCA595FA7B4E7F3459BA /* Pods-sinovateAppTests.release.xcconfig */;
+			baseConfigurationReference = 1348FCA595FA7B4E7F3459BA /* Pods-biblepayWalletTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = sinovateAppTests/Info.plist;
+				INFOPLIST_FILE = biblepayWalletTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -717,29 +717,29 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/sinovateApp.app/sinovateApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/biblepayWallet.app/biblepayWallet";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EFE3E39775F2AED5EEDCF2A5 /* Pods-sinovateApp.debug.xcconfig */;
+			baseConfigurationReference = EFE3E39775F2AED5EEDCF2A5 /* Pods-biblepayWallet.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 32;
+				CURRENT_PROJECT_VERSION = 400;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = 82TMVBNQZX;
-				INFOPLIST_FILE = sinovateApp/Info.plist;
+				DEVELOPMENT_TEAM = CSZ4WJT8ZH;
+				INFOPLIST_FILE = biblepayWallet/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.1.2;
+				MARKETING_VERSION = 4.0.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sinovate.wallet;
-				PRODUCT_NAME = sinovateApp;
+				PRODUCT_BUNDLE_IDENTIFIER = org.biblepaymobile;
+				PRODUCT_NAME = biblepayWallet;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -747,22 +747,22 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B43D52E43277480725D363EA /* Pods-sinovateApp.release.xcconfig */;
+			baseConfigurationReference = B43D52E43277480725D363EA /* Pods-biblepayWallet.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 32;
-				DEVELOPMENT_TEAM = 82TMVBNQZX;
-				INFOPLIST_FILE = sinovateApp/Info.plist;
+				CURRENT_PROJECT_VERSION = 400;
+				DEVELOPMENT_TEAM = CSZ4WJT8ZH;
+				INFOPLIST_FILE = biblepayWallet/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.1.2;
+				MARKETING_VERSION = 4.0.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sinovate.wallet;
-				PRODUCT_NAME = sinovateApp;
+				PRODUCT_BUNDLE_IDENTIFIER = org.biblepaymobile;
+				PRODUCT_NAME = biblepayWallet;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -770,7 +770,7 @@
 		};
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 727459ED1D474E243387B6D1 /* Pods-sinovateApp-tvOS.debug.xcconfig */;
+			baseConfigurationReference = 727459ED1D474E243387B6D1 /* Pods-biblepayWallet-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -781,14 +781,14 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "sinovateApp-tvOS/Info.plist";
+				INFOPLIST_FILE = "biblepayWallet-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.sinovateApp-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.biblepayWallet-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -798,7 +798,7 @@
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 384C416C9FD5378464F7FF8A /* Pods-sinovateApp-tvOS.release.xcconfig */;
+			baseConfigurationReference = 384C416C9FD5378464F7FF8A /* Pods-biblepayWallet-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -809,14 +809,14 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "sinovateApp-tvOS/Info.plist";
+				INFOPLIST_FILE = "biblepayWallet-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.sinovateApp-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.biblepayWallet-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -826,7 +826,7 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 06A3EE497D0412B6273BA903 /* Pods-sinovateApp-tvOSTests.debug.xcconfig */;
+			baseConfigurationReference = 06A3EE497D0412B6273BA903 /* Pods-biblepayWallet-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -836,24 +836,24 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "sinovateApp-tvOSTests/Info.plist";
+				INFOPLIST_FILE = "biblepayWallet-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.sinovateApp-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.biblepayWallet-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/sinovateApp-tvOS.app/sinovateApp-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/biblepayWallet-tvOS.app/biblepayWallet-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Debug;
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4FBC4F891A8563FA5CF6867C /* Pods-sinovateApp-tvOSTests.release.xcconfig */;
+			baseConfigurationReference = 4FBC4F891A8563FA5CF6867C /* Pods-biblepayWallet-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -863,17 +863,17 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "sinovateApp-tvOSTests/Info.plist";
+				INFOPLIST_FILE = "biblepayWallet-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.sinovateApp-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.biblepayWallet-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/sinovateApp-tvOS.app/sinovateApp-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/biblepayWallet-tvOS.app/biblepayWallet-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Release;
@@ -980,7 +980,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "sinovateAppTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "biblepayWalletTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -989,7 +989,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "sinovateApp" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "biblepayWallet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -998,7 +998,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "sinovateApp-tvOS" */ = {
+		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "biblepayWallet-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4971E0B4A5E006451C7 /* Debug */,
@@ -1007,7 +1007,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "sinovateApp-tvOSTests" */ = {
+		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "biblepayWallet-tvOSTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4991E0B4A5E006451C7 /* Debug */,
@@ -1016,7 +1016,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "sinovateApp" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "biblepayWallet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
