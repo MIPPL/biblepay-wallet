@@ -23,7 +23,7 @@ export default StyleSheet.create({
   },
   stylePinCodeButtonCircle: {
     width: wp(16),
-    height: hp(9),
+    height: wp(16),
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 50,
@@ -32,7 +32,7 @@ export default StyleSheet.create({
   },
   stylePinCodeButtonCircleLight: {
     width: wp(16),
-    height: hp(9),
+    height: wp(16),
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 50,

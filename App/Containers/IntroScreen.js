@@ -141,7 +141,7 @@ class IntroScreen extends Component {
           },200)
           if(this.backhandler)
             this.backhandler.remove()
-          startApp()
+          startApp(true)
 
         }
       })
@@ -176,7 +176,7 @@ class IntroScreen extends Component {
           },200)
           if(this.backhandler)
             this.backhandler.remove()
-          startApp()
+          startApp(true)
         }
       })
     }
@@ -422,7 +422,8 @@ class IntroScreen extends Component {
 const mapStateToProps = (state) => {
   return {
     addresses: AccountSelectors.getAddresses(state),
-    derivationPath: AccountSelectors.getDerivationPath(state)
+    derivationPath: AccountSelectors.getDerivationPath(state),
+    lightTheme: GlobalSelectors.getUseLightTheme(state)
   }
 }
 
