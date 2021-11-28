@@ -734,13 +734,13 @@
 			baseConfigurationReference = EFE3E39775F2AED5EEDCF2A5 /* Pods-biblepayWallet.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 401;
+				CURRENT_PROJECT_VERSION = 402;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = CSZ4WJT8ZH;
 				INFOPLIST_FILE = biblepayWallet/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 4.0.1;
+				MARKETING_VERSION = 4.0.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -758,12 +758,12 @@
 			baseConfigurationReference = B43D52E43277480725D363EA /* Pods-biblepayWallet.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 401;
+				CURRENT_PROJECT_VERSION = 402;
 				DEVELOPMENT_TEAM = CSZ4WJT8ZH;
 				INFOPLIST_FILE = biblepayWallet/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 4.0.1;
+				MARKETING_VERSION = 4.0.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
