@@ -42,8 +42,9 @@ export function * estimateFee (action) {
   const { destination, value, callback } = action
 
   const allUtxos = yield select(AccountSelectors.getUtxo)
-
   const unsendTx = yield select(AccountSelectors.getUnsendTx)
+  const balance = yield select(AccountSelectors.getBalance)
+  const changeAdd = yield select(AccountSelectors.getChangeAddress)
 
   allUtxos.sort((a,b)=>{return parseInt(a.satoshis)-parseInt(b.satoshis)})
 
@@ -52,20 +53,14 @@ export function * estimateFee (action) {
   let amount = longRep(parseFloat(value))
 
   if (unsendTx.length) { showError(I18n.t('alreadyNonBroadcast'));return false;}
-  if (amount > addresses[0].balance) { showError(I18n.t('insufFunds'));return false;}
+  if (amount > balance) { showError(I18n.t('insufFunds'));return false;}
   if (amount <= longRep(0.01)) { showError(I18n.t('amountTooLittle'));return false;}
   if (!bitcore.Address.isValid(destination, bitcore.Networks.livenet, bitcore.Address.PayToPublicKeyHash)
       && !bitcore.Address.isValid(destination, bitcore.Networks.livenet, bitcore.Address.PayToScriptHash))
   { showError(I18n.t('addressInvalid'));return false;}
 
-
-
   let utxos = []
-
-  const changeAdd = addresses[0].address
-
   let sumAmounts=0
-
 
   allUtxos.forEach(utxo=>{
 
@@ -80,7 +75,7 @@ export function * estimateFee (action) {
       .from(utxos)
       .to(destination, amount)
       .feePerKb(100000000)
-      .change(changeAdd)
+      .change(changeAdd.address)
 
   var fee = parseInt(transaction.getFee())
 
@@ -88,7 +83,7 @@ export function * estimateFee (action) {
     fee = AppConfig.MIN_RELAY_FEE
   }
   
-  if(fee+amount>addresses[0].balance){
+  if(fee+amount>balance){
     showError(I18n.t('exceedsBalance', {fee: normRep(fee), ticker:AppConfig.coinTicker}))
     return false
   }
@@ -112,14 +107,12 @@ export function * getMaxAmount (action) {
   const { callback } = action
 
   const allUtxos = yield select(AccountSelectors.getUtxo)
-
   const addresses = yield select(AccountSelectors.getAddresses)
+  const changeAdd = yield select(AccountSelectors.getChangeAddress)
 
   let utxos = []
 
   let sumAmounts=0
-
-  const changeAdd = addresses[0].address
 
   allUtxos.forEach(utxo=>{
       sumAmounts+=parseInt(utxo.satoshis)
@@ -128,9 +121,9 @@ export function * getMaxAmount (action) {
 
   var transaction = new bitcore.Transaction()
       .from(utxos)
-      .to(changeAdd, sumAmounts)
+      .to(changeAdd.address, sumAmounts)
       .feePerKb(10000000)
-      .change(changeAdd)
+      .change(changeAdd.address)
 
   var fee = parseInt(transaction.getFee())
   if (fee<AppConfig.MIN_RELAY_FEE) {
@@ -175,14 +168,15 @@ export function * sendTransaction (action) {
         var pk = new bitcore.PrivateKey( privKey )
         privateKeys.push( pk )
         loadedKeys[index] = true;
-        //console.log('sendTransaction add HD priv: '+ utxo.address + '=>' + pk.toWIF());
+        console.log('sendTransaction add HD priv: '+ utxo.address + '=>' + pk.toWIF());
       }
       utxos.push(utxo)
     }
   })
 
   const changeAdd = yield select(AccountSelectors.getChangeAddress)
-
+console.log('sendTransaction utxos='+ JSON.stringify(utxos));
+console.log('sendTransaction keys='+ JSON.stringify(privateKeys));
   try {
       var transaction = new bitcore.Transaction()
         .from(utxos)
@@ -248,7 +242,12 @@ export function * sendTransaction (action) {
           yield put(AccountActions.rebroadcastTx())
 
         }else{
-          showError(I18n.t('unexpectedError'))
+          if (response.problem=='CLIENT_ERROR') {
+            showError(I18n.t('unexpectedError') + ': ' + response.data.error)  
+          }
+          else {
+            showError(I18n.t('unexpectedError'))
+          }
           console.log('sendTransaction ERROR: '+ JSON.stringify(response));
         }
 
@@ -314,8 +313,6 @@ export function * rebroadcastTx (action) {
 
   const addresses = yield select(AccountSelectors.getAddresses)
 
-  const address = addresses[0].address
-
     const url = yield select(GlobalSelectors.getBlockbookApi)
 
     const api = API.create(url)
@@ -334,8 +331,6 @@ export function * rebroadcastTx (action) {
         yield put(AccountActions.fetchAddressUtxo())
         yield put(AccountActions.fetchAddressInfo())
         yield put(AccountActions.resetUnsendTx())
-
-
       } else {
         if (response.problem === 'TIMEOUT_ERROR' || response.problem === 'CONNECTION_ERROR' || response.problem === 'NETWORK_ERROR') {
           yield put(AccountActions.rebroadcastTx())
