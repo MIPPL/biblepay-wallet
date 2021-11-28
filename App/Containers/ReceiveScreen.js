@@ -29,7 +29,7 @@ import I18n from '../I18n'
 class ReceiveScreen extends Component {
 
   state = {
-    qrValue : this.props.accountAddress.address,
+    qrValue : AppConfig.coinPrefixQR + ':' + this.props.accountAddress.address,
     copyText: I18n.t('copy'),
     amount: null
   }
@@ -58,9 +58,9 @@ class ReceiveScreen extends Component {
 
   changeQrValue = (amount) => {
     if(parseFloat(amount)){
-      this.setState({qrValue : this.props.accountAddress.address+'?amount='+parseFloat(amount)})
+      this.setState({qrValue : AppConfig.coinPrefixQR + ':'+this.props.accountAddress.address+'?amount='+parseFloat(amount)})
     }else{
-      this.setState({qrValue : this.props.accountAddress.address})
+      this.setState({qrValue : AppConfig.coinPrefixQR + ':'+this.props.accountAddress.address})
     }
   }
 
