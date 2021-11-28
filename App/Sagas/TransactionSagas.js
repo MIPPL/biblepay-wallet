@@ -164,28 +164,28 @@ export function * sendTransaction (action) {
 
       var index = addresses.findIndex( (addrObj) => addrObj.address === utxo.address ); 
       if (index!=-1 && typeof loadedKeys[index] === 'undefined')  {
-        var privKey = getPrivateKeyForHDAddress(decryptedMnemonic, index/2, false, derivationPath );
+        var privKey = getPrivateKeyForHDAddress(decryptedMnemonic, index/2, index%2, derivationPath );
         var pk = new bitcore.PrivateKey( privKey )
         privateKeys.push( pk )
         loadedKeys[index] = true;
-        console.log('sendTransaction add HD priv: '+ utxo.address + '=>' + pk.toWIF());
+  //      console.log('sendTransaction add HD priv: ('+ index +')'+ utxo.address + '=>' + pk.toWIF());
       }
       utxos.push(utxo)
     }
   })
 
   const changeAdd = yield select(AccountSelectors.getChangeAddress)
-console.log('sendTransaction utxos='+ JSON.stringify(utxos));
-console.log('sendTransaction keys='+ JSON.stringify(privateKeys));
+//console.log('sendTransaction utxos:' + JSON.stringify(utxos));
   try {
       var transaction = new bitcore.Transaction()
         .from(utxos)
         .to(destination, amount, '')
         .fee(realFee)
         .change(changeAdd.address)
-
+      
+      //console.log('sendTransaction UNSIGNED :'+ transaction.toString());
       let signedTx = transaction.sign(privateKeys)
-      console.log('sendTransaction SIGN :'+ signedTx);
+      //console.log('sendTransaction SIGN :'+ signedTx);
       const url = yield select(GlobalSelectors.getBlockbookApi)
 
       const api = API.create(url)
@@ -312,39 +312,39 @@ export function * rebroadcastTx (action) {
   })
 
   const addresses = yield select(AccountSelectors.getAddresses)
+  const url = yield select(GlobalSelectors.getBlockbookApi)
+  const api = API.create(url)
 
-    const url = yield select(GlobalSelectors.getBlockbookApi)
+  const response = yield call(api.sendTransaction, unsendTxs[0].hex)
 
-    const api = API.create(url)
+  try {
 
-    const response = yield call(api.sendTransaction, unsendTxs[0].hex)
+    if (response.ok) {
+      const txData = new SendTx(response.data)
+      yield new Promise(resolve => {
+        setTimeout(() => {
+          resolve()
+        }, 5000);
+      })
+      yield put(AccountActions.fetchAddressUtxo())
+      yield put(AccountActions.fetchAddressInfo())
+      yield put(AccountActions.resetUnsendTx())
 
-    try {
 
-      if (response.ok) {
-        const txData = new SendTx(response.data)
-        yield new Promise(resolve => {
-          setTimeout(() => {
-            resolve()
-          }, 5000);
-        })
-        yield put(AccountActions.fetchAddressUtxo())
-        yield put(AccountActions.fetchAddressInfo())
-        yield put(AccountActions.resetUnsendTx())
+    } else {
+      if (response.problem === 'TIMEOUT_ERROR' || response.problem === 'CONNECTION_ERROR' || response.problem === 'NETWORK_ERROR') {
+        yield put(AccountActions.rebroadcastTx())
       } else {
-        if (response.problem === 'TIMEOUT_ERROR' || response.problem === 'CONNECTION_ERROR' || response.problem === 'NETWORK_ERROR') {
-          yield put(AccountActions.rebroadcastTx())
-        } else {
-          yield put(AccountActions.resetUnsendTx())
-        }
+        yield put(AccountActions.resetUnsendTx())
       }
-
-
-    } catch (e) {
-      yield put(AccountActions.rebroadcastTx())
     }
 
+
+  } catch (e) {
+    yield put(AccountActions.rebroadcastTx())
   }
+
+}
 }
 
 
