@@ -23,7 +23,6 @@ class ChangePinCodeScreen extends Component {
 
 
   componentDidMount () {
-
   }
 
   render () {
