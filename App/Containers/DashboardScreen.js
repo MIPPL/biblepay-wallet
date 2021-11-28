@@ -97,7 +97,7 @@ class DashboardScreen extends Component {
       if (  typeof this.props.accountAddress === 'undefined'
       ||    typeof this.props.changeAddress === 'undefined'
       ||    this.props.isAddressPoolEmpty) {
-        console.log("!! new addresses needed " + this.props.addresses.length);
+        //console.log("!! new addresses needed " + this.props.addresses.length);
         Keychain.getInternetCredentials(this.props.addresses[0].encryptedPrivKey).then(  (creds) => {
           this.props.generateNewAddresses( creds.username, creds.password, (error) => {
             if (error)  {

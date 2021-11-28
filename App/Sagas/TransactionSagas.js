@@ -42,8 +42,8 @@ export function * estimateFee (action) {
   const { destination, value, callback } = action
 
   const allUtxos = yield select(AccountSelectors.getUtxo)
-
   const unsendTx = yield select(AccountSelectors.getUnsendTx)
+  const balance = yield select(AccountSelectors.getBalance)
 
   allUtxos.sort((a,b)=>{return parseInt(a.satoshis)-parseInt(b.satoshis)})
 
@@ -52,7 +52,7 @@ export function * estimateFee (action) {
   let amount = longRep(parseFloat(value))
 
   if (unsendTx.length) { showError(I18n.t('alreadyNonBroadcast'));return false;}
-  if (amount > addresses[0].balance) { showError(I18n.t('insufFunds'));return false;}
+  if (amount > balance) { showError(I18n.t('insufFunds'));return false;}
   if (amount <= longRep(0.01)) { showError(I18n.t('amountTooLittle'));return false;}
   if (!bitcore.Address.isValid(destination, bitcore.Networks.livenet, bitcore.Address.PayToPublicKeyHash)
       && !bitcore.Address.isValid(destination, bitcore.Networks.livenet, bitcore.Address.PayToScriptHash))
@@ -88,7 +88,7 @@ export function * estimateFee (action) {
     fee = AppConfig.MIN_RELAY_FEE
   }
   
-  if(fee+amount>addresses[0].balance){
+  if(fee+amount>balance){
     showError(I18n.t('exceedsBalance', {fee: normRep(fee), ticker:AppConfig.coinTicker}))
     return false
   }
@@ -171,27 +171,28 @@ export function * sendTransaction (action) {
 
       var index = addresses.findIndex( (addrObj) => addrObj.address === utxo.address ); 
       if (index!=-1 && typeof loadedKeys[index] === 'undefined')  {
-        var privKey = getPrivateKeyForHDAddress(decryptedMnemonic, index/2, false, derivationPath );
+        var privKey = getPrivateKeyForHDAddress(decryptedMnemonic, index/2, index%2, derivationPath );
         var pk = new bitcore.PrivateKey( privKey )
         privateKeys.push( pk )
         loadedKeys[index] = true;
-        //console.log('sendTransaction add HD priv: '+ utxo.address + '=>' + pk.toWIF());
+  //      console.log('sendTransaction add HD priv: ('+ index +')'+ utxo.address + '=>' + pk.toWIF());
       }
       utxos.push(utxo)
     }
   })
 
   const changeAdd = yield select(AccountSelectors.getChangeAddress)
-
+//console.log('sendTransaction utxos:' + JSON.stringify(utxos));
   try {
       var transaction = new bitcore.Transaction()
         .from(utxos)
         .to(destination, amount, '')
         .fee(realFee)
         .change(changeAdd.address)
-
+      
+      //console.log('sendTransaction UNSIGNED :'+ transaction.toString());
       let signedTx = transaction.sign(privateKeys)
-      console.log('sendTransaction SIGN :'+ signedTx);
+      //console.log('sendTransaction SIGN :'+ signedTx);
       const url = yield select(GlobalSelectors.getBlockbookApi)
 
       const api = API.create(url)
@@ -248,7 +249,9 @@ export function * sendTransaction (action) {
           yield put(AccountActions.rebroadcastTx())
 
         }else{
-          showError(I18n.t('unexpectedError'))
+          if (response.problem=='CLIENT_ERROR') {
+            showError(I18n.t('unexpectedError') + ': ' + response.data.error )
+          }
           console.log('sendTransaction ERROR: '+ JSON.stringify(response));
         }
 
@@ -313,43 +316,39 @@ export function * rebroadcastTx (action) {
   })
 
   const addresses = yield select(AccountSelectors.getAddresses)
+  const url = yield select(GlobalSelectors.getBlockbookApi)
+  const api = API.create(url)
 
-  const address = addresses[0].address
+  const response = yield call(api.sendTransaction, unsendTxs[0].hex)
 
-    const url = yield select(GlobalSelectors.getBlockbookApi)
+  try {
 
-    const api = API.create(url)
-
-    const response = yield call(api.sendTransaction, unsendTxs[0].hex)
-
-    try {
-
-      if (response.ok) {
-        const txData = new SendTx(response.data)
-        yield new Promise(resolve => {
-          setTimeout(() => {
-            resolve()
-          }, 5000);
-        })
-        yield put(AccountActions.fetchAddressUtxo())
-        yield put(AccountActions.fetchAddressInfo())
-        yield put(AccountActions.resetUnsendTx())
+    if (response.ok) {
+      const txData = new SendTx(response.data)
+      yield new Promise(resolve => {
+        setTimeout(() => {
+          resolve()
+        }, 5000);
+      })
+      yield put(AccountActions.fetchAddressUtxo())
+      yield put(AccountActions.fetchAddressInfo())
+      yield put(AccountActions.resetUnsendTx())
 
 
+    } else {
+      if (response.problem === 'TIMEOUT_ERROR' || response.problem === 'CONNECTION_ERROR' || response.problem === 'NETWORK_ERROR') {
+        yield put(AccountActions.rebroadcastTx())
       } else {
-        if (response.problem === 'TIMEOUT_ERROR' || response.problem === 'CONNECTION_ERROR' || response.problem === 'NETWORK_ERROR') {
-          yield put(AccountActions.rebroadcastTx())
-        } else {
-          yield put(AccountActions.resetUnsendTx())
-        }
+        yield put(AccountActions.resetUnsendTx())
       }
-
-
-    } catch (e) {
-      yield put(AccountActions.rebroadcastTx())
     }
 
+
+  } catch (e) {
+    yield put(AccountActions.rebroadcastTx())
   }
+
+}
 }
 
 
