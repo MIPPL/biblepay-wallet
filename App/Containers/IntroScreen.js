@@ -348,7 +348,7 @@ class IntroScreen extends Component {
             <View style={[styles.privateKeyPageContainer, Platform.OS!=='ios'?{height:Dimensions.get('window').height-StatusBar.currentHeight}:null]}>
               <View style={styles.privateKeyPageInnerContainer}>
               {this.renderBackIcon()}
-                <Image source={SecurityIcon} style={styles.securityIconPrivKey} resizeMode={'stretch'}/>
+                <Image source={SecurityIcon} style={styles.securityIconCheckSmall} resizeMode={'stretch'}/>
                 <Text style={styles.accountTitle}>{I18n.t('importYourMnemonics')}</Text>
                 <Text style={styles.mnemonicCheckSubTitle}>{I18n.t('ifYouHaveMnemonic')}</Text>
               </View>

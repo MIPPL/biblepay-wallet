@@ -94,7 +94,7 @@ export const defaultOptions = (useLightTheme) => ({
     textColor: '#a2a5b7',
     selectedTextColor: useLightTheme?'black':'white',
     iconInsets: {
-      top: -2,
+      top: 6,
       left: 0,
       bottom: 2,
       right: 0
