@@ -114,6 +114,16 @@ export default StyleSheet.create({
     paddingTop: 2,
     fontSize: wp(4),
   },
+  mnemonic2: {
+    backgroundColor: '#EEEEEE',
+    fontFamily: 'OpenSans-Regular',
+    width: wp(80),
+    height: hp(6),
+    color: 'black',
+    paddingBottom: 2,
+    paddingTop: 2,
+    fontSize: wp(4),
+  },
   mnemonicError: {
     backgroundColor: '#EEEEEE',
     borderBottomWidth: 2,
