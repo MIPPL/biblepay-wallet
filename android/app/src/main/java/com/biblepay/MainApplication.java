@@ -10,6 +10,8 @@ import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.lang.reflect.Field;
+import android.database.CursorWindow;
 
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
@@ -47,6 +49,15 @@ public class MainApplication extends NavigationApplication {
   public void onCreate() {
     super.onCreate();
     initializeFlipper(this); // Remove this line if you don't want Flipper enabled
+      try {
+          Field field = CursorWindow.class.getDeclaredField("sCursorWindowSize");
+          field.setAccessible(true);
+          field.set(null, 100 * 1024 * 1024); //100MB
+      } catch (Exception e) {
+          if (BuildConfig.DEBUG) {
+              e.printStackTrace();
+          }
+      }
   }
 
   /**
