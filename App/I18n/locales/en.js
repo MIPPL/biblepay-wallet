@@ -118,6 +118,8 @@ export default
     newWallet: 'Create new wallet',
     importYourMnemonics: 'Import Your Mnemonics',
     ifYouHaveMnemonic: 'If you have already a mnemonic passphrase, please enter the 12 words',
+    pleaseEnter12Words: 'Please enter the 12 words separated by blank spaces',
+    changeInputMode: 'Change input mode',
     word: 'Word',
     protectYourWallet: 'Protect Your Wallet',
     protectLongText: 'For your safety, the wallet generates a mnemonic passphrase of 12 words. Please save the following words in a safe location.',  
@@ -135,7 +137,9 @@ export default
     showInExplorer: 'Show in explorer',
     capitalizationAbbreviated: 'cap.',
     unexpectedError: 'An unexpected Error occurred while trying to send the transaction. Please try again.',
-        
+    
+    viewMnemonic: 'View your 12-word mnemonic',
+    
     /* staking translations*/
     stakingtitle: 'Staking (Soon)'
 };

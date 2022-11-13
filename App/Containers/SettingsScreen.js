@@ -11,10 +11,10 @@ import { connect } from 'react-redux'
 // Styles
 import styles from './Styles/SettingsScreenStyle'
 
+import { AccountSelectors } from '../Redux/AccountRedux'
 import GlobalActions, { GlobalSelectors } from '../Redux/GlobalRedux'
-import {preStartApp} from '../Navigation';
 import Header from '../Components/TitleHeader';
-import TransactionItem from '../Components/TransactionItem';
+
 import {Navigation} from 'react-native-navigation';
 import AccountActions from '../Redux/AccountRedux';
 import Swiper from 'react-native-swiper'
@@ -129,6 +129,29 @@ class SettingsScreen extends Component {
         });
     }
 
+    viewMnemonic = () => {
+        Navigation.showModal({
+            component: {
+                name: 'RequestPinCodeScreen',
+                passProps: {onFinish: this.openViewSeedModal},
+                options: defaultOptions(this.props.lightTheme)
+            },
+        });
+    }
+
+    openViewSeedModal = (id) => {
+        Navigation.dismissModal(id).then(()=>{
+            Navigation.showModal({
+                component: {
+                    name: 'ViewMnemonic',
+                    options: defaultOptions(this.props.lightTheme)
+                },
+            });
+            if(this.backhandler)
+                this.backhandler.remove()
+        })
+
+    }
     goBack = () => {
         this.setState({ pageAPI: false, pageLang: false })
         this.refs.swiper.scrollBy(-1, true)
@@ -279,6 +302,16 @@ class SettingsScreen extends Component {
                     </View>
                 </View>
             </TouchableOpacity>
+
+            {this.props.addresses.length>1 && <TouchableOpacity onPress={this.viewMnemonic} style={[styles.settingContainer,this.props.lightTheme?styles.settingContainerLight1:styles.settingContainerDark1]}>
+                  <View style={styles.settingInnerContainer}>
+                      <Image source={this.props.lightTheme?ExportIconLight:ExportIcon} style={styles.icon} resizeMode={'contain'}/>
+                      <View style={styles.titleWrapper}>
+                          <Text style={[styles.title,this.props.lightTheme?styles.titleLight:null]}>{I18n.t('viewMnemonic')}</Text>
+                      </View>
+                  </View>
+              </TouchableOpacity>
+              }
         </View>
         );
   }
@@ -410,10 +443,11 @@ class SettingsScreen extends Component {
 
 const mapStateToProps = (state) => {
   return {
-      blockBookApi: GlobalSelectors.getBlockbookApi(state),
-      explorerApi: GlobalSelectors.getExplorerApi(state),
-      lightTheme: GlobalSelectors.getUseLightTheme(state),
-      language: GlobalSelectors.getLanguage(state)
+    addresses: AccountSelectors.getAddresses(state),
+    blockBookApi: GlobalSelectors.getBlockbookApi(state),
+    explorerApi: GlobalSelectors.getExplorerApi(state),
+    lightTheme: GlobalSelectors.getUseLightTheme(state),
+    language: GlobalSelectors.getLanguage(state)
   }
 }
 

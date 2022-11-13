@@ -14,6 +14,7 @@ import NetworkScreen from '../Containers/NetworkScreen'
 import SettingsScreen from '../Containers/SettingsScreen'
 import ExportPrivKeyScreen from '../Containers/ExportPrivKeyScreen'
 import TransactionDetailScreen from '../Containers/TransactionDetailScreen';
+import ViewMnemonic from '../Containers/ViewMnemonic';
 
 import {withReduxProvider} from './redux';
 
@@ -37,6 +38,7 @@ Navigation.registerComponent('SettingsScreen', () => gestureHandlerRootHOC(withR
 Navigation.registerComponent('ChangePinCodeScreen', () => gestureHandlerRootHOC(withReduxProvider(ChangePinCodeScreen)), () => ChangePinCodeScreen)
 Navigation.registerComponent('ExportPrivKeyScreen', () => gestureHandlerRootHOC(withReduxProvider(ExportPrivKeyScreen)), () => ExportPrivKeyScreen)
 Navigation.registerComponent('TransactionDetailScreen', () => gestureHandlerRootHOC(withReduxProvider(TransactionDetailScreen)), () => TransactionDetailScreen)
+Navigation.registerComponent('ViewMnemonic', () => gestureHandlerRootHOC(withReduxProvider(ViewMnemonic)), () => ViewMnemonic)
 
 export const defaultOptions = (useLightTheme) => ({
   layout: {

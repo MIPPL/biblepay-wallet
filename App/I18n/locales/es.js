@@ -173,6 +173,7 @@ export default
     capitalizationAbbreviated: 'cap.',
     apy: 'APY',
     
+    viewMnemonic: 'Ver su mnemónico de 12 palabras',
     /* staking translations*/
     stakingtitle: 'Staking (Soon)'
 };
