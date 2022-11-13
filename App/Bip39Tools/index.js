@@ -1,6 +1,6 @@
 
-import ZH_SI from './wordlists/chinese_simplified.json';
-import ZH from './wordlists/chinese_traditional.json';
+import ZH from './wordlists/chinese_simplified.json';
+import ZH_TR from './wordlists/chinese_traditional.json';
 import EN from './wordlists/english.json';
 import FR from './wordlists/french.json';
 import IT from './wordlists/italian.json';
@@ -16,13 +16,14 @@ Bip39Tools.wordlists = {
     JA,
     KO,
     ES,
+    ZH_TR,
     ZH
 };
 
-Bip39Tools.wordlistsLanguage = ['EN', 'FR', 'IT', 'JA', 'KO', 'ES', 'ZH' ];
+Bip39Tools.wordlistsLanguage = ['EN', 'FR', 'IT', 'JA', 'KO', 'ES', 'ZH', 'ZH_TR' ];
 
 Bip39Tools.normalize = function (str) {
-    return (str || '').normalize('NFKD');
+    return (str || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
 
 Bip39Tools.accentsTidy = function(s){

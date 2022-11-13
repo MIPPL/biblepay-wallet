@@ -5,18 +5,20 @@ import {
   Text,
   View,
   TextInput,
-  TouchableOpacity,
   Alert,
+  Platform,
+  BackHandler,
+  Keyboard,
   Image,
+  ScrollView,
+  TouchableOpacity,
   TouchableWithoutFeedback,
   Dimensions,
-  Platform,
   StatusBar,
-  BackHandler,
   ImageBackground,
-    ScrollView,
-    Keyboard
+  Clipboard
 } from 'react-native';
+
 import * as RNLocalize from 'react-native-localize';
 import { connect } from 'react-redux'
 
@@ -74,9 +76,11 @@ class IntroScreen extends Component {
     vSalt: '',
     rounds: '',
     passphrase: '',
-    mnemonicLang : ''
+    mnemonicLang : '',
+    inputMode: 0, // 0 - 12 textinput, 1 = single input
   }
 
+  debugStr='';
   canGoBack=false
   _mnemonicInputRef= [null,null,null,null,null,null,null,null,null,null,null,null,null]
 
@@ -111,7 +115,8 @@ class IntroScreen extends Component {
         })
 
       }
-    })
+    }) 
+    
   }
 
   next = () => {
@@ -121,7 +126,6 @@ class IntroScreen extends Component {
   generateMnemonic = async (strength) => {
     try {
       const locales = RNLocalize.getLocales();
-      var languageCode = 'EN';
       if (Array.isArray(locales)) {
         languageCode = locales[0].languageCode.toUpperCase();
       }
@@ -134,51 +138,106 @@ class IntroScreen extends Component {
 
   checkMnemonic = () => {
     if(this.state.mnemonic===this.state.mnemonicCheck) {
-      this.props.generateAddressFromMnemonic(this.state.mnemonic, (error)=>{
-        if(!error){
-          setTimeout(()=>{
-            this.props.startup()
-          },200)
-          if(this.backhandler)
-            this.backhandler.remove()
-          startApp(true)
-
-        }
-      })
-
-
+        this.props.generateAddressFromMnemonic(this.state.mnemonic, (error)=>{
+          if(!error){
+            setTimeout(()=>{
+              this.props.startup()
+            },200)
+            if(this.backhandler)
+              this.backhandler.remove()
+            startApp(true)
+          }
+        })
     }else{
       this.refs.swiper.scrollBy(-1, true)
     }
-
   }
 
+  debugLog = (str) => {
+    this.debugStr+=str+'\n'
+    console.log(str)
+    Clipboard.setString(this.debugStr)
+  }
+  
   importMnemonic = () => {
-    var normalizedMnemonic = Bip39Tools.normalize(this.state.importMnemonic);
-    if(this.state.importMnemonic && bip39.validateMnemonic( normalizedMnemonic, Bip39Tools.getWordList( this.state.mnemonicLang ))) {
+
+    if (this.state.mnemonicLang!=='') {
+      wordLang = this.state.mnemonicLang
+    }
+    else {
+      wordLang = Bip39Tools.isWordInWordlist(this.state.importMnemonic.split(' ')[0]);
+      if (wordLang=='') wordLang = 'EN'
+      this.setState( { mnemonicLang: wordLang } );
+    }
+    this.debugLog('import wordlist #'+ wordLang + '#, \nstateLang #'+this.state.mnemonicLang+'#, \nfirst word #'+this.state.importMnemonic.split(' ')[0]+'#, \nword count#'+this.state.importMnemonic.split(' ').length+'#');
+
+    var normalizedMnemonic ='';
+    if (this.state.importMnemonic)  {
+      normalizedMnemonic = Bip39Tools.normalize(this.state.importMnemonic);
+    }
+        
+    var wordList;
+    wordList = Bip39Tools.getWordList( wordLang )
+    var isMnemonicValid = bip39.validateMnemonic( normalizedMnemonic, wordList )
+    
+    this.debugLog('validate #'+ normalizedMnemonic + '#, \n lang #'+wordLang+'# , valid='+isMnemonicValid);
+
+    if (!isMnemonicValid && wordLang=='ZH') { // try with traditional chinese
+      var wordListTrad = Bip39Tools.getWordList( 'ZH_TR' )
+      isMnemonicValid = bip39.validateMnemonic( normalizedMnemonic, wordListTrad )
+      if (isMnemonicValid) {
+        wordList=wordListTrad
+        wordLang='ZH_TR'
+      }
+      isMnemonicValid = true;
+    }
+    //this.debugLog('validate2 #'+ normalizedMnemonic + '#, \n lang #'+wordLang+'# , valid='+isMnemonicValid);
+
+    if(wordLang!='' && (wordList instanceof Array) && isMnemonicValid) { 
         // new wallet
-      this.props.generateAddressFromMnemonic(normalizedMnemonic, (error) => {
-        if(error){
-          Alert.alert(
-              I18n.t('error'),
-              I18n.t('mnemonicInvalid'),
-              [
-                {
-                  text: I18n.t('dismiss'),
-                  style: 'cancel',
-                },
-              ],
-              {cancelable: false},
-          )
-        }else{
-          setTimeout(()=>{
-            this.props.startup()
-          },200)
-          if(this.backhandler)
-            this.backhandler.remove()
-          startApp(true)
-        }
-      })
+      try {
+        this.debugLog('Generating wallet...')        
+        this.props.generateAddressFromMnemonic(normalizedMnemonic, (error) => {
+          this.debugLog('Generation ended ('+error+')')
+          
+          if(error){
+            Alert.alert(
+                I18n.t('error'),
+                I18n.t('mnemonicInvalid'),
+                [
+                  {
+                    text: I18n.t('dismiss'),
+                    style: 'cancel',
+                  },
+                ],
+                {cancelable: false},
+            )
+          }else{
+            setTimeout(()=>{
+              this.debugLog('Calling startup...')
+              this.props.startup()
+              this.debugLog('Startup ended.')
+            },200)
+            if(this.backhandler)
+              this.backhandler.remove()
+              this.debugLog('Calling startApplication ')
+      
+            startApp(true)
+            this.debugLog('startApplication ended')
+          }
+        })
+      } catch(e) {
+        Alert.alert(
+            I18n.t('error'),
+            'There was an error: \nmessage ='+e.message + '; \n',
+            [
+              {
+                text: I18n.t('dismiss'),
+                style: 'cancel',
+              },
+            ],
+            {cancelable: false},)
+      }
     }
     else  {
       Alert.alert(
@@ -223,6 +282,23 @@ class IntroScreen extends Component {
       }
   }
 
+  RenderMnemonicContainer = () => {
+  
+    if (this.state.inputMode === 0) {
+      return (<View style={styles.mnemonicContainer}>
+          <View style={styles.mnemonicContainerInner}>{this.renderMnemonicWordInput(1)}{this.renderMnemonicWordInput(2)}{this.renderMnemonicWordInput(3)}</View>
+          <View style={styles.mnemonicContainerInner}>{this.renderMnemonicWordInput(4)}{this.renderMnemonicWordInput(5)}{this.renderMnemonicWordInput(6)}</View>
+          <View style={styles.mnemonicContainerInner}>{this.renderMnemonicWordInput(7)}{this.renderMnemonicWordInput(8)}{this.renderMnemonicWordInput(9)}</View>
+          <View style={styles.mnemonicContainerInner}>{this.renderMnemonicWordInput(10)}{this.renderMnemonicWordInput(11)}{this.renderMnemonicWordInput(12)}</View>
+        </View>);
+    }
+    else {
+      return (<View style={styles.mnemonicContainer}>
+        <View style={styles.mnemonicContainerInner}>{this.renderMnemonicWordInput2()}</View>
+      </View>);
+    }
+  }
+
   renderMnemonicWordInput = (n) => {
     return ( <TextInput editable placeholder={I18n.t('word')+' #'+n} 
                        style={(this.state.mnemonicState[n-1]==1)?styles.mnemonicError:(this.state.mnemonicFocusedIndex==(n-1))?styles.mnemonicFocus:styles.mnemonic} 
@@ -237,7 +313,20 @@ class IntroScreen extends Component {
           );
   }
 
+  renderMnemonicWordInput2 = () => {
+    return ( <TextInput editable placeholder={I18n.t('pleaseEnter12Words')} 
+                       style={styles.mnemonic2} 
+                       placeholderTextColor = "#a2a5b7"
+                       autoCapitalize = 'none'
+                       onChangeText={(mnemonic)=>{
+                        this.setState({importMnemonic : mnemonic});}} 
+                       ref={(r) => { this._textInputRef = r; }}
+                       />
+          );
+  }
+
   setBIP39Word = (n, word) =>  {
+    //console.log('setBIP39Word',n,word)
     var last = word.substr(word.length-1,1);
     if (last==' ') {
       word = word.trim();
@@ -264,11 +353,18 @@ class IntroScreen extends Component {
   checkBIP39Word = (word) =>  {
     wordLang = Bip39Tools.isWordInWordlist(word);
 
-    //console.log('checkBIP39Word: ' + word + ',' + wordLang + ',' + this.state.mnemonicLang)
+    console.log('checkBIP39Word: ' + word + ',' + wordLang + ',' + this.state.mnemonicLang)
     if (wordLang!=='')  {
       if (this.state.mnemonicLang!=='')   {
-        if (this.state.mnemonicLang!=wordLang)     // language must be the same for all words
-              return false;
+        if (this.state.mnemonicLang!=wordLang) {    // language must be the same for all words
+          if (wordLang=='ZH_TR' && this.state.mnemonicLang=='ZH') { // make exception with chinese
+            this.setState( { mnemonicLang: wordLang } );  // can change from SI to TR but not the opposite
+            return true;
+          } 
+          else {
+            return false;  
+          }   
+        }
         else  return true;
       }
       else  {
@@ -352,12 +448,7 @@ class IntroScreen extends Component {
                 <Text style={styles.accountTitle}>{I18n.t('importYourMnemonics')}</Text>
                 <Text style={styles.mnemonicCheckSubTitle}>{I18n.t('ifYouHaveMnemonic')}</Text>
               </View>
-              <View style={styles.mnemonicContainer}>
-                <View style={styles.mnemonicContainerInner}>{this.renderMnemonicWordInput(1)}{this.renderMnemonicWordInput(2)}{this.renderMnemonicWordInput(3)}</View>
-                <View style={styles.mnemonicContainerInner}>{this.renderMnemonicWordInput(4)}{this.renderMnemonicWordInput(5)}{this.renderMnemonicWordInput(6)}</View>
-                <View style={styles.mnemonicContainerInner}>{this.renderMnemonicWordInput(7)}{this.renderMnemonicWordInput(8)}{this.renderMnemonicWordInput(9)}</View>
-                <View style={styles.mnemonicContainerInner}>{this.renderMnemonicWordInput(10)}{this.renderMnemonicWordInput(11)}{this.renderMnemonicWordInput(12)}</View>
-              </View>
+              {this.RenderMnemonicContainer()}
               <Button label={I18n.t('next')} arrow onPress={this.importMnemonic}/>
             </View>
           </KeyboardAwareScrollView>
