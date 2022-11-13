@@ -24,6 +24,7 @@ import bip39 from 'react-native-bip39'
 const { HDKey } = require("wallet.ts");
 
 const crypto = require('crypto');
+import decrypt from '../Helpers/decrypt';
 
 import I18n from '../I18n'
 
@@ -263,15 +264,6 @@ export function * sendTransaction (action) {
 /*
 
 */
-}
-
-function decrypt(text) {
-  let iv = Buffer.from(text.iv, 'hex');
-  let encryptedText = Buffer.from(text.encryptedData, 'hex');
-  let decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(text.key, 'hex'), iv);
-  let decrypted = decipher.update(encryptedText);
-  decrypted = Buffer.concat([decrypted, decipher.final()]);
-  return decrypted.toString();
 }
 
 // return: priv key as raw hex string

@@ -30,6 +30,8 @@ weekday[6] = I18n.t('saturday');
 import * as Keychain from "react-native-keychain";
 import '../../shim.js'
 import AppConfig from '../Config/AppConfig'
+import decrypt from '../Helpers/decrypt';
+
 const crypto = require('crypto');
 class ReceiveScreen extends Component {
 
@@ -39,27 +41,13 @@ class ReceiveScreen extends Component {
     privateKey: ''
   }
 
-
-
-
   componentDidMount () {
     Navigation.events().bindComponent(this);
 
-    function decrypt(text) {
-      let iv = Buffer.from(text.iv, 'hex');
-      let encryptedText = Buffer.from(text.encryptedData, 'hex');
-      let decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(text.key, 'hex'), iv);
-      let decrypted = decipher.update(encryptedText);
-      decrypted = Buffer.concat([decrypted, decipher.final()]);
-      return decrypted.toString();
-    }
-
-        Keychain.getInternetCredentials(this.props.addresses[0].encryptedPrivKey).then((creds)=>{
-          var decryptedPrivateKey = decrypt({encryptedData:this.props.addresses[0].encryptedPrivKey, iv: creds.username, key: creds.password})
-          this.setState({privateKey: decryptedPrivateKey})
-        })
-
-
+    Keychain.getInternetCredentials(this.props.addresses[0].encryptedPrivKey).then((creds)=>{
+      var decryptedPrivateKey = decrypt({encryptedData:this.props.addresses[0].encryptedPrivKey, iv: creds.username, key: creds.password})
+      this.setState({privateKey: decryptedPrivateKey})
+    })
   }
 
   componentDidAppear() {
