@@ -142,7 +142,7 @@ export const AccountSelectors = {
     if (state.account.addresses.length == 0) {
       return []
     }
-    
+
     state.account.utxo.forEach(ut=>{
       let address = state.account.addresses.find(add=>{return add.address===ut.address})
       let transaction = address.transactions.find(tx=>{return tx.txid===ut.txid})
@@ -307,7 +307,6 @@ export const fetchAddUtxo = (state = INITIAL_STATE, action) => {
 
 export const successFetchAddUtxo = (state = INITIAL_STATE, action) => {
   const { address, utxo } = action
-
   utxo.forEach(ut=>{
     ut.address=address
   })
@@ -317,12 +316,11 @@ export const successFetchAddUtxo = (state = INITIAL_STATE, action) => {
 
   var loading = state.addresses.findIndex( (item, index) => { return item.address == address; } )
               / (state.addresses.length-1);
- 
+
   return state.merge({
     utxo: merged,
     loadingUtxoInfo: loading
   })
-
 }
 
 export const sendTransaction = (state = INITIAL_STATE, action) => {

@@ -165,4 +165,7 @@ export default
   'showInExplorer':	'Afficher dans l\'explorer',
   'capitalizationAbbreviated':	'cap.',
   'apy':	'APY',
-  'unexpectedError':	'Un erreur innatendue est survenue lors de l\'envoie de la transaction. Veuillez réessayer'}
+  'unexpectedError':	'Un erreur innatendue est survenue lors de l\'envoie de la transaction. Veuillez réessayer',
+
+  'syncingWait': 'Synchronisation...Merci de patienter'
+}

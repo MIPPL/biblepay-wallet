@@ -159,7 +159,7 @@ export function * sendTransaction (action) {
   decryptedMnemonic = decrypt({encryptedData:addresses[0].encryptedPrivKey, iv: credsHD.username, key: credsHD.password})
   
   allUtxos.forEach(utxo=>{
-    //console.log('sendTransaction try utxo ' + utxo.txId + '; address='+utxo.address+', amount='+utxo.satoshis + ' (sum='+sumAmounts+', required='+amount+') allUtxos len='+allUtxos.length );
+    console.log('sendTransaction try utxo ' + utxo.txId + '; address='+utxo.address+', amount='+utxo.satoshis + ' (sum='+sumAmounts+', required='+amount+') allUtxos len='+allUtxos.length );
     if(sumAmounts<(amount+realFee)){
       sumAmounts+=parseInt(utxo.satoshis)
 
@@ -169,24 +169,24 @@ export function * sendTransaction (action) {
         var pk = new bitcore.PrivateKey( privKey )
         privateKeys.push( pk )
         loadedKeys[index] = true;
-  //      console.log('sendTransaction add HD priv: ('+ index +')'+ utxo.address + '=>' + pk.toWIF());
       }
+      console.log('sendTransaction added UTXO');
       utxos.push(utxo)
     }
   })
 
   const changeAdd = yield select(AccountSelectors.getChangeAddress)
-//console.log('sendTransaction utxos:' + JSON.stringify(utxos));
+
+  var bSuccess = false;
   try {
+    while (!bSuccess)  {
       var transaction = new bitcore.Transaction()
         .from(utxos)
         .to(destination, amount, '')
         .fee(realFee)
         .change(changeAdd.address)
       
-      //console.log('sendTransaction UNSIGNED :'+ transaction.toString());
       let signedTx = transaction.sign(privateKeys)
-      //console.log('sendTransaction SIGN :'+ signedTx);
       const url = yield select(GlobalSelectors.getBlockbookApi)
 
       const api = API.create(url)
@@ -219,7 +219,7 @@ export function * sendTransaction (action) {
         else    {
           console.log('sendTransaction SUCCESS: '+ transaction.hash);
         }
-
+        bSuccess = true;
       } else {
         callback('')
 
@@ -241,19 +241,23 @@ export function * sendTransaction (action) {
           }
 
           yield put(AccountActions.rebroadcastTx())
-
+          bSuccess = true;
         }else{
           if (response.problem=='CLIENT_ERROR') {
-            showError(I18n.t('unexpectedError') + ': ' + response.data.error)  
-          }
-          else {
-            showError(I18n.t('unexpectedError'))
+            var m = /-26: min relay fee not met, (\d+) < (\d+)/.exec(response.data.error)
+            if (m) {
+              realFee = parseInt(m[2]);
+              console.log('CLIENT_ERROR found '+realFee)
+            }
+            else {
+              showError(I18n.t('unexpectedError') + ': [NORMAL]' + JSON.stringify(response.data)) 
+              bSuccess = true;
+            }
           }
           console.log('sendTransaction ERROR: '+ JSON.stringify(response));
         }
-
       }
-
+    }
   } catch(e) {
     callback('')
     showError(I18n.t('unexpectedError') + ' => '+ e.message)

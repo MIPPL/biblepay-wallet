@@ -174,6 +174,7 @@ export default
     apy: 'APY',
     
     viewMnemonic: 'Ver su mnemónico de 12 palabras',
+    syncingWait: 'Sincronizando...espere',
     /* staking translations*/
     stakingtitle: 'Staking (Soon)'
 };

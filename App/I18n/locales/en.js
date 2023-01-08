@@ -139,7 +139,7 @@ export default
     unexpectedError: 'An unexpected Error occurred while trying to send the transaction. Please try again.',
     
     viewMnemonic: 'View your 12-word mnemonic',
-    
+    syncingWait: 'Syncing...please wait',
     /* staking translations*/
     stakingtitle: 'Staking (Soon)'
 };

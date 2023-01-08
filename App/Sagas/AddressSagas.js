@@ -89,7 +89,6 @@ export function * getAddressUtxo (action) {
     if (response.ok) {
       try {
         const addressUtxo = new AddressUtxo(response.data)
-
         yield put(AccountActions.successFetchAddressUtxo(address,addressUtxo.data))
       } catch(e) {
         console.log(e.message)

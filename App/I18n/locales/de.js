@@ -90,5 +90,7 @@ export default
   'maxAttemp': 'Maximale Anzahl an Versuchen erreicht',
   'cancel': 'Abbrechen',
   'typeHere': 'Tippen Sie hier',
-  'passphrase': 'Passwort'
+  'passphrase': 'Passwort',
+
+  'syncingWait': 'Synchronisieren...warten Sie'
 }

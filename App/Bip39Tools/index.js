@@ -24,7 +24,6 @@ Bip39Tools.wordlistsLanguage = ['EN', 'FR', 'IT', 'JA', 'KO', 'ES', 'ZH', 'ZH_TR
 
 Bip39Tools.normalize = function (str) {
     return (str || '').normalize('NFKD');
-    //return (str || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
 
 Bip39Tools.accentsTidy = function(s){

@@ -66,7 +66,7 @@ class SendScreen extends Component {
     }
 
     componentDidAppear() {
-        this.refresh();
+        //this.refresh();
         if(Platform.OS==='android')
             this.backhandler=BackHandler.addEventListener('hardwareBackPress', () => {
                 Navigation.mergeOptions(this.props.componentId, {
@@ -83,8 +83,12 @@ class SendScreen extends Component {
             this.backhandler.remove()
     }
     refresh = () => {
-        this.props.fetchAddressUtxo();
-        this.props.fetchAddressInfo()
+        if (this.props.loadingUtxoInfo==1) {
+            this.props.fetchAddressUtxo()
+        }
+        if (this.props.loadingAddressInfo==1) {
+            this.props.fetchAddressInfo()
+        }
     };
 
     readQr = (componentId, result) => {
@@ -116,6 +120,9 @@ class SendScreen extends Component {
         }
     };
 
+    isSyncing = () => {
+        return (this.props.loadingUtxoInfo<1 || this.props.loadingAddressInfo<1);
+    }
 
     openQrScanner = () => {
         Navigation.showModal({
@@ -131,6 +138,11 @@ class SendScreen extends Component {
     address = null;
 
     estimateFee = () => {
+        console.log('@@@estimateFee ' +this.props.loadingUtxoInfo)
+
+        if (this.props.loadingUtxoInfo<1)  {
+            return;
+        }
 
         if (parseFloat(this.state.amount)) {
             this.props.estimateFee(this.state.address, this.state.amount, (fee) => {
@@ -149,6 +161,10 @@ class SendScreen extends Component {
 
     sendTx = (componentId, fee) => {
         Navigation.dismissModal(componentId)
+
+        if (this.props.loadingUtxoInfo<1) {
+            this.props.fetchAddressUtxo()
+        }
 
         this.setState({showLoading: true});
         this.props.sendTransaction(this.state.address, this.state.amount, fee, false, (txid) => {
@@ -219,7 +235,7 @@ class SendScreen extends Component {
                         <View style={styles.seperatorBottom,this.props.lightTheme?styles.borderLight:null}/>
                         
                     </View>
-                    <Button label={I18n.t('send')} arrow onPress={this.estimateFee} style={styles.button}/>
+                    <Button label={(!this.isSyncing())?I18n.t('send'):I18n.t('syncingWait')} arrow onPress={this.estimateFee} style={styles.button}/>
                 </View>
                 {this.renderLoadingIndicator()}
                 </KeyboardAwareScrollView>
@@ -259,6 +275,8 @@ const mapStateToProps = (state) => {
         lightTheme: GlobalSelectors.getUseLightTheme(state),
         stats: NetworkSelectors.getStats(state),
         priceData: NetworkSelectors.getPriceData(state),
+        loadingAddressInfo: AccountSelectors.getLoadingAddressInfo(state),
+        loadingUtxoInfo: AccountSelectors.getLoadingUtxoInfo(state)
     };
 };
 

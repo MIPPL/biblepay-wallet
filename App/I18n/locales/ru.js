@@ -90,5 +90,6 @@ export default
   'maxAttemp': 'Превышено количество попыток ',
   'cancel': 'Отмена',
   'typeHere': 'Введите здесь',
-  'passphrase': 'Кодовая фраза'
+  'passphrase': 'Кодовая фраза',
+  'syncingWait': 'Синхронизация...Пожалуйста подождите'
 }

@@ -166,4 +166,5 @@ export default
   'capitalizationAbbreviated':	'Capitalização',
   'apy':	'rendimento anual percentual',
   'unexpectedError':	'Ocorreu um erro inesperado ao tentar enviar a transação. Por favor, tente novamente.',
+  'syncingWait': 'Sincronizando, aguarde'
   }
