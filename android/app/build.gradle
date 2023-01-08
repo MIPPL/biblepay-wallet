@@ -131,8 +131,8 @@ android {
         applicationId "com.biblepay.wallet"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 42
-        versionName "2.2.2"
+        versionCode 43
+        versionName "2.2.3"
         missingDimensionStrategy 'react-native-camera', 'general'
         multiDexEnabled true
     }
